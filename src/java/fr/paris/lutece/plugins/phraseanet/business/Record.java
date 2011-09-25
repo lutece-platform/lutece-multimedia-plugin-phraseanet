@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2009, Mairie de Paris
+ * Copyright (c) 2002-2011, Mairie de Paris
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,7 @@ public class Record
     private int _nCollectionId;
     private String _strSha256;
     private Thumbnail _Thumbnail;
-    private TechnicalInformation _TechnicalInformation;
+    private TechnicalInformations _TechnicalInformations;
     private String _strPhraseaType;
     private String _strUuid;
     
@@ -238,18 +238,18 @@ public class Record
         * Returns the TechnicalInformation
         * @return The TechnicalInformation
         */ 
-    public TechnicalInformation getTechnicalInformation()
+    public TechnicalInformations getTechnicalInformations()
     {
-        return _TechnicalInformation;
+        return _TechnicalInformations;
     }
     
        /**
         * Sets the TechnicalInformation
-        * @param TechnicalInformation The TechnicalInformation
+        * @param TechnicalInformations The TechnicalInformation
         */ 
-    public void setTechnicalInformation( TechnicalInformation TechnicalInformation )
+    public void setTechnicalInformations( TechnicalInformations TechnicalInformations )
     {
-        _TechnicalInformation = TechnicalInformation;
+        _TechnicalInformations = TechnicalInformations;
     }
     
        /**
