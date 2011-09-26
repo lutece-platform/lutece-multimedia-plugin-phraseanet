@@ -31,9 +31,12 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.phraseanet.service;
+package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
-import fr.paris.lutece.plugins.phraseanet.business.Record;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
+import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -71,8 +74,9 @@ public class RecordJsonParserTest
     public void testParse()
     {
         System.out.println("parse");
-        RecordJsonParser instance = new RecordJsonParser();
-        Record record = instance.parse( RECORD_JSON );
+        JSONObject json = (JSONObject) JSONSerializer.toJSON( RECORD_JSON );
+        JSONObject jsonRecord = json.getJSONObject("record");
+        Record record = RecordJsonParser.parse( jsonRecord );
         assertEquals( record.getDataboxId() , 1 );
         assertEquals( record.getRecordId() , 295 );
         assertEquals( record.getMimeType() , "image/gif" );

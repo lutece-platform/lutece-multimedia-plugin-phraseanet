@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.phraseanet.business;
+package fr.paris.lutece.plugins.phraseanet.business.record;
 
 /**
  * This is the business class for the object TechnicalInformations
