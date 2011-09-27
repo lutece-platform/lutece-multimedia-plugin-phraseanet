@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import org.junit.Test;
 import static org.junit.Assert.*;

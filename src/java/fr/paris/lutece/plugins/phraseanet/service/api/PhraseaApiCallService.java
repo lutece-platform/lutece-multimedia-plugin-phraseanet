@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.phraseanet.service.api;
 
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.MetaJsonParser;
+import fr.paris.lutece.util.url.UrlItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -53,24 +54,19 @@ public class PhraseaApiCallService
     private static final String FIELD_RESPONSE = "response";
     private static final String ENCODING = "UTF-8";
     private static final int SUCCESS = 200;
+    private static final String PARAMETER_ACCESS_TOKEN = "access_token";
 
     public static JSONObject getResponse(String strRequest) throws PhraseaApiCallException
     {
         try
         {
-            URL urlRequest = new URL(strRequest);
+            UrlItem url = new UrlItem( strRequest );
+            url.addParameter( PARAMETER_ACCESS_TOKEN , PhraseaApiAuthentication.getAccessToken() );
+            URL urlRequest = new URL( url.getUrl() );
             HttpURLConnection httpConnection = (HttpURLConnection) urlRequest.openConnection();
             InputStream inputStream = httpConnection.getInputStream();
             String strResponse = IOUtils.toString(inputStream, ENCODING );
-            JSONObject json = (JSONObject) JSONSerializer.toJSON(strResponse);
-            JSONObject jsonMeta = json.getJSONObject( FIELD_META);
-            Meta meta = MetaJsonParser.parse( jsonMeta );
-            if ( meta.getHttpCode() != SUCCESS)
-            {
-                throw new PhraseaApiCallException( meta.getErrorMessage() + " : " + meta.getErrorDetails());
-            }
-            JSONObject jsonResponse = json.getJSONObject(FIELD_RESPONSE);
-            return jsonResponse;
+            return extractResponse( strResponse );
 
         }
         catch (MalformedURLException ex)
@@ -82,5 +78,19 @@ public class PhraseaApiCallService
             throw new PhraseaApiCallException( ex.getMessage() );
         }
 
+    }
+    
+    static JSONObject extractResponse( String strResponse ) throws PhraseaApiCallException
+    {
+            JSONObject json = (JSONObject) JSONSerializer.toJSON(strResponse);
+            JSONObject jsonMeta = json.getJSONObject( FIELD_META);
+            Meta meta = MetaJsonParser.parse( jsonMeta );
+            if ( meta.getHttpCode() != SUCCESS)
+            {
+                throw new PhraseaApiCallException( meta.getErrorMessage() + " : " + meta.getErrorDetails());
+            }
+            JSONObject jsonResponse = json.getJSONObject(FIELD_RESPONSE);
+            return jsonResponse;
+        
     }
 }
