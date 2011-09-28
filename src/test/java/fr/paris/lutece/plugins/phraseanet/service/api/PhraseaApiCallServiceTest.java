@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * PhraseaApiCallService Test
+ * PhraseanetApiCallService Test
  */
 public class PhraseaApiCallServiceTest
 {
@@ -28,7 +28,7 @@ public class PhraseaApiCallServiceTest
             + "} }";
 
     /**
-     * Test of getResponse method, of class PhraseaApiCallService.
+     * Test of getResponse method, of class PhraseanetApiCallService.
      */
     @Test
     public void testGetResponse() throws Exception
@@ -37,17 +37,17 @@ public class PhraseaApiCallServiceTest
         System.out.println("getResponse");
         String strRequest = "";
         JSONObject expResult = null;
-        JSONObject result = PhraseaApiCallService.getResponse(strRequest);
+        JSONObject result = PhraseanetApiCallService.getResponse(strRequest);
          */    }
 
     /**
-     * Test of extractResponse method, of class PhraseaApiCallService.
+     * Test of extractResponse method, of class PhraseanetApiCallService.
      */
     @Test
     public void testExtractResponse() throws Exception
     {
         System.out.println("extractResponse");
-        JSONObject response = PhraseaApiCallService.extractResponse(RESPONSE);
+        JSONObject response = PhraseanetApiCallService.extractResponse(RESPONSE);
         assertEquals(response.getString("body"), "response body");
     }
 }

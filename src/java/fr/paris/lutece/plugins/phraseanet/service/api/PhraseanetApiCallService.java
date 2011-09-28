@@ -46,9 +46,9 @@ import net.sf.json.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 
 /**
- * PhraseaApiCallService
+ * PhraseanetApiCallService
  */
-public class PhraseaApiCallService
+public class PhraseanetApiCallService
 {
     private static final String FIELD_META = "meta";
     private static final String FIELD_RESPONSE = "response";
@@ -56,12 +56,12 @@ public class PhraseaApiCallService
     private static final int SUCCESS = 200;
     private static final String PARAMETER_ACCESS_TOKEN = "access_token";
 
-    public static JSONObject getResponse(String strRequest) throws PhraseaApiCallException
+    public static JSONObject getResponse(String strRequest) throws PhraseanetApiCallException
     {
         try
         {
             UrlItem url = new UrlItem( strRequest );
-            url.addParameter( PARAMETER_ACCESS_TOKEN , PhraseaApiAuthentication.getAccessToken() );
+            url.addParameter( PARAMETER_ACCESS_TOKEN , PhraseanetApiAuthentication.getAccessToken() );
             URL urlRequest = new URL( url.getUrl() );
             HttpURLConnection httpConnection = (HttpURLConnection) urlRequest.openConnection();
             InputStream inputStream = httpConnection.getInputStream();
@@ -71,23 +71,23 @@ public class PhraseaApiCallService
         }
         catch (MalformedURLException ex)
         {
-            throw new PhraseaApiCallException( ex.getMessage() );
+            throw new PhraseanetApiCallException( ex.getMessage() );
         }
         catch (IOException ex)
         {
-            throw new PhraseaApiCallException( ex.getMessage() );
+            throw new PhraseanetApiCallException( ex.getMessage() );
         }
 
     }
     
-    static JSONObject extractResponse( String strResponse ) throws PhraseaApiCallException
+    static JSONObject extractResponse( String strResponse ) throws PhraseanetApiCallException
     {
             JSONObject json = (JSONObject) JSONSerializer.toJSON(strResponse);
             JSONObject jsonMeta = json.getJSONObject( FIELD_META);
             Meta meta = MetaJsonParser.parse( jsonMeta );
             if ( meta.getHttpCode() != SUCCESS)
             {
-                throw new PhraseaApiCallException( meta.getErrorMessage() + " : " + meta.getErrorDetails());
+                throw new PhraseanetApiCallException( meta.getErrorMessage() + " : " + meta.getErrorDetails());
             }
             JSONObject jsonResponse = json.getJSONObject(FIELD_RESPONSE);
             return jsonResponse;

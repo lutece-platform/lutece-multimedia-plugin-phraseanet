@@ -32,28 +32,17 @@
  * License 1.0
  */
 
-package fr.paris.lutece.plugins.phraseanet.service;
-
-import fr.paris.lutece.plugins.phraseanet.business.record.Record;
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseaApiCallException;
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseaApiCallService;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
-import java.text.MessageFormat;
-import net.sf.json.JSONObject;
+package fr.paris.lutece.plugins.phraseanet.service.api;
 
 /**
- * PhraseaService
+ *
+ * @author pierre
  */
-public class PhraseaService
+public class PhraseanetApiCallException extends Exception
 {
-    private static final String GET_RECORD = "/api/v1/records/{0}/{1}/";
-    
-    public static Record getRecord( int nDataboxId, int nRecordId ) throws PhraseaApiCallException
+    public PhraseanetApiCallException( String strMessage )
     {
-        Object[] arguments = { nDataboxId , nRecordId };
-        String url = MessageFormat.format(GET_RECORD, arguments);
-        JSONObject jsonResponse = PhraseaApiCallService.getResponse(url);
-        JSONObject jsonRecord = jsonResponse.getJSONObject("record");
-        return RecordJsonParser.parse( jsonRecord );
+        super( strMessage );
     }
+    
 }

@@ -31,18 +31,29 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
 /**
- *
- * @author pierre
+ * PhraseaApiAuthentication
  */
-public class PhraseaApiCallException extends Exception
+public class PhraseanetApiAuthentication 
 {
-    public PhraseaApiCallException( String strMessage )
+    private static String _strAccessToken;
+
+    /**
+     * @return the _strAccessToken
+     */
+    public static String getAccessToken()
     {
-        super( strMessage );
+        return _strAccessToken;
+    }
+
+    /**
+     * @param strAccessToken the _strAccessToken to set
+     */
+    public static void setAccessToken(String strAccessToken)
+    {
+        _strAccessToken = strAccessToken;
     }
     
 }

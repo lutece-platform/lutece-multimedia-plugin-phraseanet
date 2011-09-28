@@ -31,29 +31,12 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.phraseanet.service.api;
+package fr.paris.lutece.plugins.phraseanet.service;
 
 /**
- * PhraseaApiAuthentication
+ * SearchCriterias
  */
-public class PhraseaApiAuthentication 
+public class SearchCriterias 
 {
-    private static String _strAccessToken;
-
-    /**
-     * @return the _strAccessToken
-     */
-    public static String getAccessToken()
-    {
-        return _strAccessToken;
-    }
-
-    /**
-     * @param strAccessToken the _strAccessToken to set
-     */
-    public static void setAccessToken(String strAccessToken)
-    {
-        _strAccessToken = strAccessToken;
-    }
     
 }
