@@ -1,0 +1,42 @@
+<div class="insert-service">
+    
+    <img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo"  style="margin:7px;"/>
+    
+    <h2>#i18n{phraseanet.search_results.title}</h2>
+    <form action="jsp/admin/plugins/phraseanet/Search.jsp" >
+        <input type="hidden" name="input" value="${input}" />
+        <input type="hidden" name="width" value="${width}" />
+        <input type="hidden" name="height" value="${height}" />
+        <input type="text" name="search" value="${query}" />
+        <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
+    </form>        
+    <table>
+        <#list results.results as record >
+        <tr>
+            <td valign="middle" >
+                <form action="jsp/admin/plugins/phraseanet/DoInsertLink.jsp" >
+                    <input type="hidden" name="input" value="${input}" />
+                    <input type="hidden" name="width" value="${width}" />
+                    <input type="hidden" name="height" value="${height}" />
+                    <input type="hidden" name="link" value="${record.recordId}" />
+                    <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonInsert}"/>
+                </form>
+            </td>
+            <td>
+                <a href="${record.recordId}" target="_blank">
+                    <img src="${record.thumbnail.url}" />
+                </a>
+            </td>
+            <td valign="top" >
+                <p>
+                    <a href="${record.recordId}" target="_blank" >${record.title}</a>
+                </p>
+                <p>
+                    ${record.title}
+                </p>           
+            </td>
+        </tr>
+        </#list>
+    </table>      
+    
+</div>

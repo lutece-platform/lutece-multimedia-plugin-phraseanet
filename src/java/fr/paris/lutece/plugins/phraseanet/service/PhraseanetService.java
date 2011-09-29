@@ -35,14 +35,16 @@
 package fr.paris.lutece.plugins.phraseanet.service;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
+import fr.paris.lutece.plugins.phraseanet.business.record.Thumbnail;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.url.UrlItem;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import net.sf.json.JSONObject;
 
 /**
@@ -71,6 +73,9 @@ public class PhraseanetService
     
     public static SearchResults search( String strQuery , int nPage , int nPerPage , SearchCriterias criterias ) throws PhraseanetApiCallException
     {
+        return mokeSearch();
+  
+/*
         UrlItem url = new UrlItem( SERVER + PATH_SEARCH );
         url.addParameter(PARAMETER_QUERY , strQuery );
         url.addParameter(PARAMETER_PAGE, String.valueOf(nPage));
@@ -78,5 +83,22 @@ public class PhraseanetService
         // TODO add other criterias
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse(url.getUrl());
         return SearchResultsJsonParser.parse(jsonResponse);
+*/  }
+    
+    public static SearchResults mokeSearch()
+    {
+        SearchResults results = new SearchResults();
+        List<Record> listRecords = new ArrayList<Record>();
+        Record record = new Record();
+        record.setRecordId( 1 );
+        record.setTitle("Titre de la video");
+        Thumbnail thumbnail = new Thumbnail();
+        thumbnail.setUrl("http://fr.lutece.paris.fr/fr/images/local/skin/screens.png");
+        record.setThumbnail(thumbnail);
+        listRecords.add(record);
+        
+        results.setResults( listRecords);
+        return results;
+        
     }
 }
