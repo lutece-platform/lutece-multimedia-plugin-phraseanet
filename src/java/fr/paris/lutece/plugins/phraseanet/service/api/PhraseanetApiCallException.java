@@ -31,8 +31,8 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.phraseanet.service.api;
+
 
 /**
  *
@@ -44,5 +44,4 @@ public class PhraseanetApiCallException extends Exception
     {
         super( strMessage );
     }
-    
 }

@@ -33,50 +33,36 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
-import fr.paris.lutece.plugins.phraseanet.business.record.Record;
-import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
+import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.junit.Test;
 
+import java.io.IOException;
 
 /**
- *
- * @author pierre
+ * MetaJsonParserTest
  */
-public class SearchResultsJsonParser
+public class MetaJsonParserTest
 {
-    public static SearchResults parse( JSONObject jsonResponse )
+    /**
+     * Test of parse method, of class RecordJsonParser.
+     */
+    @Test
+    public void testParse(  ) throws IOException
     {
-        SearchResults results = new SearchResults(  );
-        results.setTotalPages( jsonResponse.getInt( "total_pages" ) );
-        results.setCurrentPages( jsonResponse.getInt( "current_page" ) );
-        results.setAvalaibleResults( jsonResponse.getInt( "avalaible_results" ) );
-        results.setTotalResults( jsonResponse.getInt( "total_results" ) );
-        results.setError( jsonResponse.getString( "error" ) );
-        results.setWarning( jsonResponse.getString( "warning" ) );
-        results.setQueryTime( jsonResponse.getString( "query_time" ) );
-        results.setSearchIndexes( jsonResponse.getString( "search_indexes" ) );
-        results.setQuery( jsonResponse.getString( "query" ) );
+        System.out.println( "parse" );
 
-        JSONArray jsonResults = jsonResponse.getJSONArray( "results" );
-        List<Record> listResults = new ArrayList<Record>(  );
-        Iterator i = jsonResults.iterator(  );
-
-        while ( i.hasNext(  ) )
-        {
-            JSONObject jsonResult = (JSONObject) i.next(  );
-            Record record = RecordJsonParser.parse( jsonResult );
-            listResults.add( record );
-        }
-
-        results.setResults( listResults );
-
-        // TODO suggestions
-        return results;
+        String strJson = new Utils(  ).getJson( "meta.json" );
+        JSONObject jsonMeta = (JSONObject) JSONSerializer.toJSON( strJson );
+        Meta meta = MetaJsonParser.parse( jsonMeta );
+        assertEquals( meta.getApiVersion(  ), "1.0" );
+        assertEquals( meta.getRequest(  ), "GET /api/v1/feeds/288/content/" );
+        assertEquals( meta.getResponseTime(  ), "2011-07-27T15:52:04+02:00" );
+        assertEquals( meta.getHttpCode(  ), 200 );
+        assertEquals( meta.getCharset(  ), "UTF-8" );
     }
 }

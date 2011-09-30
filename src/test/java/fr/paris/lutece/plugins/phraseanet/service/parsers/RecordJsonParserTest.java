@@ -33,65 +33,47 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
+import fr.paris.lutece.plugins.phraseanet.business.record.Record;
+
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import fr.paris.lutece.plugins.phraseanet.business.record.Record;
-import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import java.io.IOException;
 
 /**
  * RecordJsonParserTest
  */
 public class RecordJsonParserTest
 {
-    private static final String RECORD_JSON = "{\"record\": {"+
-            "\"databox_id\": 1," +
-            "\"record_id\": 295," +
-            "\"mime_type\": \"image/gif\"," +
-            "\"title\": \"Argentina.gif\"," +
-            "\"original_name\": \"Argentina.gif\"," +
-            "\"last_modification\": \"2011-03-24T12:05:18+01:00\"," +
-            "\"created_on\": \"2011-03-24T12:05:04+01:00\"," +
-            "\"phrasea_type\": \"image\"," +
-            "\"uuid\": \"b65b957f-ed22-4291-9811-35c09a43ba28\"," +
-            "\"collection_id\": 1," +
-            "\"sha256\": \"669f161400fe81fa3024b074a1c0cfe0d0d7643470a2f450e6b005ce8daf0f8d\"," +
-            "\"thumbnail\": {" +
-                "\"url\": \"/web//db_trunk/subdefs/2011/03/24/0000/295_thumbnail.jpg\"," +
-                "\"mime_type\": \"image/jpeg\"," +
-                "\"height\": 48," +
-                "\"width\": 48," +
-                "\"filesize\": 1017" +
-            "}," +
-            "\"technical_informations\": []" +
-        "}}";
-
     /**
      * Test of parse method, of class RecordJsonParser.
      */
     @Test
-    public void testParse()
+    public void testParse(  ) throws IOException
     {
-        System.out.println("parse");
-        JSONObject json = (JSONObject) JSONSerializer.toJSON( RECORD_JSON );
-        JSONObject jsonRecord = json.getJSONObject("record");
-        Record record = RecordJsonParser.parse( jsonRecord );
-        assertEquals( record.getDataboxId() , 1 );
-        assertEquals( record.getRecordId() , 295 );
-        assertEquals( record.getMimeType() , "image/gif" );
-        assertEquals( record.getTitle() , "Argentina.gif" );
-        assertEquals( record.getOriginalName() , "Argentina.gif" );
-        assertEquals( record.getLastModified() , "2011-03-24T12:05:18+01:00" );
-        assertEquals( record.getCreatedOn() , "2011-03-24T12:05:04+01:00" );
-        assertEquals( record.getCollectionId() , 1 );
-        assertEquals( record.getSha256() , "669f161400fe81fa3024b074a1c0cfe0d0d7643470a2f450e6b005ce8daf0f8d" );
-        assertEquals( record.getThumbnail().getUrl() , "/web//db_trunk/subdefs/2011/03/24/0000/295_thumbnail.jpg" );
-        assertEquals( record.getThumbnail().getMimeType() , "image/jpeg" );
-        assertEquals( record.getThumbnail().getHeight() , 48 );
-        assertEquals( record.getThumbnail().getWidth() , 48 );
-        assertEquals( record.getThumbnail().getFilesize() , 1017 );
-        assertEquals( record.getPhraseaType() , "image" );
-        assertEquals( record.getUuid() , "b65b957f-ed22-4291-9811-35c09a43ba28" );
+        System.out.println( "parse" );
 
+        String strJson = new Utils(  ).getJson( "record.json" );
+        JSONObject jsonRecord = (JSONObject) JSONSerializer.toJSON( strJson );
+        Record record = RecordJsonParser.parse( jsonRecord );
+        assertEquals( record.getDataboxId(  ), 1 );
+        assertEquals( record.getRecordId(  ), 295 );
+        assertEquals( record.getMimeType(  ), "image/gif" );
+        assertEquals( record.getTitle(  ), "Argentina.gif" );
+        assertEquals( record.getOriginalName(  ), "Argentina.gif" );
+        assertEquals( record.getLastModified(  ), "2011-03-24T12:05:18+01:00" );
+        assertEquals( record.getCreatedOn(  ), "2011-03-24T12:05:04+01:00" );
+        assertEquals( record.getCollectionId(  ), 1 );
+        assertEquals( record.getSha256(  ), "669f161400fe81fa3024b074a1c0cfe0d0d7643470a2f450e6b005ce8daf0f8d" );
+        assertEquals( record.getThumbnail(  ).getUrl(  ), "/web//db_trunk/subdefs/2011/03/24/0000/295_thumbnail.jpg" );
+        assertEquals( record.getThumbnail(  ).getMimeType(  ), "image/jpeg" );
+        assertEquals( record.getThumbnail(  ).getHeight(  ), 48 );
+        assertEquals( record.getThumbnail(  ).getWidth(  ), 48 );
+        assertEquals( record.getThumbnail(  ).getFilesize(  ), 1017 );
+        assertEquals( record.getPhraseaType(  ), "image" );
+        assertEquals( record.getUuid(  ), "b65b957f-ed22-4291-9811-35c09a43ba28" );
     }
 }

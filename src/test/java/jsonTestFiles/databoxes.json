@@ -1,0 +1,17 @@
+{
+        "52": {
+            "databox_id": 52,
+            "name": "db_test_debug23",
+            "version": "3.2.0.0a6"
+        },
+        "1": {
+            "databox_id": 1,
+            "name": "DB TRUNK PËRCONIA",
+            "version": "3.2.0.0a6"
+        },
+        "9": {
+            "databox_id": 9,
+            "name": "db_trunk_maria",
+            "version": "3.2.0.0a6"
+        }
+    }

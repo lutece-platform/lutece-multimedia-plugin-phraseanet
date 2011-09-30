@@ -43,7 +43,6 @@ import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
-
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -60,7 +59,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 {
     ////////////////////////////////////////////////////////////////////////////
     // Constants
-
     private static final String TEMPLATE_SELECTOR_PAGE = "admin/plugins/phraseanet/linkservice_selector.html";
     private static final String TEMPLATE_SEARCH_RESULTS = "admin/plugins/phraseanet/search_results.html";
     private static final String MARK_SELECTED_TEXT = "selected_text";
@@ -69,6 +67,8 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_RESULTS = "results";
     private static final String MARK_WIDTH = "width";
     private static final String MARK_HEIGHT = "height";
+    private static final String MARK_SERVER = "server";
+    private static final String MARK_DATABOXES = "databoxes";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_PROVIDER = "provider";
     private static final String PARAMETER_SELECTED_TEXT = "selected_text";
@@ -88,27 +88,27 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @param request The Http Request
      * @return The html form.
      */
-    public String getInsertServiceSelectorUI(HttpServletRequest request)
+    public String getInsertServiceSelectorUI( HttpServletRequest request )
     {
-        String strSelectedText = request.getParameter(PARAMETER_SELECTED_TEXT);
-        String strInput = request.getParameter(PARAMETER_INPUT);
+        String strSelectedText = request.getParameter( PARAMETER_SELECTED_TEXT );
+        String strInput = request.getParameter( PARAMETER_INPUT );
 
-        String strDefaultPlayerWidth = AppPropertiesService.getProperty(PROPERTY_WIDTH, DEFAULT_WIDTH);
-        String strDefaultPlayerHeight = AppPropertiesService.getProperty(PROPERTY_HEIGHT, DEFAULT_WIDTH);
+        String strDefaultPlayerWidth = AppPropertiesService.getProperty( PROPERTY_WIDTH, DEFAULT_WIDTH );
+        String strDefaultPlayerHeight = AppPropertiesService.getProperty( PROPERTY_HEIGHT, DEFAULT_WIDTH );
 
-        Map<String, Serializable> model = new HashMap<String, Serializable>();
+        Map<String, Serializable> model = new HashMap<String, Serializable>(  );
 
-        model.put(MARK_SELECTED_TEXT, strSelectedText);
-        model.put(MARK_INPUT, strInput);
-        model.put(MARK_WIDTH, strDefaultPlayerWidth);
-        model.put(MARK_HEIGHT, strDefaultPlayerHeight);
+        model.put( MARK_SELECTED_TEXT, strSelectedText );
+        model.put( MARK_INPUT, strInput );
+        model.put( MARK_WIDTH, strDefaultPlayerWidth );
+        model.put( MARK_HEIGHT, strDefaultPlayerHeight );
 
         // Gets the locale of the user
-        Locale locale = AdminUserService.getLocale(request);
+        Locale locale = AdminUserService.getLocale( request );
 
-        HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_SELECTOR_PAGE, locale, model);
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SELECTOR_PAGE, locale, model );
 
-        return template.getHtml();
+        return template.getHtml(  );
     }
 
     /**
@@ -116,41 +116,45 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @param request The HTTP request
      * @return The search page
      */
-    public String getSearch(HttpServletRequest request)
+    public String getSearch( HttpServletRequest request )
     {
-        String strSelectedText = request.getParameter(PARAMETER_SELECTED_TEXT);
-        String strInput = request.getParameter(PARAMETER_INPUT);
-        String strQuery = request.getParameter(PARAMETER_SEARCH);
-        String strWidth = request.getParameter(PARAMETER_WIDTH);
-        String strHeight = request.getParameter(PARAMETER_HEIGHT);
+        String strSelectedText = request.getParameter( PARAMETER_SELECTED_TEXT );
+        String strInput = request.getParameter( PARAMETER_INPUT );
+        String strQuery = request.getParameter( PARAMETER_SEARCH );
+        String strWidth = request.getParameter( PARAMETER_WIDTH );
+        String strHeight = request.getParameter( PARAMETER_HEIGHT );
 
         int nPage = 1;
         int nPerPage = 10;
+
         try
         {
-            SearchResults results = PhraseanetService.search(strQuery, nPage, nPerPage, null);
+            SearchResults results = PhraseanetService.search( strQuery, nPage, nPerPage, null );
 
-            HashMap<String, Object> model = new HashMap<String, Object>();
+            HashMap<String, Object> model = new HashMap<String, Object>(  );
 
-            model.put(MARK_QUERY, (strQuery != null) ? strQuery : "");
-            model.put(MARK_RESULTS, results);
+            model.put( MARK_QUERY, ( strQuery != null ) ? strQuery : "" );
+            model.put( MARK_RESULTS, results );
+            model.put( MARK_SERVER, AppPropertiesService.getProperty( PhraseanetService.PROPERTY_SERVER ) );
 
-            model.put(MARK_SELECTED_TEXT, strSelectedText);
-            model.put(MARK_INPUT, strInput);
+            model.put( MARK_SELECTED_TEXT, strSelectedText );
+            model.put( MARK_INPUT, strInput );
 
-            model.put(MARK_WIDTH, strWidth);
-            model.put(MARK_HEIGHT, strHeight);
+            model.put( MARK_WIDTH, strWidth );
+            model.put( MARK_HEIGHT, strHeight );
+
+            model.put( MARK_DATABOXES, PhraseanetService.getDataboxes(  ) );
 
             // Gets the locale of the user
-            Locale locale = AdminUserService.getLocale(request);
+            Locale locale = AdminUserService.getLocale( request );
 
-            HtmlTemplate template = AppTemplateService.getTemplate(TEMPLATE_SEARCH_RESULTS, locale, model);
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SEARCH_RESULTS, locale, model );
 
-            return template.getHtml();
+            return template.getHtml(  );
         }
-        catch (PhraseanetApiCallException ex)
+        catch ( PhraseanetApiCallException ex )
         {
-            return ex.getMessage();
+            return ex.getMessage(  );
         }
     }
 
@@ -159,27 +163,28 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @param request The HTTP request
      * @return The code to insert
      */
-    public String doInsertLink(HttpServletRequest request)
+    public String doInsertLink( HttpServletRequest request )
     {
-        String strLink = request.getParameter(PARAMETER_LINK);
-        String strInput = request.getParameter(PARAMETER_INPUT);
-        String strProvider = request.getParameter(PARAMETER_PROVIDER);
-        String strWidth = request.getParameter(PARAMETER_WIDTH);
-        String strHeight = request.getParameter(PARAMETER_HEIGHT);
+        String strLink = request.getParameter( PARAMETER_LINK );
+        String strInput = request.getParameter( PARAMETER_INPUT );
+        String strProvider = request.getParameter( PARAMETER_PROVIDER );
+        String strWidth = request.getParameter( PARAMETER_WIDTH );
+        String strHeight = request.getParameter( PARAMETER_HEIGHT );
 
         // Gets the locale of the user
-        Locale locale = AdminUserService.getLocale(request);
+        Locale locale = AdminUserService.getLocale( request );
 
-/*        
-        FeedProvider videoProvider = FeedsService.getInstance().getProvider(strProvider);
-        String strInsert = "no video";
+        /*
+                FeedProvider videoProvider = FeedsService.getInstance().getProvider(strProvider);
+                String strInsert = "no video";
 
-        if (videoProvider instanceof VideoProvider)
-        {
-            strInsert = ((VideoProvider) videoProvider).getPlayerHtml(strLink, strWidth, strHeight, locale);
-        }
-*/
+                if (videoProvider instanceof VideoProvider)
+                {
+                    strInsert = ((VideoProvider) videoProvider).getPlayerHtml(strLink, strWidth, strHeight, locale);
+                }
+        */
         String strInsert = "video coming soon";
-        return insertUrl(request, strInput, strInsert);
+
+        return insertUrl( request, strInput, strInsert );
     }
 }

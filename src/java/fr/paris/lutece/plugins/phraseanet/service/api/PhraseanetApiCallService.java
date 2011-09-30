@@ -35,15 +35,15 @@ package fr.paris.lutece.plugins.phraseanet.service.api;
 
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.MetaJsonParser;
+import fr.paris.lutece.util.httpaccess.HttpAccess;
+import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.url.UrlItem;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import org.apache.commons.io.IOUtils;
+
+import java.util.HashMap;
+
 
 /**
  * PhraseanetApiCallService
@@ -52,45 +52,63 @@ public class PhraseanetApiCallService
 {
     private static final String FIELD_META = "meta";
     private static final String FIELD_RESPONSE = "response";
-    private static final String ENCODING = "UTF-8";
     private static final int SUCCESS = 200;
-    private static final String PARAMETER_ACCESS_TOKEN = "access_token";
+    private static final String PARAMETER_OAUTH_TOKEN = "oauth_token";
 
-    public static JSONObject getResponse(String strRequest) throws PhraseanetApiCallException
+    public static JSONObject getResponse( String strRequest )
+        throws PhraseanetApiCallException
     {
         try
         {
             UrlItem url = new UrlItem( strRequest );
-            url.addParameter( PARAMETER_ACCESS_TOKEN , PhraseanetApiAuthentication.getAccessToken() );
-            URL urlRequest = new URL( url.getUrl() );
-            HttpURLConnection httpConnection = (HttpURLConnection) urlRequest.openConnection();
-            InputStream inputStream = httpConnection.getInputStream();
-            String strResponse = IOUtils.toString(inputStream, ENCODING );
+            url.addParameter( PARAMETER_OAUTH_TOKEN, PhraseanetApiAuthentication.getAccessToken(  ) );
+
+            HttpAccess httpClient = new HttpAccess(  );
+            String strResponse = httpClient.doGet( url.getUrl(  ) );
+            System.out.println( strResponse ); // TODO remove me
+
             return extractResponse( strResponse );
-
         }
-        catch (MalformedURLException ex)
+        catch ( HttpAccessException ex )
         {
-            throw new PhraseanetApiCallException( ex.getMessage() );
+            throw new PhraseanetApiCallException( ex.getMessage(  ) );
         }
-        catch (IOException ex)
-        {
-            throw new PhraseanetApiCallException( ex.getMessage() );
-        }
-
     }
-    
-    static JSONObject extractResponse( String strResponse ) throws PhraseanetApiCallException
+
+    static JSONObject extractResponse( String strResponse )
+        throws PhraseanetApiCallException
     {
-            JSONObject json = (JSONObject) JSONSerializer.toJSON(strResponse);
-            JSONObject jsonMeta = json.getJSONObject( FIELD_META);
-            Meta meta = MetaJsonParser.parse( jsonMeta );
-            if ( meta.getHttpCode() != SUCCESS)
-            {
-                throw new PhraseanetApiCallException( meta.getErrorMessage() + " : " + meta.getErrorDetails());
-            }
-            JSONObject jsonResponse = json.getJSONObject(FIELD_RESPONSE);
-            return jsonResponse;
-        
+        JSONObject json = (JSONObject) JSONSerializer.toJSON( strResponse );
+        JSONObject jsonMeta = json.getJSONObject( FIELD_META );
+        Meta meta = MetaJsonParser.parse( jsonMeta );
+
+        if ( meta.getHttpCode(  ) != SUCCESS )
+        {
+            throw new PhraseanetApiCallException( meta.getErrorMessage(  ) + " : " + meta.getErrorDetails(  ) );
+        }
+
+        JSONObject jsonResponse = json.getJSONObject( FIELD_RESPONSE );
+
+        return jsonResponse;
+    }
+
+    public static JSONObject getPostResponse( String strUrl, HashMap mapParameters )
+        throws PhraseanetApiCallException
+    {
+        try
+        {
+            UrlItem url = new UrlItem( strUrl );
+            mapParameters.put( PARAMETER_OAUTH_TOKEN, PhraseanetApiAuthentication.getAccessToken(  ) );
+
+            HttpAccess httpClient = new HttpAccess(  );
+            String strResponse = httpClient.doPost( url.getUrl(  ), mapParameters );
+            System.out.println( strResponse ); // TODO remove me
+
+            return extractResponse( strResponse );
+        }
+        catch ( HttpAccessException ex )
+        {
+            throw new PhraseanetApiCallException( ex.getMessage(  ) );
+        }
     }
 }

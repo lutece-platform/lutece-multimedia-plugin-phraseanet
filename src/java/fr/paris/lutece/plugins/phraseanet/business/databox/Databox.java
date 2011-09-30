@@ -31,108 +31,70 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.phraseanet.business.record;
+package fr.paris.lutece.plugins.phraseanet.business.databox;
 
 
 /**
- * This is the business class for the object Thumbnail
+ * This is the business class for the object Databox
  */
-public class Thumbnail
+public class Databox
 {
     // Variables declarations 
-    private String _strUrl;
-    private String _strMimeType;
-    private int _nHeight;
-    private int _nWidth;
-    private int _nFilesize;
+    private int _nDataboxId;
+    private String _strName;
+    private String _strVersion;
 
     /**
-     * Returns the Url
-     * @return The Url
+     * Returns the DataboxId
+     * @return The DataboxId
      */
-    public String getUrl(  )
+    public int getDataboxId(  )
     {
-        return _strUrl;
+        return _nDataboxId;
     }
 
     /**
-     * Sets the Url
-     * @param strUrl The Url
+     * Sets the DataboxId
+     * @param nDataboxId The DataboxId
      */
-    public void setUrl( String strUrl )
+    public void setDataboxId( int nDataboxId )
     {
-        _strUrl = strUrl;
+        _nDataboxId = nDataboxId;
     }
 
     /**
-     * Returns the MimeType
-     * @return The MimeType
+     * Returns the Name
+     * @return The Name
      */
-    public String getMimeType(  )
+    public String getName(  )
     {
-        return _strMimeType;
+        return _strName;
     }
 
     /**
-     * Sets the MimeType
-     * @param strMimeType The MimeType
+     * Sets the Name
+     * @param strName The Name
      */
-    public void setMimeType( String strMimeType )
+    public void setName( String strName )
     {
-        _strMimeType = strMimeType;
+        _strName = strName;
     }
 
     /**
-     * Returns the Height
-     * @return The Height
+     * Returns the Version
+     * @return The Version
      */
-    public int getHeight(  )
+    public String getVersion(  )
     {
-        return _nHeight;
+        return _strVersion;
     }
 
     /**
-     * Sets the Height
-     * @param nHeight The Height
+     * Sets the Version
+     * @param strVersion The Version
      */
-    public void setHeight( int nHeight )
+    public void setVersion( String strVersion )
     {
-        _nHeight = nHeight;
-    }
-
-    /**
-     * Returns the Width
-     * @return The Width
-     */
-    public int getWidth(  )
-    {
-        return _nWidth;
-    }
-
-    /**
-     * Sets the Width
-     * @param nWidth The Width
-     */
-    public void setWidth( int nWidth )
-    {
-        _nWidth = nWidth;
-    }
-
-    /**
-     * Returns the Filesize
-     * @return The Filesize
-     */
-    public int getFilesize(  )
-    {
-        return _nFilesize;
-    }
-
-    /**
-     * Sets the Filesize
-     * @param nFilesize The Filesize
-     */
-    public void setFilesize( int nFilesize )
-    {
-        _nFilesize = nFilesize;
+        _strVersion = strVersion;
     }
 }

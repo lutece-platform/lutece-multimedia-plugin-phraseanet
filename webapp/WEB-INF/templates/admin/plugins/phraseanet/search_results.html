@@ -9,6 +9,11 @@
         <input type="hidden" name="height" value="${height}" />
         <input type="text" name="search" value="${query}" />
         <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
+        <select name="databox">
+            <#list databoxes as databox>
+            <option value="${databox.databoxId}">${databox.name}</option>
+            </#list>
+        </select>
     </form>        
     <table>
         <#list results.results as record >
@@ -24,7 +29,7 @@
             </td>
             <td>
                 <a href="${record.recordId}" target="_blank">
-                    <img src="${record.thumbnail.url}" />
+                    <img src="${server}${record.thumbnail.url}" />
                 </a>
             </td>
             <td valign="top" >

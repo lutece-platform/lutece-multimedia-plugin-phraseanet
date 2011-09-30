@@ -33,10 +33,10 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service;
 
+
 /**
  * SearchCriterias
  */
-public class SearchCriterias 
+public class SearchCriterias
 {
-    
 }

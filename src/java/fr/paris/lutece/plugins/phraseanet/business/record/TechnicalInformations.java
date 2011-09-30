@@ -33,20 +33,20 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.record;
 
+
 /**
  * This is the business class for the object TechnicalInformations
  */
 public class TechnicalInformations
 {
     // Variables declarations 
-
     private int _nBits;
 
     /**
      * Returns the Bits
      * @return The Bits
      */
-    public int getBits()
+    public int getBits(  )
     {
         return _nBits;
     }
@@ -55,7 +55,7 @@ public class TechnicalInformations
      * Sets the Bits
      * @param nBits The Bits
      */
-    public void setBits(int nBits)
+    public void setBits( int nBits )
     {
         _nBits = nBits;
     }

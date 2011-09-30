@@ -34,7 +34,9 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
+
 import net.sf.json.JSONObject;
+
 
 /**
  * MetaJsonParser
@@ -43,14 +45,15 @@ public class MetaJsonParser
 {
     public static Meta parse( JSONObject jsonMeta )
     {
-        Meta meta = new Meta();
-        meta.setApiVersion( jsonMeta.getString("api_version"));
-        meta.setRequest( jsonMeta.getString("request"));
-        meta.setResponseTime( jsonMeta.getString( "response_time"));
-        meta.setHttpCode( jsonMeta.getInt("http_code"));
-        meta.setErrorMessage(jsonMeta.getString("error_message"));
-        meta.setErrorDetails( jsonMeta.getString("error_details"));
-        meta.setCharset(jsonMeta.getString("charset"));
+        Meta meta = new Meta(  );
+        meta.setApiVersion( jsonMeta.getString( "api_version" ) );
+        meta.setRequest( jsonMeta.getString( "request" ) );
+        meta.setResponseTime( jsonMeta.getString( "response_time" ) );
+        meta.setHttpCode( jsonMeta.getInt( "http_code" ) );
+        meta.setErrorMessage( jsonMeta.getString( "error_message" ) );
+        meta.setErrorDetails( jsonMeta.getString( "error_details" ) );
+        meta.setCharset( jsonMeta.getString( "charset" ) );
+
         return meta;
     }
 }

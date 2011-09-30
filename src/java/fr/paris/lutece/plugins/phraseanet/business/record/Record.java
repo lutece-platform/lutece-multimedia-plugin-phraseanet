@@ -30,12 +30,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.phraseanet.business.record;
+
 
 /**
  * This is the business class for the object Record
- */ 
+ */
 public class Record
 {
     // Variables declarations 
@@ -52,239 +53,238 @@ public class Record
     private TechnicalInformations _TechnicalInformations;
     private String _strPhraseaType;
     private String _strUuid;
-    
-    
-       /**
-        * Returns the RecordId
-        * @return The RecordId
-        */ 
-    public int getRecordId()
+
+    /**
+     * Returns the RecordId
+     * @return The RecordId
+     */
+    public int getRecordId(  )
     {
         return _nRecordId;
     }
-    
-       /**
-        * Sets the RecordId
-        * @param nRecordId The RecordId
-        */ 
+
+    /**
+     * Sets the RecordId
+     * @param nRecordId The RecordId
+     */
     public void setRecordId( int nRecordId )
     {
         _nRecordId = nRecordId;
     }
-    
-       /**
-        * Returns the DataboxId
-        * @return The DataboxId
-        */ 
-    public int getDataboxId()
+
+    /**
+     * Returns the DataboxId
+     * @return The DataboxId
+     */
+    public int getDataboxId(  )
     {
         return _nDataboxId;
     }
-    
-       /**
-        * Sets the DataboxId
-        * @param nDataboxId The DataboxId
-        */ 
+
+    /**
+     * Sets the DataboxId
+     * @param nDataboxId The DataboxId
+     */
     public void setDataboxId( int nDataboxId )
     {
         _nDataboxId = nDataboxId;
     }
-    
-       /**
-        * Returns the MimeType
-        * @return The MimeType
-        */ 
-    public String getMimeType()
+
+    /**
+     * Returns the MimeType
+     * @return The MimeType
+     */
+    public String getMimeType(  )
     {
         return _strMimeType;
     }
-    
-       /**
-        * Sets the MimeType
-        * @param strMimeType The MimeType
-        */ 
+
+    /**
+     * Sets the MimeType
+     * @param strMimeType The MimeType
+     */
     public void setMimeType( String strMimeType )
     {
         _strMimeType = strMimeType;
     }
-    
-       /**
-        * Returns the Title
-        * @return The Title
-        */ 
-    public String getTitle()
+
+    /**
+     * Returns the Title
+     * @return The Title
+     */
+    public String getTitle(  )
     {
         return _strTitle;
     }
-    
-       /**
-        * Sets the Title
-        * @param strTitle The Title
-        */ 
+
+    /**
+     * Sets the Title
+     * @param strTitle The Title
+     */
     public void setTitle( String strTitle )
     {
         _strTitle = strTitle;
     }
-    
-       /**
-        * Returns the OriginalName
-        * @return The OriginalName
-        */ 
-    public String getOriginalName()
+
+    /**
+     * Returns the OriginalName
+     * @return The OriginalName
+     */
+    public String getOriginalName(  )
     {
         return _strOriginalName;
     }
-    
-       /**
-        * Sets the OriginalName
-        * @param strOriginalName The OriginalName
-        */ 
+
+    /**
+     * Sets the OriginalName
+     * @param strOriginalName The OriginalName
+     */
     public void setOriginalName( String strOriginalName )
     {
         _strOriginalName = strOriginalName;
     }
-    
-       /**
-        * Returns the LastModified
-        * @return The LastModified
-        */ 
-    public String getLastModified()
+
+    /**
+     * Returns the LastModified
+     * @return The LastModified
+     */
+    public String getLastModified(  )
     {
         return _strLastModified;
     }
-    
-       /**
-        * Sets the LastModified
-        * @param strLastModified The LastModified
-        */ 
+
+    /**
+     * Sets the LastModified
+     * @param strLastModified The LastModified
+     */
     public void setLastModified( String strLastModified )
     {
         _strLastModified = strLastModified;
     }
-    
-       /**
-        * Returns the CreatedOn
-        * @return The CreatedOn
-        */ 
-    public String getCreatedOn()
+
+    /**
+     * Returns the CreatedOn
+     * @return The CreatedOn
+     */
+    public String getCreatedOn(  )
     {
         return _strCreatedOn;
     }
-    
-       /**
-        * Sets the CreatedOn
-        * @param strCreatedOn The CreatedOn
-        */ 
+
+    /**
+     * Sets the CreatedOn
+     * @param strCreatedOn The CreatedOn
+     */
     public void setCreatedOn( String strCreatedOn )
     {
         _strCreatedOn = strCreatedOn;
     }
-    
-       /**
-        * Returns the CollectionId
-        * @return The CollectionId
-        */ 
-    public int getCollectionId()
+
+    /**
+     * Returns the CollectionId
+     * @return The CollectionId
+     */
+    public int getCollectionId(  )
     {
         return _nCollectionId;
     }
-    
-       /**
-        * Sets the CollectionId
-        * @param nCollectionId The CollectionId
-        */ 
+
+    /**
+     * Sets the CollectionId
+     * @param nCollectionId The CollectionId
+     */
     public void setCollectionId( int nCollectionId )
     {
         _nCollectionId = nCollectionId;
     }
-    
-       /**
-        * Returns the Sha256
-        * @return The Sha256
-        */ 
-    public String getSha256()
+
+    /**
+     * Returns the Sha256
+     * @return The Sha256
+     */
+    public String getSha256(  )
     {
         return _strSha256;
     }
-    
-       /**
-        * Sets the Sha256
-        * @param strSha256 The Sha256
-        */ 
+
+    /**
+     * Sets the Sha256
+     * @param strSha256 The Sha256
+     */
     public void setSha256( String strSha256 )
     {
         _strSha256 = strSha256;
     }
-    
-       /**
-        * Returns the Thumbnail
-        * @return The Thumbnail
-        */ 
-    public Thumbnail getThumbnail()
+
+    /**
+     * Returns the Thumbnail
+     * @return The Thumbnail
+     */
+    public Thumbnail getThumbnail(  )
     {
         return _Thumbnail;
     }
-    
-       /**
-        * Sets the Thumbnail
-        * @param Thumbnail The Thumbnail
-        */ 
+
+    /**
+     * Sets the Thumbnail
+     * @param Thumbnail The Thumbnail
+     */
     public void setThumbnail( Thumbnail Thumbnail )
     {
         _Thumbnail = Thumbnail;
     }
-    
-       /**
-        * Returns the TechnicalInformation
-        * @return The TechnicalInformation
-        */ 
-    public TechnicalInformations getTechnicalInformations()
+
+    /**
+     * Returns the TechnicalInformation
+     * @return The TechnicalInformation
+     */
+    public TechnicalInformations getTechnicalInformations(  )
     {
         return _TechnicalInformations;
     }
-    
-       /**
-        * Sets the TechnicalInformation
-        * @param TechnicalInformations The TechnicalInformation
-        */ 
+
+    /**
+     * Sets the TechnicalInformation
+     * @param TechnicalInformations The TechnicalInformation
+     */
     public void setTechnicalInformations( TechnicalInformations TechnicalInformations )
     {
         _TechnicalInformations = TechnicalInformations;
     }
-    
-       /**
-        * Returns the PhraseaType
-        * @return The PhraseaType
-        */ 
-    public String getPhraseaType()
+
+    /**
+     * Returns the PhraseaType
+     * @return The PhraseaType
+     */
+    public String getPhraseaType(  )
     {
         return _strPhraseaType;
     }
-    
-       /**
-        * Sets the PhraseaType
-        * @param strPhraseaType The PhraseaType
-        */ 
+
+    /**
+     * Sets the PhraseaType
+     * @param strPhraseaType The PhraseaType
+     */
     public void setPhraseaType( String strPhraseaType )
     {
         _strPhraseaType = strPhraseaType;
     }
-    
-       /**
-        * Returns the Uuid
-        * @return The Uuid
-        */ 
-    public String getUuid()
+
+    /**
+     * Returns the Uuid
+     * @return The Uuid
+     */
+    public String getUuid(  )
     {
         return _strUuid;
     }
-    
-       /**
-        * Sets the Uuid
-        * @param strUuid The Uuid
-        */ 
+
+    /**
+     * Sets the Uuid
+     * @param strUuid The Uuid
+     */
     public void setUuid( String strUuid )
     {
         _strUuid = strUuid;
     }
- }
+}

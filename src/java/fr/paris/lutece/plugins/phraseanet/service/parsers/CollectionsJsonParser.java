@@ -33,10 +33,8 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
-import fr.paris.lutece.plugins.phraseanet.business.record.Record;
-import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
+import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
@@ -45,38 +43,28 @@ import java.util.List;
 
 
 /**
- *
- * @author pierre
+ * CollectionsJsonParser
  */
-public class SearchResultsJsonParser
+public class CollectionsJsonParser
 {
-    public static SearchResults parse( JSONObject jsonResponse )
+    public static List<Collection> parse( JSONObject jsonResponse )
     {
-        SearchResults results = new SearchResults(  );
-        results.setTotalPages( jsonResponse.getInt( "total_pages" ) );
-        results.setCurrentPages( jsonResponse.getInt( "current_page" ) );
-        results.setAvalaibleResults( jsonResponse.getInt( "avalaible_results" ) );
-        results.setTotalResults( jsonResponse.getInt( "total_results" ) );
-        results.setError( jsonResponse.getString( "error" ) );
-        results.setWarning( jsonResponse.getString( "warning" ) );
-        results.setQueryTime( jsonResponse.getString( "query_time" ) );
-        results.setSearchIndexes( jsonResponse.getString( "search_indexes" ) );
-        results.setQuery( jsonResponse.getString( "query" ) );
-
-        JSONArray jsonResults = jsonResponse.getJSONArray( "results" );
-        List<Record> listResults = new ArrayList<Record>(  );
-        Iterator i = jsonResults.iterator(  );
+        List<Collection> listCollectiones = new ArrayList<Collection>(  );
+        JSONObject jsonCollections = jsonResponse.getJSONObject( "collections" );
+        Iterator i = jsonCollections.keys(  );
 
         while ( i.hasNext(  ) )
         {
-            JSONObject jsonResult = (JSONObject) i.next(  );
-            Record record = RecordJsonParser.parse( jsonResult );
-            listResults.add( record );
+            String strKey = (String) i.next(  );
+            JSONObject jsonCollection = jsonCollections.getJSONObject( strKey );
+            Collection Collection = new Collection(  );
+            Collection.setBaseId( jsonCollection.getInt( "base_id" ) );
+            Collection.setCollId( jsonCollection.getInt( "coll_id" ) );
+            Collection.setName( jsonCollection.getString( "name" ) );
+            Collection.setRecordAmount( jsonCollection.getInt( "record_amount" ) );
+            listCollectiones.add( Collection );
         }
 
-        results.setResults( listResults );
-
-        // TODO suggestions
-        return results;
+        return listCollectiones;
     }
 }

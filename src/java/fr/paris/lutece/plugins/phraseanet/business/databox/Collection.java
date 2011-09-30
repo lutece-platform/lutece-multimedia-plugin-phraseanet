@@ -31,108 +31,89 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.phraseanet.business.record;
+package fr.paris.lutece.plugins.phraseanet.business.databox;
 
 
 /**
- * This is the business class for the object Thumbnail
+ * This is the business class for the object Collection
  */
-public class Thumbnail
+public class Collection
 {
     // Variables declarations 
-    private String _strUrl;
-    private String _strMimeType;
-    private int _nHeight;
-    private int _nWidth;
-    private int _nFilesize;
+    private int _nBaseId;
+    private int _nCollId;
+    private String _strName;
+    private int _nRecordAmount;
 
     /**
-     * Returns the Url
-     * @return The Url
+     * Returns the BaseId
+     * @return The BaseId
      */
-    public String getUrl(  )
+    public int getBaseId(  )
     {
-        return _strUrl;
+        return _nBaseId;
     }
 
     /**
-     * Sets the Url
-     * @param strUrl The Url
+     * Sets the BaseId
+     * @param nBaseId The BaseId
      */
-    public void setUrl( String strUrl )
+    public void setBaseId( int nBaseId )
     {
-        _strUrl = strUrl;
+        _nBaseId = nBaseId;
     }
 
     /**
-     * Returns the MimeType
-     * @return The MimeType
+     * Returns the CollId
+     * @return The CollId
      */
-    public String getMimeType(  )
+    public int getCollId(  )
     {
-        return _strMimeType;
+        return _nCollId;
     }
 
     /**
-     * Sets the MimeType
-     * @param strMimeType The MimeType
+     * Sets the CollId
+     * @param nCollId The CollId
      */
-    public void setMimeType( String strMimeType )
+    public void setCollId( int nCollId )
     {
-        _strMimeType = strMimeType;
+        _nCollId = nCollId;
     }
 
     /**
-     * Returns the Height
-     * @return The Height
+     * Returns the Name
+     * @return The Name
      */
-    public int getHeight(  )
+    public String getName(  )
     {
-        return _nHeight;
+        return _strName;
     }
 
     /**
-     * Sets the Height
-     * @param nHeight The Height
+     * Sets the Name
+     * @param strName The Name
      */
-    public void setHeight( int nHeight )
+    public void setName( String strName )
     {
-        _nHeight = nHeight;
+        _strName = strName;
     }
 
     /**
-     * Returns the Width
-     * @return The Width
+     * Returns the RecordAmount
+     * @return The RecordAmount
      */
-    public int getWidth(  )
+    public int getRecordAmount(  )
     {
-        return _nWidth;
+        return _nRecordAmount;
     }
 
     /**
-     * Sets the Width
-     * @param nWidth The Width
+     * Sets the RecordAmount
+     * @param nRecordAmount The RecordAmount
      */
-    public void setWidth( int nWidth )
+    public void setRecordAmount( int nRecordAmount )
     {
-        _nWidth = nWidth;
-    }
-
-    /**
-     * Returns the Filesize
-     * @return The Filesize
-     */
-    public int getFilesize(  )
-    {
-        return _nFilesize;
-    }
-
-    /**
-     * Sets the Filesize
-     * @param nFilesize The Filesize
-     */
-    public void setFilesize( int nFilesize )
-    {
-        _nFilesize = nFilesize;
+        _nRecordAmount = nRecordAmount;
     }
 }

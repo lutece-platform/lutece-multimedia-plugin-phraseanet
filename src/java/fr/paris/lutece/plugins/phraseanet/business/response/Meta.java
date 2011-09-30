@@ -33,13 +33,13 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.response;
 
+
 /**
  * This is the business class for the object Meta
  */
 public class Meta
 {
     // Variables declarations 
-
     private String _strApiVersion;
     private String _strRequest;
     private String _strResponseTime;
@@ -52,7 +52,7 @@ public class Meta
      * Returns the ApiVersion
      * @return The ApiVersion
      */
-    public String getApiVersion()
+    public String getApiVersion(  )
     {
         return _strApiVersion;
     }
@@ -61,7 +61,7 @@ public class Meta
      * Sets the ApiVersion
      * @param strApiVersion The ApiVersion
      */
-    public void setApiVersion(String strApiVersion)
+    public void setApiVersion( String strApiVersion )
     {
         _strApiVersion = strApiVersion;
     }
@@ -70,7 +70,7 @@ public class Meta
      * Returns the Request
      * @return The Request
      */
-    public String getRequest()
+    public String getRequest(  )
     {
         return _strRequest;
     }
@@ -79,7 +79,7 @@ public class Meta
      * Sets the Request
      * @param strRequest The Request
      */
-    public void setRequest(String strRequest)
+    public void setRequest( String strRequest )
     {
         _strRequest = strRequest;
     }
@@ -88,7 +88,7 @@ public class Meta
      * Returns the ResponseTime
      * @return The ResponseTime
      */
-    public String getResponseTime()
+    public String getResponseTime(  )
     {
         return _strResponseTime;
     }
@@ -97,7 +97,7 @@ public class Meta
      * Sets the ResponseTime
      * @param strResponseTime The ResponseTime
      */
-    public void setResponseTime(String strResponseTime)
+    public void setResponseTime( String strResponseTime )
     {
         _strResponseTime = strResponseTime;
     }
@@ -106,7 +106,7 @@ public class Meta
      * Returns the HttpCode
      * @return The HttpCode
      */
-    public int getHttpCode()
+    public int getHttpCode(  )
     {
         return _nHttpCode;
     }
@@ -115,7 +115,7 @@ public class Meta
      * Sets the HttpCode
      * @param nHttpCode The HttpCode
      */
-    public void setHttpCode(int nHttpCode)
+    public void setHttpCode( int nHttpCode )
     {
         _nHttpCode = nHttpCode;
     }
@@ -124,7 +124,7 @@ public class Meta
      * Returns the ErrorMessage
      * @return The ErrorMessage
      */
-    public String getErrorMessage()
+    public String getErrorMessage(  )
     {
         return _strErrorMessage;
     }
@@ -133,7 +133,7 @@ public class Meta
      * Sets the ErrorMessage
      * @param strErrorMessage The ErrorMessage
      */
-    public void setErrorMessage(String strErrorMessage)
+    public void setErrorMessage( String strErrorMessage )
     {
         _strErrorMessage = strErrorMessage;
     }
@@ -142,7 +142,7 @@ public class Meta
      * Returns the ErrorDetails
      * @return The ErrorDetails
      */
-    public String getErrorDetails()
+    public String getErrorDetails(  )
     {
         return _strErrorDetails;
     }
@@ -151,7 +151,7 @@ public class Meta
      * Sets the ErrorDetails
      * @param strErrorDetails The ErrorDetails
      */
-    public void setErrorDetails(String strErrorDetails)
+    public void setErrorDetails( String strErrorDetails )
     {
         _strErrorDetails = strErrorDetails;
     }
@@ -160,7 +160,7 @@ public class Meta
      * Returns the Charset
      * @return The Charset
      */
-    public String getCharset()
+    public String getCharset(  )
     {
         return _strCharset;
     }
@@ -169,7 +169,7 @@ public class Meta
      * Sets the Charset
      * @param strCharset The Charset
      */
-    public void setCharset(String strCharset)
+    public void setCharset( String strCharset )
     {
         _strCharset = strCharset;
     }

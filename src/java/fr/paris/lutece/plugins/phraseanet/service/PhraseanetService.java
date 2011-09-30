@@ -31,74 +31,85 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.phraseanet.service;
 
+import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
+import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
-import fr.paris.lutece.plugins.phraseanet.business.record.Thumbnail;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.CollectionsJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.DataboxesJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
-import fr.paris.lutece.util.url.UrlItem;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.sf.json.JSONObject;
+
+import java.text.MessageFormat;
+
+import java.util.HashMap;
+import java.util.List;
+
 
 /**
  * PhraseanetService
  */
 public class PhraseanetService
 {
-    private static final String PROPERTY_SERVER = "phraseanet.server";
-    private static final String SERVER = AppPropertiesService.getProperty(PROPERTY_SERVER);
+    public static final String PROPERTY_SERVER = "phraseanet.server";
+    private static final String SERVER = AppPropertiesService.getProperty( PROPERTY_SERVER );
     private static final String PATH_GET_RECORD = "/api/v1/records/{0}/{1}/";
     private static final String PATH_SEARCH = "/api/v1/records/search/?";
-
+    private static final String PATH_DATABOXES = "/api/v1/databoxes/list/";
+    private static final String PATH_COLLECTIONS = "/api/v1/databoxes/{0}/collections/";
     private static final String PARAMETER_QUERY = "query";
     private static final String PARAMETER_PAGE = "page";
     private static final String PARAMETER_PER_PAGE = "per_page";
-    
-    
-    public static Record getRecord( int nDataboxId, int nRecordId ) throws PhraseanetApiCallException
+
+    public static Record getRecord( int nDataboxId, int nRecordId )
+        throws PhraseanetApiCallException
     {
-        Object[] arguments = { nDataboxId , nRecordId };
-        String url = SERVER + MessageFormat.format(PATH_GET_RECORD, arguments);
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse(url);
-        JSONObject jsonRecord = jsonResponse.getJSONObject("record");
+        Object[] arguments = { nDataboxId, nRecordId };
+        String url = SERVER + MessageFormat.format( PATH_GET_RECORD, arguments );
+        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url );
+        JSONObject jsonRecord = jsonResponse.getJSONObject( "record" );
+
         return RecordJsonParser.parse( jsonRecord );
     }
-    
-    public static SearchResults search( String strQuery , int nPage , int nPerPage , SearchCriterias criterias ) throws PhraseanetApiCallException
+
+    public static SearchResults search( String strQuery, int nPage, int nPerPage, SearchCriterias criterias )
+        throws PhraseanetApiCallException
     {
-        return mokeSearch();
-  
-/*
-        UrlItem url = new UrlItem( SERVER + PATH_SEARCH );
-        url.addParameter(PARAMETER_QUERY , strQuery );
-        url.addParameter(PARAMETER_PAGE, String.valueOf(nPage));
-        url.addParameter(PARAMETER_PER_PAGE, String.valueOf(nPerPage));
+        String strUrl = SERVER + PATH_SEARCH;
+        HashMap mapParameters = new HashMap(  );
+        mapParameters.put( PARAMETER_QUERY, strQuery );
+        mapParameters.put( PARAMETER_PAGE, String.valueOf( nPage ) );
+        mapParameters.put( PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );
+
         // TODO add other criterias
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse(url.getUrl());
-        return SearchResultsJsonParser.parse(jsonResponse);
-*/  }
-    
-    public static SearchResults mokeSearch()
+        JSONObject jsonResponse = PhraseanetApiCallService.getPostResponse( strUrl, mapParameters );
+
+        return SearchResultsJsonParser.parse( jsonResponse );
+    }
+
+    public static List<Databox> getDataboxes(  ) throws PhraseanetApiCallException
     {
-        SearchResults results = new SearchResults();
-        List<Record> listRecords = new ArrayList<Record>();
-        Record record = new Record();
-        record.setRecordId( 1 );
-        record.setTitle("Titre de la video");
-        Thumbnail thumbnail = new Thumbnail();
-        thumbnail.setUrl("http://fr.lutece.paris.fr/fr/images/local/skin/screens.png");
-        record.setThumbnail(thumbnail);
-        listRecords.add(record);
-        
-        results.setResults( listRecords);
-        return results;
-        
+        String strUrl = SERVER + PATH_DATABOXES;
+        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl );
+        JSONObject jsonDataboxes = jsonResponse.getJSONObject( "databoxes" );
+
+        return DataboxesJsonParser.parse( jsonDataboxes );
+    }
+
+    public static List<Collection> getColletions( int nDataboxId )
+        throws PhraseanetApiCallException
+    {
+        Object[] arguments = { nDataboxId };
+        String strUrl = SERVER + MessageFormat.format( PATH_COLLECTIONS, arguments );
+        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl );
+
+        return CollectionsJsonParser.parse( jsonResponse );
     }
 }

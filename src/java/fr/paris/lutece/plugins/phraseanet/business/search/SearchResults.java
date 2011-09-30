@@ -30,17 +30,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */package fr.paris.lutece.plugins.phraseanet.business.search;
+ */
+package fr.paris.lutece.plugins.phraseanet.business.search;
 
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * SearchResults
  */
-public class SearchResults 
+public class SearchResults
 {
-   // Variables declarations 
+    // Variables declarations 
     private int _nTotalPages;
     private int _nCurrentPages;
     private int _nAvalaibleResults;
@@ -50,205 +52,204 @@ public class SearchResults
     private String _strQueryTime;
     private String _strSearchIndexes;
     private List _Results;
-    private 	String _Query;
+    private String _Query;
     private Map _Suggestions;
-    
-    
-       /**
-        * Returns the TotalPages
-        * @return The TotalPages
-        */ 
-    public int getTotalPages()
+
+    /**
+     * Returns the TotalPages
+     * @return The TotalPages
+     */
+    public int getTotalPages(  )
     {
         return _nTotalPages;
     }
-    
-       /**
-        * Sets the TotalPages
-        * @param nTotalPages The TotalPages
-        */ 
+
+    /**
+     * Sets the TotalPages
+     * @param nTotalPages The TotalPages
+     */
     public void setTotalPages( int nTotalPages )
     {
         _nTotalPages = nTotalPages;
     }
-    
-       /**
-        * Returns the CurrentPages
-        * @return The CurrentPages
-        */ 
-    public int getCurrentPages()
+
+    /**
+     * Returns the CurrentPages
+     * @return The CurrentPages
+     */
+    public int getCurrentPages(  )
     {
         return _nCurrentPages;
     }
-    
-       /**
-        * Sets the CurrentPages
-        * @param nCurrentPages The CurrentPages
-        */ 
+
+    /**
+     * Sets the CurrentPages
+     * @param nCurrentPages The CurrentPages
+     */
     public void setCurrentPages( int nCurrentPages )
     {
         _nCurrentPages = nCurrentPages;
     }
-    
-       /**
-        * Returns the AvalaibleResults
-        * @return The AvalaibleResults
-        */ 
-    public int getAvalaibleResults()
+
+    /**
+     * Returns the AvalaibleResults
+     * @return The AvalaibleResults
+     */
+    public int getAvalaibleResults(  )
     {
         return _nAvalaibleResults;
     }
-    
-       /**
-        * Sets the AvalaibleResults
-        * @param nAvalaibleResults The AvalaibleResults
-        */ 
+
+    /**
+     * Sets the AvalaibleResults
+     * @param nAvalaibleResults The AvalaibleResults
+     */
     public void setAvalaibleResults( int nAvalaibleResults )
     {
         _nAvalaibleResults = nAvalaibleResults;
     }
-    
-       /**
-        * Returns the TotalResults
-        * @return The TotalResults
-        */ 
-    public int getTotalResults()
+
+    /**
+     * Returns the TotalResults
+     * @return The TotalResults
+     */
+    public int getTotalResults(  )
     {
         return _nTotalResults;
     }
-    
-       /**
-        * Sets the TotalResults
-        * @param nTotalResults The TotalResults
-        */ 
+
+    /**
+     * Sets the TotalResults
+     * @param nTotalResults The TotalResults
+     */
     public void setTotalResults( int nTotalResults )
     {
         _nTotalResults = nTotalResults;
     }
-    
-       /**
-        * Returns the Error
-        * @return The Error
-        */ 
-    public String getError()
+
+    /**
+     * Returns the Error
+     * @return The Error
+     */
+    public String getError(  )
     {
         return _strError;
     }
-    
-       /**
-        * Sets the Error
-        * @param strError The Error
-        */ 
+
+    /**
+     * Sets the Error
+     * @param strError The Error
+     */
     public void setError( String strError )
     {
         _strError = strError;
     }
-    
-       /**
-        * Returns the Warning
-        * @return The Warning
-        */ 
-    public String getWarning()
+
+    /**
+     * Returns the Warning
+     * @return The Warning
+     */
+    public String getWarning(  )
     {
         return _strWarning;
     }
-    
-       /**
-        * Sets the Warning
-        * @param strWarning The Warning
-        */ 
+
+    /**
+     * Sets the Warning
+     * @param strWarning The Warning
+     */
     public void setWarning( String strWarning )
     {
         _strWarning = strWarning;
     }
-    
-       /**
-        * Returns the QueryTime
-        * @return The QueryTime
-        */ 
-    public String getQueryTime()
+
+    /**
+     * Returns the QueryTime
+     * @return The QueryTime
+     */
+    public String getQueryTime(  )
     {
         return _strQueryTime;
     }
-    
-       /**
-        * Sets the QueryTime
-        * @param strQueryTime The QueryTime
-        */ 
+
+    /**
+     * Sets the QueryTime
+     * @param strQueryTime The QueryTime
+     */
     public void setQueryTime( String strQueryTime )
     {
         _strQueryTime = strQueryTime;
     }
-    
-       /**
-        * Returns the SearchIndexes
-        * @return The SearchIndexes
-        */ 
-    public String getSearchIndexes()
+
+    /**
+     * Returns the SearchIndexes
+     * @return The SearchIndexes
+     */
+    public String getSearchIndexes(  )
     {
         return _strSearchIndexes;
     }
-    
-       /**
-        * Sets the SearchIndexes
-        * @param strSearchIndexes The SearchIndexes
-        */ 
+
+    /**
+     * Sets the SearchIndexes
+     * @param strSearchIndexes The SearchIndexes
+     */
     public void setSearchIndexes( String strSearchIndexes )
     {
         _strSearchIndexes = strSearchIndexes;
     }
-    
-       /**
-        * Returns the Results
-        * @return The Results
-        */ 
-    public List getResults()
+
+    /**
+     * Returns the Results
+     * @return The Results
+     */
+    public List getResults(  )
     {
         return _Results;
     }
-    
-       /**
-        * Sets the Results
-        * @param Results The Results
-        */ 
+
+    /**
+     * Sets the Results
+     * @param Results The Results
+     */
     public void setResults( List Results )
     {
         _Results = Results;
     }
-    
-       /**
-        * Returns the Query
-        * @return The Query
-        */ 
-    public 	String getQuery()
+
+    /**
+     * Returns the Query
+     * @return The Query
+     */
+    public String getQuery(  )
     {
         return _Query;
     }
-    
-       /**
-        * Sets the Query
-        * @param Query The Query
-        */ 
-    public void setQuery( 	String Query )
+
+    /**
+     * Sets the Query
+     * @param Query The Query
+     */
+    public void setQuery( String Query )
     {
         _Query = Query;
     }
-    
-       /**
-        * Returns the Suggestions
-        * @return The Suggestions
-        */ 
-    public Map getSuggestions()
+
+    /**
+     * Returns the Suggestions
+     * @return The Suggestions
+     */
+    public Map getSuggestions(  )
     {
         return _Suggestions;
     }
-    
-       /**
-        * Sets the Suggestions
-        * @param Suggestions The Suggestions
-        */ 
+
+    /**
+     * Sets the Suggestions
+     * @param Suggestions The Suggestions
+     */
     public void setSuggestions( Map Suggestions )
     {
         _Suggestions = Suggestions;
     }
- }
+}

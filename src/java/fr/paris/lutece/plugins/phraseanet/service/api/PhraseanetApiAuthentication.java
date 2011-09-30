@@ -33,27 +33,32 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
+
+
 /**
  * PhraseaApiAuthentication
  */
-public class PhraseanetApiAuthentication 
+public class PhraseanetApiAuthentication
 {
     private static String _strAccessToken;
 
     /**
      * @return the _strAccessToken
      */
-    public static String getAccessToken()
+    public static String getAccessToken(  )
     {
+        // FIXME temporary authentication
+        _strAccessToken = AppPropertiesService.getProperty( "phraseanet.oauthToken" );
+
         return _strAccessToken;
     }
 
     /**
      * @param strAccessToken the _strAccessToken to set
      */
-    public static void setAccessToken(String strAccessToken)
+    public static void setAccessToken( String strAccessToken )
     {
         _strAccessToken = strAccessToken;
     }
-    
 }
