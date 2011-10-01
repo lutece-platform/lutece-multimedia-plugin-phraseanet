@@ -6,6 +6,7 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -19,8 +20,8 @@ public class Utils
 {
     public String getJson( String strResource ) throws IOException
     {
-        String strResourcePath = "/jsonTestFiles/" + strResource;
-        InputStreamReader isr = new InputStreamReader( getClass(  ).getResourceAsStream( strResourcePath ) );
+        InputStream is = getClass().getResourceAsStream( "/" + strResource );
+        InputStreamReader isr = new InputStreamReader( is );
         BufferedReader in = new BufferedReader( isr );
         Writer writer = new StringWriter(  );
 
