@@ -43,8 +43,6 @@ import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -69,6 +67,11 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_HEIGHT = "height";
     private static final String MARK_SERVER = "server";
     private static final String MARK_DATABOXES = "databoxes";
+    private static final String MARK_DATABOX = "databox_selected";
+    private static final String MARK_ITEMS_PER_PAGE_VALUES = "items_per_page_values";
+    private static final String MARK_MEDIA_TYPE_VALUES = "media_type_values";
+    private static final String MARK_ITEMS_PER_PAGE = "items_per_page_selected";
+    private static final String MARK_MEDIA_TYPE = "media_type_selected";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_PROVIDER = "provider";
     private static final String PARAMETER_SELECTED_TEXT = "selected_text";
@@ -76,9 +79,17 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String PARAMETER_LINK = "link";
     private static final String PARAMETER_WIDTH = "width";
     private static final String PARAMETER_HEIGHT = "height";
+    private static final String PARAMETER_DATABOX = "databox";
+    private static final String PARAMETER_CURRENT_PAGE = "current_page";
+    private static final String PARAMETER_ITEMS_PER_PAGE = "items_per_page";
+    private static final String PARAMETER_MEDIA_TYPE = "media_type";
     private static final String PROPERTY_WIDTH = "phraseanet.videoPlayer.width";
     private static final String PROPERTY_HEIGHT = "phraseanet.videoPlayer.height";
+    private static final String PROPERTY_DATABOX_DEFAULT = "phraseanet.databoxDefault";
+    private static final String PROPERTY_ITEMS_PER_PAGE_DEFAULT = "phraseanet.itemsPerPageDefault";
+    private static final String PROPERTY_MEDIA_TYPE_DEFAULT = "phraseanet.mediaTypeDefault";
     private static final String DEFAULT_WIDTH = "260";
+    private static final String DEFAULT_HEIGHT = "180";
 
     ////////////////////////////////////////////////////////////////////////////
     // Methods
@@ -90,25 +101,41 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String getInsertServiceSelectorUI( HttpServletRequest request )
     {
-        String strSelectedText = request.getParameter( PARAMETER_SELECTED_TEXT );
-        String strInput = request.getParameter( PARAMETER_INPUT );
+        try
+        {
+            String strSelectedText = request.getParameter( PARAMETER_SELECTED_TEXT );
+            String strInput = request.getParameter( PARAMETER_INPUT );
 
-        String strDefaultPlayerWidth = AppPropertiesService.getProperty( PROPERTY_WIDTH, DEFAULT_WIDTH );
-        String strDefaultPlayerHeight = AppPropertiesService.getProperty( PROPERTY_HEIGHT, DEFAULT_WIDTH );
+            String strDefaultPlayerWidth = AppPropertiesService.getProperty( PROPERTY_WIDTH, DEFAULT_WIDTH );
+            String strDefaultPlayerHeight = AppPropertiesService.getProperty( PROPERTY_HEIGHT, DEFAULT_HEIGHT );
+            int nDefaultDatabox = AppPropertiesService.getPropertyInt( PROPERTY_DATABOX_DEFAULT, 1 );
+            String strDefaultItemsPerPage = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_DEFAULT );
+            String strDefaultMediaType = AppPropertiesService.getProperty( PROPERTY_MEDIA_TYPE_DEFAULT );
 
-        Map<String, Serializable> model = new HashMap<String, Serializable>(  );
+            Map<String, Object> model = new HashMap<String, Object>(  );
 
-        model.put( MARK_SELECTED_TEXT, strSelectedText );
-        model.put( MARK_INPUT, strInput );
-        model.put( MARK_WIDTH, strDefaultPlayerWidth );
-        model.put( MARK_HEIGHT, strDefaultPlayerHeight );
+            model.put( MARK_SELECTED_TEXT, strSelectedText );
+            model.put( MARK_INPUT, strInput );
+            model.put( MARK_WIDTH, strDefaultPlayerWidth );
+            model.put( MARK_HEIGHT, strDefaultPlayerHeight );
+            model.put( MARK_DATABOXES, PhraseanetService.getDataboxes(  ) );
+            model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
+            model.put( MARK_MEDIA_TYPE_VALUES, PhraseanetService.getMediaTypeValues(  ) );
+            model.put( MARK_DATABOX, nDefaultDatabox );
+            model.put( MARK_ITEMS_PER_PAGE, strDefaultItemsPerPage );
+            model.put( MARK_MEDIA_TYPE, strDefaultMediaType );
 
-        // Gets the locale of the user
-        Locale locale = AdminUserService.getLocale( request );
+            // Gets the locale of the user
+            Locale locale = AdminUserService.getLocale( request );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SELECTOR_PAGE, locale, model );
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SELECTOR_PAGE, locale, model );
 
-        return template.getHtml(  );
+            return template.getHtml(  );
+        }
+        catch ( PhraseanetApiCallException ex )
+        {
+            return ex.getMessage(  );
+        }
     }
 
     /**
@@ -123,9 +150,13 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         String strQuery = request.getParameter( PARAMETER_SEARCH );
         String strWidth = request.getParameter( PARAMETER_WIDTH );
         String strHeight = request.getParameter( PARAMETER_HEIGHT );
-
-        int nPage = 1;
-        int nPerPage = 10;
+        String strDatabox = request.getParameter( PARAMETER_DATABOX );
+        String strCurrentPage = request.getParameter( PARAMETER_CURRENT_PAGE );
+        String strItemsPerPage = request.getParameter( PARAMETER_ITEMS_PER_PAGE );
+        String strMediaType = request.getParameter( PARAMETER_MEDIA_TYPE );
+        int nDatabox = ( strDatabox != null ) ? Integer.parseInt( strDatabox ) : 1;
+        int nPage = ( strCurrentPage != null ) ? Integer.parseInt( strCurrentPage ) : 1;
+        int nPerPage = ( strItemsPerPage != null ) ? Integer.parseInt( strItemsPerPage ) : 10;
 
         try
         {
@@ -144,6 +175,12 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
             model.put( MARK_HEIGHT, strHeight );
 
             model.put( MARK_DATABOXES, PhraseanetService.getDataboxes(  ) );
+            model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
+            model.put( MARK_MEDIA_TYPE_VALUES, PhraseanetService.getMediaTypeValues(  ) );
+
+            model.put( MARK_DATABOX, nDatabox );
+            model.put( MARK_ITEMS_PER_PAGE, strItemsPerPage );
+            model.put( MARK_MEDIA_TYPE, strMediaType );
 
             // Gets the locale of the user
             Locale locale = AdminUserService.getLocale( request );

@@ -20,7 +20,7 @@ public class Utils
 {
     public String getJson( String strResource ) throws IOException
     {
-        InputStream is = getClass().getResourceAsStream( "/" + strResource );
+        InputStream is = getClass(  ).getResourceAsStream( "/" + strResource );
         InputStreamReader isr = new InputStreamReader( is );
         BufferedReader in = new BufferedReader( isr );
         Writer writer = new StringWriter(  );

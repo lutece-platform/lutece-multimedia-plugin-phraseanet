@@ -49,8 +49,10 @@ import net.sf.json.JSONObject;
 
 import java.text.MessageFormat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 /**
@@ -59,6 +61,8 @@ import java.util.List;
 public class PhraseanetService
 {
     public static final String PROPERTY_SERVER = "phraseanet.server";
+    private static final String PROPERTY_ITEMS_PER_PAGE_VALUES = "phraseanet.itemsPerPageValues";
+    private static final String PROPERTY_MEDIA_TYPE_VALUES = "phraseanet.mediaTypeValues";
     private static final String SERVER = AppPropertiesService.getProperty( PROPERTY_SERVER );
     private static final String PATH_GET_RECORD = "/api/v1/records/{0}/{1}/";
     private static final String PATH_SEARCH = "/api/v1/records/search/?";
@@ -67,6 +71,9 @@ public class PhraseanetService
     private static final String PARAMETER_QUERY = "query";
     private static final String PARAMETER_PAGE = "page";
     private static final String PARAMETER_PER_PAGE = "per_page";
+    private static final String DELIMITER = ",";
+    private static List<String> _listItemsPerPageValues;
+    private static List<String> _listMediaTypeValues;
 
     public static Record getRecord( int nDataboxId, int nRecordId )
         throws PhraseanetApiCallException
@@ -111,5 +118,43 @@ public class PhraseanetService
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl );
 
         return CollectionsJsonParser.parse( jsonResponse );
+    }
+
+    public static List<String> getItemsPerPageValues(  )
+    {
+        if ( _listItemsPerPageValues == null )
+        {
+            _listItemsPerPageValues = new ArrayList<String>(  );
+
+            String strItemsPerPageValues = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_VALUES );
+            StringTokenizer st = new StringTokenizer( strItemsPerPageValues, DELIMITER );
+
+            while ( st.hasMoreTokens(  ) )
+            {
+                String strValue = st.nextToken(  );
+                _listItemsPerPageValues.add( strValue.trim(  ) );
+            }
+        }
+
+        return _listItemsPerPageValues;
+    }
+
+    public static List<String> getMediaTypeValues(  )
+    {
+        if ( _listMediaTypeValues == null )
+        {
+            _listMediaTypeValues = new ArrayList<String>(  );
+
+            String strMediaTypeValues = AppPropertiesService.getProperty( PROPERTY_MEDIA_TYPE_VALUES );
+            StringTokenizer st = new StringTokenizer( strMediaTypeValues, DELIMITER );
+
+            while ( st.hasMoreTokens(  ) )
+            {
+                String strValue = st.nextToken(  );
+                _listMediaTypeValues.add( strValue.trim(  ) );
+            }
+        }
+
+        return _listMediaTypeValues;
     }
 }

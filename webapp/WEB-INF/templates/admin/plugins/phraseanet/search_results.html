@@ -7,13 +7,34 @@
         <input type="hidden" name="input" value="${input}" />
         <input type="hidden" name="width" value="${width}" />
         <input type="hidden" name="height" value="${height}" />
-        <input type="text" name="search" value="${query}" />
-        <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
-        <select name="databox">
-            <#list databoxes as databox>
-            <option value="${databox.databoxId}">${databox.name}</option>
-            </#list>
-        </select>
+        <input type="hidden" name="page" value="${results.currentPages}" />
+        <p>
+            <label for="databox" >#i18n{phraseanet.search_results.labelDatabox} : </label>
+            <select name="databox">
+                <#list databoxes as databox>
+                <option value="${databox.databoxId}" <#if databox.databoxId = databox_selected> selected </#if> >${databox.name}</option>
+                </#list>
+            </select>
+        </p>
+        <p>
+            <label for="media_type" >#i18n{phraseanet.search_results.labelMediaType} : </label>
+            <select name="media_type">
+                <#list media_type_values as mt_value>
+                <option value="${mt_value}" <#if mt_value = media_type_selected> selected </#if> /> ${mt_value}</option>
+                </#list> 
+            </select>
+        </p>
+        <p>
+            <label for="items_per_page" >#i18n{phraseanet.search_results.labelItemsPerPage} : </label>
+            <#list items_per_page_values as ipp_value>
+                <input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if>/> ${ipp_value}
+            </#list>  
+        </p>
+        <p>
+            <label for="search" >#i18n{phraseanet.search_results.labelQuery} : </label>
+            <input type="text" name="search" value="${query}" />
+            <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
+        </p>
     </form>        
     <table>
         <#list results.results as record >
