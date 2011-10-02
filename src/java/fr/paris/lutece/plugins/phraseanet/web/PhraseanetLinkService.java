@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.phraseanet.web;
 
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
+import fr.paris.lutece.plugins.phraseanet.service.SearchCriterias;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -59,6 +60,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     // Constants
     private static final String TEMPLATE_SELECTOR_PAGE = "admin/plugins/phraseanet/linkservice_selector.html";
     private static final String TEMPLATE_SEARCH_RESULTS = "admin/plugins/phraseanet/search_results.html";
+    private static final String TEMPLATE_PLAYER = "admin/plugins/phraseanet/player.html";
     private static final String MARK_SELECTED_TEXT = "selected_text";
     private static final String MARK_INPUT = "input";
     private static final String MARK_QUERY = "query";
@@ -72,6 +74,8 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_MEDIA_TYPE_VALUES = "media_type_values";
     private static final String MARK_ITEMS_PER_PAGE = "items_per_page_selected";
     private static final String MARK_MEDIA_TYPE = "media_type_selected";
+    private static final String MARK_LOCALE = "locale";
+    private static final String MARK_URL = "url";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_PROVIDER = "provider";
     private static final String PARAMETER_SELECTED_TEXT = "selected_text";
@@ -160,7 +164,10 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
         try
         {
-            SearchResults results = PhraseanetService.search( strQuery, nPage, nPerPage, null );
+            SearchCriterias criterias = new SearchCriterias(  );
+            criterias.setRecordType( strMediaType );
+
+            SearchResults results = PhraseanetService.search( strQuery, nPage, nPerPage, criterias );
 
             HashMap<String, Object> model = new HashMap<String, Object>(  );
 
@@ -211,16 +218,14 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         // Gets the locale of the user
         Locale locale = AdminUserService.getLocale( request );
 
-        /*
-                FeedProvider videoProvider = FeedsService.getInstance().getProvider(strProvider);
-                String strInsert = "no video";
+        Map model = new HashMap(  );
+        model.put( MARK_LOCALE, locale );
+        model.put( MARK_WIDTH, strWidth );
+        model.put( MARK_HEIGHT, strHeight );
+        model.put( MARK_URL, strLink );
 
-                if (videoProvider instanceof VideoProvider)
-                {
-                    strInsert = ((VideoProvider) videoProvider).getPlayerHtml(strLink, strWidth, strHeight, locale);
-                }
-        */
-        String strInsert = "video coming soon";
+        HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_PLAYER, locale, model );
+        String strInsert = t.getHtml(  );
 
         return insertUrl( request, strInput, strInsert );
     }

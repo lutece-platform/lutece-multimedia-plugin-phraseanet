@@ -33,10 +33,82 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * SearchCriterias
  */
 public class SearchCriterias
 {
+    // Variables declarations 
+    private String _strOrd;
+    private String _strSort;
+    private String _strRecordType;
+    private List<String> _listBases = new ArrayList<String>(  );
+
+    /**
+     * Returns the Ord
+     * @return The Ord
+     */
+    public String getOrd(  )
+    {
+        return _strOrd;
+    }
+
+    /**
+     * Sets the Ord
+     * @param strOrd The Ord
+     */
+    public void setOrd( String strOrd )
+    {
+        _strOrd = strOrd;
+    }
+
+    /**
+     * Returns the Sort
+     * @return The Sort
+     */
+    public String getSort(  )
+    {
+        return _strSort;
+    }
+
+    /**
+     * Sets the Sort
+     * @param strSort The Sort
+     */
+    public void setSort( String strSort )
+    {
+        _strSort = strSort;
+    }
+
+    /**
+     * Returns the RecordType
+     * @return The RecordType
+     */
+    public String getRecordType(  )
+    {
+        return _strRecordType;
+    }
+
+    /**
+     * Sets the RecordType
+     * @param strRecordType The RecordType
+     */
+    public void setRecordType( String strRecordType )
+    {
+        _strRecordType = strRecordType;
+    }
+
+    public List<String> getBases(  )
+    {
+        return _listBases;
+    }
+
+    public void addBase( String strBaseId )
+    {
+        _listBases.add( strBaseId );
+    }
 }

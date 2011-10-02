@@ -35,7 +35,22 @@
             <input type="text" name="search" value="${query}" />
             <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
         </p>
-    </form>        
+    
+       <div id="lutece-paginator">
+        <span>
+         <ul>
+             <#list 1..results.totalPages as i>
+                <#if i = results.currentPages >
+                    <li class="active"><strong>${i}</strong></li>
+                <#else>
+                <li><a href="jsp/admin/plugins/phraseanet/Search.jsp?input=html_content&page=phraseanet&width=${width}&height=${height}&databox=${databox_selected}&media_type=${media_type_selected}&items_per_page=${items_per_page_selected}&search=${query}&current_page=${i}">${i}</a></li>
+                </#if>
+              </#list>
+        </ul>
+        </span>
+
+        #i18n{phraseanet.search_results.labelResultsCount} : ${results.totalResults}
+    </div>
     <table>
         <#list results.results as record >
         <tr>
@@ -66,3 +81,4 @@
     </table>      
     
 </div>
+  

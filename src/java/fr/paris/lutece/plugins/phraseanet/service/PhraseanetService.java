@@ -71,7 +71,10 @@ public class PhraseanetService
     private static final String PARAMETER_QUERY = "query";
     private static final String PARAMETER_PAGE = "page";
     private static final String PARAMETER_PER_PAGE = "per_page";
+    private static final String PARAMETER_RECORD_TYPE = "record_type";
+    private static final String PARAMETER_BASES = "bases";
     private static final String DELIMITER = ",";
+    private static final String SEARCH_ALL = "< All >";
     private static List<String> _listItemsPerPageValues;
     private static List<String> _listMediaTypeValues;
 
@@ -94,6 +97,16 @@ public class PhraseanetService
         mapParameters.put( PARAMETER_QUERY, strQuery );
         mapParameters.put( PARAMETER_PAGE, String.valueOf( nPage ) );
         mapParameters.put( PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );
+
+        if ( ( criterias.getRecordType(  ) != null ) || !criterias.getRecordType(  ).equals( SEARCH_ALL ) )
+        {
+            mapParameters.put( PARAMETER_RECORD_TYPE, criterias.getRecordType(  ) );
+        }
+
+        for ( String strBaseId : criterias.getBases(  ) )
+        {
+            mapParameters.put( PARAMETER_BASES, strBaseId );
+        }
 
         // TODO add other criterias
         JSONObject jsonResponse = PhraseanetApiCallService.getPostResponse( strUrl, mapParameters );
@@ -147,6 +160,8 @@ public class PhraseanetService
 
             String strMediaTypeValues = AppPropertiesService.getProperty( PROPERTY_MEDIA_TYPE_VALUES );
             StringTokenizer st = new StringTokenizer( strMediaTypeValues, DELIMITER );
+
+            _listMediaTypeValues.add( SEARCH_ALL );
 
             while ( st.hasMoreTokens(  ) )
             {
