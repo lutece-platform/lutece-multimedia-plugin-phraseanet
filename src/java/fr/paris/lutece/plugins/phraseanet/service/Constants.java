@@ -31,39 +31,17 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.phraseanet.service.parsers;
-
-import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
-
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-import java.io.IOException;
+package fr.paris.lutece.plugins.phraseanet.service;
 
 
 /**
- * MetaJsonParserTest
+ * Constants
  */
-public class MetaJsonParserTest
+public final class Constants
 {
-    /**
-     * Test of parse method, of class RecordJsonParser.
-     */
-    @Test
-    public void testParse(  ) throws IOException
-    {
-        System.out.println( "parse" );
+    public static final String LOGGER = "lutece.phrasea";
 
-        String strJson = new Utils(  ).getJson( "meta.json" );
-        JSONObject jsonMeta = (JSONObject) JSONSerializer.toJSON( strJson );
-        Meta meta = MetaJsonParser.parse( jsonMeta );
-        assertEquals( meta.getApiVersion(  ), "1.0" );
-        assertEquals( meta.getRequest(  ), "GET /api/v1/feeds/288/content/" );
-        assertEquals( meta.getResponseTime(  ), "2011-07-27T15:52:04+02:00" );
-        assertEquals( meta.getHttpCode(  ), 200 );
-        assertEquals( meta.getCharset(  ), "UTF-8" );
+    private Constants(  )
+    {
     }
 }

@@ -44,8 +44,8 @@ public class SearchResults
 {
     // Variables declarations 
     private int _nTotalPages;
-    private int _nCurrentPages;
-    private int _nAvalaibleResults;
+    private int _nCurrentPage;
+    private int _nAvailableResults;
     private int _nTotalResults;
     private String _strError;
     private String _strWarning;
@@ -74,39 +74,39 @@ public class SearchResults
     }
 
     /**
-     * Returns the CurrentPages
-     * @return The CurrentPages
+     * Returns the CurrentPage
+     * @return The CurrentPage
      */
-    public int getCurrentPages(  )
+    public int getCurrentPage(  )
     {
-        return _nCurrentPages;
+        return _nCurrentPage;
     }
 
     /**
-     * Sets the CurrentPages
-     * @param nCurrentPages The CurrentPages
+     * Sets the CurrentPage
+     * @param nCurrentPage The CurrentPage
      */
-    public void setCurrentPages( int nCurrentPages )
+    public void setCurrentPage( int nCurrentPage )
     {
-        _nCurrentPages = nCurrentPages;
+        _nCurrentPage = nCurrentPage;
     }
 
     /**
-     * Returns the AvalaibleResults
-     * @return The AvalaibleResults
+     * Returns the AvailableResults
+     * @return The AvailableResults
      */
-    public int getAvalaibleResults(  )
+    public int getAvailableResults(  )
     {
-        return _nAvalaibleResults;
+        return _nAvailableResults;
     }
 
     /**
-     * Sets the AvalaibleResults
-     * @param nAvalaibleResults The AvalaibleResults
+     * Sets the AvailableResults
+     * @param nAvailableResults The AvailableResults
      */
-    public void setAvalaibleResults( int nAvalaibleResults )
+    public void setAvailableResults( int nAvailableResults )
     {
-        _nAvalaibleResults = nAvalaibleResults;
+        _nAvailableResults = nAvailableResults;
     }
 
     /**

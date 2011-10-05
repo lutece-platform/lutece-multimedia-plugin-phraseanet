@@ -7,7 +7,7 @@
         <input type="hidden" name="input" value="${input}" />
         <input type="hidden" name="width" value="${width}" />
         <input type="hidden" name="height" value="${height}" />
-        <input type="hidden" name="page" value="${results.currentPages}" />
+        <input type="hidden" name="page" value="${results.currentPage}" />
         <p>
             <label for="databox" >#i18n{phraseanet.search_results.labelDatabox} : </label>
             <select name="databox">
@@ -35,12 +35,13 @@
             <input type="text" name="search" value="${query}" />
             <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
         </p>
+    </form>
     
        <div id="lutece-paginator">
         <span>
          <ul>
              <#list 1..results.totalPages as i>
-                <#if i = results.currentPages >
+                <#if i = results.currentPage >
                     <li class="active"><strong>${i}</strong></li>
                 <#else>
                 <li><a href="jsp/admin/plugins/phraseanet/Search.jsp?input=html_content&page=phraseanet&width=${width}&height=${height}&databox=${databox_selected}&media_type=${media_type_selected}&items_per_page=${items_per_page_selected}&search=${query}&current_page=${i}">${i}</a></li>

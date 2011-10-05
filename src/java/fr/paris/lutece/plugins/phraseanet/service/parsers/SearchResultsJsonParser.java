@@ -54,8 +54,8 @@ public class SearchResultsJsonParser
     {
         SearchResults results = new SearchResults(  );
         results.setTotalPages( jsonResponse.getInt( "total_pages" ) );
-        results.setCurrentPages( jsonResponse.getInt( "current_page" ) );
-        results.setAvalaibleResults( jsonResponse.getInt( "avalaible_results" ) );
+        results.setCurrentPage( jsonResponse.getInt( "current_page" ) );
+        results.setAvailableResults( jsonResponse.getInt( "available_results" ) );
         results.setTotalResults( jsonResponse.getInt( "total_results" ) );
         results.setError( jsonResponse.getString( "error" ) );
         results.setWarning( jsonResponse.getString( "warning" ) );

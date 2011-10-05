@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.phraseanet.web;
 
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
 import fr.paris.lutece.plugins.phraseanet.service.SearchCriterias;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
@@ -43,6 +44,8 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
+
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -94,6 +97,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String PROPERTY_MEDIA_TYPE_DEFAULT = "phraseanet.mediaTypeDefault";
     private static final String DEFAULT_WIDTH = "260";
     private static final String DEFAULT_HEIGHT = "180";
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
 
     ////////////////////////////////////////////////////////////////////////////
     // Methods
@@ -209,6 +213,8 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String doInsertLink( HttpServletRequest request )
     {
+        _logger.debug( "doInsertLink" );
+
         String strLink = request.getParameter( PARAMETER_LINK );
         String strInput = request.getParameter( PARAMETER_INPUT );
         String strProvider = request.getParameter( PARAMETER_PROVIDER );
@@ -226,6 +232,8 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
         HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_PLAYER, locale, model );
         String strInsert = t.getHtml(  );
+
+        _logger.debug( "INSERT \"" + strInsert + "\"" );
 
         return insertUrl( request, strInput, strInsert );
     }

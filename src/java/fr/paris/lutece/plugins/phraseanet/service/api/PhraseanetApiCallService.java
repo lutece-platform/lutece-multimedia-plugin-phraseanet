@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.MetaJsonParser;
 import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
@@ -41,6 +42,8 @@ import fr.paris.lutece.util.url.UrlItem;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 
@@ -54,6 +57,7 @@ public class PhraseanetApiCallService
     private static final String FIELD_RESPONSE = "response";
     private static final int SUCCESS = 200;
     private static final String PARAMETER_OAUTH_TOKEN = "oauth_token";
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
 
     public static JSONObject getResponse( String strRequest )
         throws PhraseanetApiCallException
@@ -65,7 +69,8 @@ public class PhraseanetApiCallService
 
             HttpAccess httpClient = new HttpAccess(  );
             String strResponse = httpClient.doGet( url.getUrl(  ) );
-            System.out.println( strResponse ); // TODO remove me
+
+            _logger.debug( strResponse );
 
             return extractResponse( strResponse );
         }
