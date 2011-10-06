@@ -35,12 +35,14 @@ package fr.paris.lutece.plugins.phraseanet.service;
 
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
+import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.CollectionsJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.DataboxesJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.EmbedJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -68,6 +70,7 @@ public class PhraseanetService
     private static final String PATH_SEARCH = "/api/v1/records/search/?";
     private static final String PATH_DATABOXES = "/api/v1/databoxes/list/";
     private static final String PATH_COLLECTIONS = "/api/v1/databoxes/{0}/collections/";
+    private static final String PATH_EMBED = "/api/v1/records/{0}/{1}/embed/";
     private static final String PARAMETER_QUERY = "query";
     private static final String PARAMETER_PAGE = "page";
     private static final String PARAMETER_PER_PAGE = "per_page";
@@ -131,6 +134,16 @@ public class PhraseanetService
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl );
 
         return CollectionsJsonParser.parse( jsonResponse );
+    }
+    
+    public static Embed getEmbed( int nDataboxId , int nRecordId ) throws PhraseanetApiCallException
+    {
+        Object[] arguments = { nDataboxId, nRecordId };
+        String url = SERVER + MessageFormat.format( PATH_EMBED, arguments );
+        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url );
+        JSONObject jsonEmbed = jsonResponse.getJSONObject( "embed" );
+
+        return EmbedJsonParser.parse( jsonEmbed );
     }
 
     public static List<String> getItemsPerPageValues(  )

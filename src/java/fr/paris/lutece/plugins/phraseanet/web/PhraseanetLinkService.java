@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.phraseanet.web;
 
+import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
@@ -80,10 +81,9 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_URL = "url";
     private static final String PARAMETER_SEARCH = "search";
-    private static final String PARAMETER_PROVIDER = "provider";
+    private static final String PARAMETER_RECORD = "record";
     private static final String PARAMETER_SELECTED_TEXT = "selected_text";
     private static final String PARAMETER_INPUT = "input";
-    private static final String PARAMETER_LINK = "link";
     private static final String PARAMETER_WIDTH = "width";
     private static final String PARAMETER_HEIGHT = "height";
     private static final String PARAMETER_DATABOX = "databox";
@@ -211,24 +211,30 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @param request The HTTP request
      * @return The code to insert
      */
-    public String doInsertLink( HttpServletRequest request )
+    public String doInsertLink( HttpServletRequest request ) throws PhraseanetApiCallException
     {
         _logger.debug( "doInsertLink" );
 
-        String strLink = request.getParameter( PARAMETER_LINK );
+        String strDataboxId = request.getParameter( PARAMETER_DATABOX );
+        String strRecordId = request.getParameter( PARAMETER_RECORD );
         String strInput = request.getParameter( PARAMETER_INPUT );
-        String strProvider = request.getParameter( PARAMETER_PROVIDER );
         String strWidth = request.getParameter( PARAMETER_WIDTH );
         String strHeight = request.getParameter( PARAMETER_HEIGHT );
 
         // Gets the locale of the user
         Locale locale = AdminUserService.getLocale( request );
-
+        
+        int nDataboxId = Integer.parseInt(strDataboxId);
+        int nRecordId = Integer.parseInt(strRecordId);
+        
+        Embed embed = PhraseanetService.getEmbed(nDataboxId, nRecordId);
+        String strUrl = embed.getDocument().getPermalink().getURL();
+        
         Map model = new HashMap(  );
         model.put( MARK_LOCALE, locale );
         model.put( MARK_WIDTH, strWidth );
         model.put( MARK_HEIGHT, strHeight );
-        model.put( MARK_URL, strLink );
+        model.put( MARK_URL, strUrl );
 
         HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_PLAYER, locale, model );
         String strInsert = t.getHtml(  );

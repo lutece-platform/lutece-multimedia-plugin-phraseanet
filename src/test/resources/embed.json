@@ -1,0 +1,51 @@
+{
+            "preview": {
+                "permalink": {
+                    "created_on": "2011-07-19T11:27:20+02:00",
+                    "id": 8400,
+                    "is_activated": true,
+                    "label": "test018tiff",
+                    "last_modified": "2011-07-19T11:27:20+02:00",
+                    "page_URL": "http://utf8.romain/permalink/v1/test018tiff/52/4867/HoUT9J1v/preview/view/",
+                    "URL": "http://utf8.romain/permalink/v1/test018tiff/52/4867/HoUT9J1v/preview/"
+                },
+                "height": 800,
+                "width": 800,
+                "size": 57000,
+                "type": "IMAGE",
+                "mime": "image/jpeg"
+            },
+            "thumbnail": {
+                "permalink": {
+                    "created_on": "2011-07-19T11:27:21+02:00",
+                    "id": 8401,
+                    "is_activated": true,
+                    "label": "test018tiff",
+                    "last_modified": "2011-07-19T11:27:21+02:00",
+                    "page_URL": "http://utf8.romain/permalink/v1/test018tiff/52/4867/jPQIb7oQ/thumbnail/view/",
+                    "URL": "http://utf8.romain/permalink/v1/test018tiff/52/4867/jPQIb7oQ/thumbnail/"
+                },
+                "height": 200,
+                "width": 200,
+                "size": 5827,
+                "type": "IMAGE",
+                "mime": "image/jpeg"
+            },
+            "document": {
+                "permalink": {
+                    "created_on": "2011-07-15T19:10:46+02:00",
+                    "id": 7870,
+                    "is_activated": true,
+                    "label": "test018tiff",
+                    "last_modified": "2011-07-15T19:10:46+02:00",
+                    "page_URL": "http://utf8.romain/permalink/v1/test018tiff/52/4867/qxjlTACQ/document/view/",
+                    "URL": "http://utf8.romain/permalink/v1/test018tiff/52/4867/qxjlTACQ/document/"
+                },
+                "height": 1024,
+                "width": 1024,
+                "size": 3148838,
+                "type": "UNKNOWN",
+                "mime": "image/tiff"
+            }
+}
+        
