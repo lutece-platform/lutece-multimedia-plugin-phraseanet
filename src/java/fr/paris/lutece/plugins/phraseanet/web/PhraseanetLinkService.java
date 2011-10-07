@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.phraseanet.web;
 
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
+import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerHome;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
@@ -62,10 +63,11 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 {
     ////////////////////////////////////////////////////////////////////////////
     // Constants
-    private static final String TEMPLATE_SELECTOR_PAGE = "admin/plugins/phraseanet/linkservice_selector.html";
+    private static final String TEMPLATE_CHOOSE_MEDIA = "admin/plugins/phraseanet/choose_media.html";
+    private static final String TEMPLATE_SEARCH_FORM = "admin/plugins/phraseanet/search_form.html";
     private static final String TEMPLATE_SEARCH_RESULTS = "admin/plugins/phraseanet/search_results.html";
     private static final String TEMPLATE_PLAYER = "admin/plugins/phraseanet/player.html";
-    private static final String MARK_SELECTED_TEXT = "selected_text";
+    private static final String MARK_MEDIA_HANDLERS = "media_handlers_list";
     private static final String MARK_INPUT = "input";
     private static final String MARK_QUERY = "query";
     private static final String MARK_RESULTS = "results";
@@ -109,9 +111,28 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String getInsertServiceSelectorUI( HttpServletRequest request )
     {
+        return getChooseMedia( request );
+    }
+
+    public String getChooseMedia( HttpServletRequest request )
+    {
+            String strInput = request.getParameter( PARAMETER_INPUT );
+           Map<String, Object> model = new HashMap<String, Object>(  );
+           model.put( MARK_INPUT, strInput );
+           model.put( MARK_MEDIA_HANDLERS, MediaHandlerHome.findAll() );
+            // Gets the locale of the user
+            Locale locale = AdminUserService.getLocale( request );
+
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CHOOSE_MEDIA, locale, model );
+
+            return template.getHtml(  );
+        
+    }
+    
+    public String getSearchForm( HttpServletRequest request )
+    {
         try
         {
-            String strSelectedText = request.getParameter( PARAMETER_SELECTED_TEXT );
             String strInput = request.getParameter( PARAMETER_INPUT );
 
             String strDefaultPlayerWidth = AppPropertiesService.getProperty( PROPERTY_WIDTH, DEFAULT_WIDTH );
@@ -122,7 +143,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
             Map<String, Object> model = new HashMap<String, Object>(  );
 
-            model.put( MARK_SELECTED_TEXT, strSelectedText );
             model.put( MARK_INPUT, strInput );
             model.put( MARK_WIDTH, strDefaultPlayerWidth );
             model.put( MARK_HEIGHT, strDefaultPlayerHeight );
@@ -136,7 +156,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
             // Gets the locale of the user
             Locale locale = AdminUserService.getLocale( request );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SELECTOR_PAGE, locale, model );
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SEARCH_FORM, locale, model );
 
             return template.getHtml(  );
         }
@@ -145,7 +165,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
             return ex.getMessage(  );
         }
     }
-
+    
     /**
      * Gets the search page
      * @param request The HTTP request
@@ -179,7 +199,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
             model.put( MARK_RESULTS, results );
             model.put( MARK_SERVER, AppPropertiesService.getProperty( PhraseanetService.PROPERTY_SERVER ) );
 
-            model.put( MARK_SELECTED_TEXT, strSelectedText );
             model.put( MARK_INPUT, strInput );
 
             model.put( MARK_WIDTH, strWidth );

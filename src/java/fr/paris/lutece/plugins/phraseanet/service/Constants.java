@@ -39,7 +39,8 @@ package fr.paris.lutece.plugins.phraseanet.service;
  */
 public final class Constants
 {
-    public static final String LOGGER = "lutece.phrasea";
+    public static final String PLUGIN_NAME = "phraseanet";
+    public static final String LOGGER = "lutece.phraseanet";
 
     private Constants(  )
     {

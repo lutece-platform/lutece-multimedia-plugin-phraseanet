@@ -7,7 +7,9 @@ INSERT INTO phraseanet_dimension (id_dimension, dimension_name, dimension_width,
 --
 -- Dumping data for table `phraseanet_media`
 --
-INSERT INTO phraseanet_media (id_media, media_name, media_description, url_icon, insert_template) VALUES (1,'Vid�o','Vid�o',NULL,NULL);
+INSERT INTO phraseanet_media (id_media, media_name, media_description, url_icon, insert_template) VALUES (1,'Image','Vidéo','images/admin/skin/plugins/phraseanet/image_icon.png',NULL);
+INSERT INTO phraseanet_media (id_media, media_name, media_description, url_icon, insert_template) VALUES (2,'Vidéo','Insérer une vidéo','images/admin/skin/plugins/phraseanet/video_icon.png',NULL);
+INSERT INTO phraseanet_media (id_media, media_name, media_description, url_icon, insert_template) VALUES (3,'Audio','Vidéo','images/admin/skin/plugins/phraseanet/audio_icon.png',NULL);
 
 --
 -- Dumping data for table `phraseanet_media_dimension`

@@ -40,83 +40,101 @@ import java.util.List;
  */
 public class MediaHandler
 {
+
     private int _nId;
     private String _strName;
     private String _strDescription;
     private String _strIconUrl;
     private String _strInsertTemplate;
     private List<Dimension> _listDimensions;
-    
-          /**
-        * Returns the Id
-        * @return The Id
-        */ 
+
+    /**
+     * Returns the Id
+     * @return The Id
+     */
     public int getId()
     {
         return _nId;
     }
-    
-       /**
-        * Sets the Id
-        * @param nId The Id
-        */ 
-    public void setId( int nId )
+
+    /**
+     * Sets the Id
+     * @param nId The Id
+     */
+    public void setId(int nId)
     {
         _nId = nId;
     }
-    
-       /**
-        * Returns the Name
-        * @return The Name
-        */ 
+
+    /**
+     * Returns the Name
+     * @return The Name
+     */
     public String getName()
     {
         return _strName;
     }
-    
-       /**
-        * Sets the Name
-        * @param strName The Name
-        */ 
-    public void setName( String strName )
+
+    /**
+     * Sets the Name
+     * @param strName The Name
+     */
+    public void setName(String strName)
     {
         _strName = strName;
     }
-    
-       /**
-        * Returns the Description
-        * @return The Description
-        */ 
+
+    /**
+     * Returns the Description
+     * @return The Description
+     */
     public String getDescription()
     {
         return _strDescription;
     }
-    
-       /**
-        * Sets the Description
-        * @param strDescription The Description
-        */ 
-    public void setDescription( String strDescription )
+
+    /**
+     * Sets the Description
+     * @param strDescription The Description
+     */
+    public void setDescription(String strDescription)
     {
         _strDescription = strDescription;
     }
-    
-       /**
-        * Returns the IconUrl
-        * @return The IconUrl
-        */ 
+
+    /**
+     * Returns the IconUrl
+     * @return The IconUrl
+     */
     public String getIconUrl()
     {
         return _strIconUrl;
     }
-    
-       /**
-        * Sets the IconUrl
-        * @param strIconUrl The IconUrl
-        */ 
-    public void setIconUrl( String strIconUrl )
+
+    /**
+     * Sets the IconUrl
+     * @param strIconUrl The IconUrl
+     */
+    public void setIconUrl(String strIconUrl)
     {
         _strIconUrl = strIconUrl;
     }
-    
+
+    /**
+     * Returns the InsertTemplate
+     * @return The InsertTemplate
+     */
+    public String getInsertTemplate()
+    {
+        return _strInsertTemplate;
+    }
+
+    /**
+     * Sets the InsertTemplate
+     * @param strInsertTemplate The InsertTemplate
+     */
+    public void setInsertTemplate(String strInsertTemplate)
+    {
+        _strInsertTemplate = strInsertTemplate;
+    }
 }
