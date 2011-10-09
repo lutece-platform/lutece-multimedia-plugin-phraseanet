@@ -3,11 +3,11 @@
     <h2>#i18n{phraseanet.choose_media.title}</h2>
     <input type="hidden" name="input" value="${input}" />
     <ul>
-        <#list media_handlers_list as media_handler>
+        <#list media_handlers_list as mh>
         <li>
-            <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input=${input}">
-                <img src="${media_handler.iconUrl}" width="80" height="80" />
-                ${media_handler.name}
+            <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input=${input}&amp;media_handler=${mh.id}">
+                <img src="${mh.iconUrl}" width="80" height="80" />
+                ${mh.name}
             </a>
         </li>
         </#list>

@@ -84,7 +84,7 @@ public class PhraseanetService
     public static Record getRecord( int nDataboxId, int nRecordId )
         throws PhraseanetApiCallException
     {
-        Object[] arguments = { nDataboxId, nRecordId };
+        Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = SERVER + MessageFormat.format( PATH_GET_RECORD, arguments );
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url );
         JSONObject jsonRecord = jsonResponse.getJSONObject( "record" );
@@ -135,10 +135,11 @@ public class PhraseanetService
 
         return CollectionsJsonParser.parse( jsonResponse );
     }
-    
-    public static Embed getEmbed( int nDataboxId , int nRecordId ) throws PhraseanetApiCallException
+
+    public static Embed getEmbed( int nDataboxId, int nRecordId )
+        throws PhraseanetApiCallException
     {
-        Object[] arguments = { nDataboxId, nRecordId };
+        Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = SERVER + MessageFormat.format( PATH_EMBED, arguments );
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url );
         JSONObject jsonEmbed = jsonResponse.getJSONObject( "embed" );

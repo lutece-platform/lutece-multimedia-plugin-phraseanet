@@ -31,32 +31,29 @@
  *
  * License 1.0
  */
- 
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
-import java.util.List;
 
+import java.util.List;
 
 
 /**
  * This class provides instances management methods (create, find, ...) for MediaHandler objects
  */
-
 public final class MediaHandlerHome
 {
-
     // Static variable pointed at the DAO instance
-    private static IMediaHandlerDAO _dao = ( IMediaHandlerDAO ) SpringContextService.getBean( "phraseanet.mediaHandlerDAO" );
-    private static Plugin _plugin = PluginService.getPlugin(Constants.PLUGIN_NAME);
+    private static IMediaHandlerDAO _dao = (IMediaHandlerDAO) SpringContextService.getBean( 
+            "phraseanet.mediaHandlerDAO" );
+    private static Plugin _plugin = PluginService.getPlugin( Constants.PLUGIN_NAME );
 
     /**
      * Private constructor - this class need not be instantiated
      */
-
     private MediaHandlerHome(  )
     {
     }
@@ -66,64 +63,53 @@ public final class MediaHandlerHome
      * @param mediaHandler The instance of the MediaHandler which contains the informations to store
      * @return The  instance of mediaHandler which has been created with its primary key.
      */
-
     public static MediaHandler create( MediaHandler mediaHandler )
     {
-        _dao.insert( mediaHandler , _plugin );
+        _dao.insert( mediaHandler, _plugin );
 
         return mediaHandler;
     }
-
 
     /**
      * Update of the mediaHandler data specified in parameter
      * @param mediaHandler The instance of the MediaHandler which contains the data to store
      * @return The instance of the  mediaHandler which has been updated
      */
-
     public static MediaHandler update( MediaHandler mediaHandler )
     {
-        _dao.store( mediaHandler , _plugin );
+        _dao.store( mediaHandler, _plugin );
 
         return mediaHandler;
     }
-
 
     /**
      * Remove the mediaHandler whose identifier is specified in parameter
      * @param nMediaHandlerId The mediaHandler Id
      */
-
-
     public static void remove( int nMediaHandlerId )
     {
-        _dao.delete( nMediaHandlerId , _plugin );
+        _dao.delete( nMediaHandlerId, _plugin );
     }
-
 
     ///////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
-     * Returns an instance of a mediaHandler whose identifier is specified in parameter   
+     * Returns an instance of a mediaHandler whose identifier is specified in parameter
      * @param nKey The mediaHandler primary key
      * @return an instance of MediaHandler
      */
-
     public static MediaHandler findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey , _plugin );
+        return _dao.load( nKey, _plugin );
     }
-
 
     /**
      * Load the data of all the mediaHandler objects and returns them in form of a collection
      * @return the list which contains the data of all the mediaHandler objects
      */
-
-    public static List<MediaHandler> findAll()
+    public static List<MediaHandler> findAll(  )
     {
         return _dao.selectMediaHandlersList( _plugin );
     }
-
 }

@@ -31,32 +31,29 @@
  *
  * License 1.0
  */
- 
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+
 import java.util.List;
+
 
 /**
  * This class provides instances management methods (create, find, ...) for Dimension objects
  */
-
 public final class DimensionHome
 {
-
     // Static variable pointed at the DAO instance
 
-//    private static IDimensionDAO _dao = ( IDimensionDAO ) SpringContextService.getPluginBean( "phraseanet" , "phraseanet.dimensionDAO" );
-
-    private static IDimensionDAO _dao = new DimensionDAO();
-    private static Plugin _plugin = PluginService.getPlugin("phraseanet");
+    //    private static IDimensionDAO _dao = ( IDimensionDAO ) SpringContextService.getPluginBean( "phraseanet" , "phraseanet.dimensionDAO" );
+    private static IDimensionDAO _dao = new DimensionDAO(  );
+    private static Plugin _plugin = PluginService.getPlugin( "phraseanet" );
 
     /**
      * Private constructor - this class need not be instantiated
      */
-
     private DimensionHome(  )
     {
     }
@@ -66,7 +63,6 @@ public final class DimensionHome
      * @param dimension The instance of the Dimension which contains the informations to store
      * @return The  instance of dimension which has been created with its primary key.
      */
-
     public static Dimension create( Dimension dimension )
     {
         _dao.insert( dimension, _plugin );
@@ -74,13 +70,11 @@ public final class DimensionHome
         return dimension;
     }
 
-
     /**
      * Update of the dimension which is specified in parameter
      * @param dimension The instance of the Dimension which contains the data to store
      * @return The instance of the  dimension which has been updated
      */
-
     public static Dimension update( Dimension dimension )
     {
         _dao.store( dimension, _plugin );
@@ -88,18 +82,14 @@ public final class DimensionHome
         return dimension;
     }
 
-
     /**
      * Remove the dimension whose identifier is specified in parameter
      * @param nDimensionId The dimension Id
      */
-
-
     public static void remove( int nDimensionId )
     {
         _dao.delete( nDimensionId, _plugin );
     }
-
 
     ///////////////////////////////////////////////////////////////////////////
     // Finders
@@ -109,21 +99,17 @@ public final class DimensionHome
      * @param nKey The dimension primary key
      * @return an instance of Dimension
      */
-
     public static Dimension findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey, _plugin);
+        return _dao.load( nKey, _plugin );
     }
-
 
     /**
      * Load the data of all the dimension objects and returns them in form of a list
      * @return the list which contains the data of all the dimension objects
      */
-
-    public static List<Dimension> getDimensionsList()
+    public static List<Dimension> getDimensionsList(  )
     {
         return _dao.selectDimensionsList( _plugin );
     }
-
 }

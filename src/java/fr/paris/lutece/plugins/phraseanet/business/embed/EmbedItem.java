@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.embed;
 
+
 /**
  * Embed Item
  */
@@ -45,113 +46,112 @@ public class EmbedItem
     private int _nSize;
     private String _strType;
     private String _strMime;
-    
-    
-       /**
-        * Returns the Permalink
-        * @return The Permalink
-        */ 
-    public Permalink getPermalink()
+
+    /**
+     * Returns the Permalink
+     * @return The Permalink
+     */
+    public Permalink getPermalink(  )
     {
         return _permalink;
     }
-    
-       /**
-        * Sets the Permalink
-        * @param permalink The Permalink
-        */ 
+
+    /**
+     * Sets the Permalink
+     * @param permalink The Permalink
+     */
     public void setPermalink( Permalink permalink )
     {
         _permalink = permalink;
     }
-    
-       /**
-        * Returns the Height
-        * @return The Height
-        */ 
-    public int getHeight()
+
+    /**
+     * Returns the Height
+     * @return The Height
+     */
+    public int getHeight(  )
     {
         return _nHeight;
     }
-    
-       /**
-        * Sets the Height
-        * @param nHeight The Height
-        */ 
+
+    /**
+     * Sets the Height
+     * @param nHeight The Height
+     */
     public void setHeight( int nHeight )
     {
         _nHeight = nHeight;
     }
-    
-       /**
-        * Returns the Width
-        * @return The Width
-        */ 
-    public int getWidth()
+
+    /**
+     * Returns the Width
+     * @return The Width
+     */
+    public int getWidth(  )
     {
         return _nWidth;
     }
-    
-       /**
-        * Sets the Width
-        * @param nWidth The Width
-        */ 
+
+    /**
+     * Sets the Width
+     * @param nWidth The Width
+     */
     public void setWidth( int nWidth )
     {
         _nWidth = nWidth;
     }
-    
-       /**
-        * Returns the Size
-        * @return The Size
-        */ 
-    public int getSize()
+
+    /**
+     * Returns the Size
+     * @return The Size
+     */
+    public int getSize(  )
     {
         return _nSize;
     }
-    
-       /**
-        * Sets the Size
-        * @param nSize The Size
-        */ 
+
+    /**
+     * Sets the Size
+     * @param nSize The Size
+     */
     public void setSize( int nSize )
     {
         _nSize = nSize;
     }
-    
-       /**
-        * Returns the Type
-        * @return The Type
-        */ 
-    public String getType()
+
+    /**
+     * Returns the Type
+     * @return The Type
+     */
+    public String getType(  )
     {
         return _strType;
     }
-    
-       /**
-        * Sets the Type
-        * @param strType The Type
-        */ 
+
+    /**
+     * Sets the Type
+     * @param strType The Type
+     */
     public void setType( String strType )
     {
         _strType = strType;
     }
-    
-       /**
-        * Returns the Mime
-        * @return The Mime
-        */ 
-    public String getMime()
+
+    /**
+     * Returns the Mime
+     * @return The Mime
+     */
+    public String getMime(  )
     {
         return _strMime;
     }
-    
-       /**
-        * Sets the Mime
-        * @param strMime The Mime
-        */ 
+
+    /**
+     * Sets the Mime
+     * @param strMime The Mime
+     */
     public void setMime( String strMime )
     {
         _strMime = strMime;
-    }    
+    }
 }

@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.phraseanet.web;
 
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
+import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandler;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerHome;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
@@ -66,39 +67,26 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String TEMPLATE_CHOOSE_MEDIA = "admin/plugins/phraseanet/choose_media.html";
     private static final String TEMPLATE_SEARCH_FORM = "admin/plugins/phraseanet/search_form.html";
     private static final String TEMPLATE_SEARCH_RESULTS = "admin/plugins/phraseanet/search_results.html";
-    private static final String TEMPLATE_PLAYER = "admin/plugins/phraseanet/player.html";
     private static final String MARK_MEDIA_HANDLERS = "media_handlers_list";
+    private static final String MARK_MEDIA_HANDLER = "media_handler";
     private static final String MARK_INPUT = "input";
     private static final String MARK_QUERY = "query";
     private static final String MARK_RESULTS = "results";
     private static final String MARK_WIDTH = "width";
     private static final String MARK_HEIGHT = "height";
     private static final String MARK_SERVER = "server";
-    private static final String MARK_DATABOXES = "databoxes";
-    private static final String MARK_DATABOX = "databox_selected";
     private static final String MARK_ITEMS_PER_PAGE_VALUES = "items_per_page_values";
-    private static final String MARK_MEDIA_TYPE_VALUES = "media_type_values";
     private static final String MARK_ITEMS_PER_PAGE = "items_per_page_selected";
-    private static final String MARK_MEDIA_TYPE = "media_type_selected";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_URL = "url";
-    private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_RECORD = "record";
-    private static final String PARAMETER_SELECTED_TEXT = "selected_text";
+    private static final String PARAMETER_SEARCH = "search";
+    private static final String PARAMETER_MEDIA_HANDLER = "media_handler";
     private static final String PARAMETER_INPUT = "input";
-    private static final String PARAMETER_WIDTH = "width";
-    private static final String PARAMETER_HEIGHT = "height";
     private static final String PARAMETER_DATABOX = "databox";
     private static final String PARAMETER_CURRENT_PAGE = "current_page";
     private static final String PARAMETER_ITEMS_PER_PAGE = "items_per_page";
-    private static final String PARAMETER_MEDIA_TYPE = "media_type";
-    private static final String PROPERTY_WIDTH = "phraseanet.videoPlayer.width";
-    private static final String PROPERTY_HEIGHT = "phraseanet.videoPlayer.height";
-    private static final String PROPERTY_DATABOX_DEFAULT = "phraseanet.databoxDefault";
     private static final String PROPERTY_ITEMS_PER_PAGE_DEFAULT = "phraseanet.itemsPerPageDefault";
-    private static final String PROPERTY_MEDIA_TYPE_DEFAULT = "phraseanet.mediaTypeDefault";
-    private static final String DEFAULT_WIDTH = "260";
-    private static final String DEFAULT_HEIGHT = "180";
     private static Logger _logger = Logger.getLogger( Constants.LOGGER );
 
     ////////////////////////////////////////////////////////////////////////////
@@ -116,56 +104,43 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
     public String getChooseMedia( HttpServletRequest request )
     {
-            String strInput = request.getParameter( PARAMETER_INPUT );
-           Map<String, Object> model = new HashMap<String, Object>(  );
-           model.put( MARK_INPUT, strInput );
-           model.put( MARK_MEDIA_HANDLERS, MediaHandlerHome.findAll() );
-            // Gets the locale of the user
-            Locale locale = AdminUserService.getLocale( request );
+        String strInput = request.getParameter( PARAMETER_INPUT );
+        Map<String, Object> model = new HashMap<String, Object>(  );
+        model.put( MARK_INPUT, strInput );
+        model.put( MARK_MEDIA_HANDLERS, MediaHandlerHome.findAll(  ) );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CHOOSE_MEDIA, locale, model );
+        // Gets the locale of the user
+        Locale locale = AdminUserService.getLocale( request );
 
-            return template.getHtml(  );
-        
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CHOOSE_MEDIA, locale, model );
+
+        return template.getHtml(  );
     }
-    
+
     public String getSearchForm( HttpServletRequest request )
     {
-        try
-        {
-            String strInput = request.getParameter( PARAMETER_INPUT );
+        String strInput = request.getParameter( PARAMETER_INPUT );
+        String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
 
-            String strDefaultPlayerWidth = AppPropertiesService.getProperty( PROPERTY_WIDTH, DEFAULT_WIDTH );
-            String strDefaultPlayerHeight = AppPropertiesService.getProperty( PROPERTY_HEIGHT, DEFAULT_HEIGHT );
-            int nDefaultDatabox = AppPropertiesService.getPropertyInt( PROPERTY_DATABOX_DEFAULT, 1 );
-            String strDefaultItemsPerPage = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_DEFAULT );
-            String strDefaultMediaType = AppPropertiesService.getProperty( PROPERTY_MEDIA_TYPE_DEFAULT );
+        int nMediaHandlerId = Integer.parseInt( strMediaHandler );
+        MediaHandler mh = MediaHandlerHome.findByPrimaryKey( nMediaHandlerId );
+        String strDefaultItemsPerPage = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_DEFAULT );
 
-            Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
 
-            model.put( MARK_INPUT, strInput );
-            model.put( MARK_WIDTH, strDefaultPlayerWidth );
-            model.put( MARK_HEIGHT, strDefaultPlayerHeight );
-            model.put( MARK_DATABOXES, PhraseanetService.getDataboxes(  ) );
-            model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
-            model.put( MARK_MEDIA_TYPE_VALUES, PhraseanetService.getMediaTypeValues(  ) );
-            model.put( MARK_DATABOX, nDefaultDatabox );
-            model.put( MARK_ITEMS_PER_PAGE, strDefaultItemsPerPage );
-            model.put( MARK_MEDIA_TYPE, strDefaultMediaType );
+        model.put( MARK_INPUT, strInput );
+        model.put( MARK_MEDIA_HANDLER, strMediaHandler );
+        model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
+        model.put( MARK_ITEMS_PER_PAGE, strDefaultItemsPerPage );
 
-            // Gets the locale of the user
-            Locale locale = AdminUserService.getLocale( request );
+        // Gets the locale of the user
+        Locale locale = AdminUserService.getLocale( request );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SEARCH_FORM, locale, model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SEARCH_FORM, locale, model );
 
-            return template.getHtml(  );
-        }
-        catch ( PhraseanetApiCallException ex )
-        {
-            return ex.getMessage(  );
-        }
+        return template.getHtml(  );
     }
-    
+
     /**
      * Gets the search page
      * @param request The HTTP request
@@ -173,44 +148,35 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String getSearch( HttpServletRequest request )
     {
-        String strSelectedText = request.getParameter( PARAMETER_SELECTED_TEXT );
         String strInput = request.getParameter( PARAMETER_INPUT );
+        String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
         String strQuery = request.getParameter( PARAMETER_SEARCH );
-        String strWidth = request.getParameter( PARAMETER_WIDTH );
-        String strHeight = request.getParameter( PARAMETER_HEIGHT );
-        String strDatabox = request.getParameter( PARAMETER_DATABOX );
         String strCurrentPage = request.getParameter( PARAMETER_CURRENT_PAGE );
         String strItemsPerPage = request.getParameter( PARAMETER_ITEMS_PER_PAGE );
-        String strMediaType = request.getParameter( PARAMETER_MEDIA_TYPE );
-        int nDatabox = ( strDatabox != null ) ? Integer.parseInt( strDatabox ) : 1;
+
+        int nMediaHandlerId = Integer.parseInt( strMediaHandler );
+        MediaHandler mh = MediaHandlerHome.findByPrimaryKey( nMediaHandlerId );
         int nPage = ( strCurrentPage != null ) ? Integer.parseInt( strCurrentPage ) : 1;
         int nPerPage = ( strItemsPerPage != null ) ? Integer.parseInt( strItemsPerPage ) : 10;
 
         try
         {
             SearchCriterias criterias = new SearchCriterias(  );
-            criterias.setRecordType( strMediaType );
+            criterias.setRecordType( mh.getMediaType(  ) );
 
             SearchResults results = PhraseanetService.search( strQuery, nPage, nPerPage, criterias );
 
             HashMap<String, Object> model = new HashMap<String, Object>(  );
 
+            model.put( MARK_INPUT, strInput );
+            model.put( MARK_MEDIA_HANDLER, strMediaHandler );
+
             model.put( MARK_QUERY, ( strQuery != null ) ? strQuery : "" );
             model.put( MARK_RESULTS, results );
             model.put( MARK_SERVER, AppPropertiesService.getProperty( PhraseanetService.PROPERTY_SERVER ) );
 
-            model.put( MARK_INPUT, strInput );
-
-            model.put( MARK_WIDTH, strWidth );
-            model.put( MARK_HEIGHT, strHeight );
-
-            model.put( MARK_DATABOXES, PhraseanetService.getDataboxes(  ) );
             model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
-            model.put( MARK_MEDIA_TYPE_VALUES, PhraseanetService.getMediaTypeValues(  ) );
-
-            model.put( MARK_DATABOX, nDatabox );
             model.put( MARK_ITEMS_PER_PAGE, strItemsPerPage );
-            model.put( MARK_MEDIA_TYPE, strMediaType );
 
             // Gets the locale of the user
             Locale locale = AdminUserService.getLocale( request );
@@ -230,32 +196,34 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @param request The HTTP request
      * @return The code to insert
      */
-    public String doInsertLink( HttpServletRequest request ) throws PhraseanetApiCallException
+    public String doInsertLink( HttpServletRequest request )
+        throws PhraseanetApiCallException
     {
         _logger.debug( "doInsertLink" );
 
-        String strDataboxId = request.getParameter( PARAMETER_DATABOX );
-        String strRecordId = request.getParameter( PARAMETER_RECORD );
         String strInput = request.getParameter( PARAMETER_INPUT );
-        String strWidth = request.getParameter( PARAMETER_WIDTH );
-        String strHeight = request.getParameter( PARAMETER_HEIGHT );
+        String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
+        String strRecordId = request.getParameter( PARAMETER_RECORD );
+        String strDataboxId = request.getParameter( PARAMETER_DATABOX );
 
         // Gets the locale of the user
         Locale locale = AdminUserService.getLocale( request );
-        
-        int nDataboxId = Integer.parseInt(strDataboxId);
-        int nRecordId = Integer.parseInt(strRecordId);
-        
-        Embed embed = PhraseanetService.getEmbed(nDataboxId, nRecordId);
-        String strUrl = embed.getDocument().getPermalink().getURL();
-        
+
+        int nMediaHandlerId = Integer.parseInt( strMediaHandler );
+        MediaHandler mh = MediaHandlerHome.findByPrimaryKey( nMediaHandlerId );
+        int nRecordId = Integer.parseInt( strRecordId );
+        int nDataboxId = Integer.parseInt( strDataboxId );
+
+        Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId );
+        String strUrl = embed.getDocument(  ).getPermalink(  ).getURL(  );
+
         Map model = new HashMap(  );
         model.put( MARK_LOCALE, locale );
-        model.put( MARK_WIDTH, strWidth );
-        model.put( MARK_HEIGHT, strHeight );
+        model.put( MARK_WIDTH, mh.getDefaultWidth(  ) );
+        model.put( MARK_HEIGHT, mh.getDefaultHeight(  ) );
         model.put( MARK_URL, strUrl );
 
-        HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_PLAYER, locale, model );
+        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
         String strInsert = t.getHtml(  );
 
         _logger.debug( "INSERT \"" + strInsert + "\"" );

@@ -62,8 +62,8 @@ public class EmbedJsonParserTest
         String strJson = new Utils(  ).getJson( "embed.json" );
         JSONObject jsonEmbed = (JSONObject) JSONSerializer.toJSON( strJson );
         Embed embed = EmbedJsonParser.parse( jsonEmbed );
-        EmbedItem document = embed.getDocument();
-        assertEquals( document.getWidth() , 1024 );
-        assertEquals( document.getHeight() , 1024 );
+        EmbedItem document = embed.getDocument(  );
+        assertEquals( document.getWidth(  ), 1024 );
+        assertEquals( document.getHeight(  ), 1024 );
     }
 }

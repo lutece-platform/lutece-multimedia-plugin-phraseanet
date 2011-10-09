@@ -31,10 +31,10 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.test.LuteceTestCase;
+
 
 public class DimensionTest extends LuteceTestCase
 {
@@ -50,7 +50,7 @@ public class DimensionTest extends LuteceTestCase
     public void testBusiness(  )
     {
         // Initialize an object
-        Dimension dimension = new Dimension();
+        Dimension dimension = new Dimension(  );
         dimension.setId( ID1 );
         dimension.setName( NAME1 );
         dimension.setWidth( WIDTH1 );
@@ -58,11 +58,12 @@ public class DimensionTest extends LuteceTestCase
 
         // Create test
         DimensionHome.create( dimension );
-        Dimension dimensionStored = DimensionHome.findByPrimaryKey( dimension.getId() );
-        assertEquals( dimensionStored.getId() , dimension.getId() );
-        assertEquals( dimensionStored.getName() , dimension.getName() );
-        assertEquals( dimensionStored.getWidth() , dimension.getWidth() );
-        assertEquals( dimensionStored.getHeight() , dimension.getHeight() );
+
+        Dimension dimensionStored = DimensionHome.findByPrimaryKey( dimension.getId(  ) );
+        assertEquals( dimensionStored.getId(  ), dimension.getId(  ) );
+        assertEquals( dimensionStored.getName(  ), dimension.getName(  ) );
+        assertEquals( dimensionStored.getWidth(  ), dimension.getWidth(  ) );
+        assertEquals( dimensionStored.getHeight(  ), dimension.getHeight(  ) );
 
         // Update test
         dimension.setId( ID2 );
@@ -70,20 +71,18 @@ public class DimensionTest extends LuteceTestCase
         dimension.setWidth( WIDTH2 );
         dimension.setHeight( HEIGHT2 );
         DimensionHome.update( dimension );
-        dimensionStored = DimensionHome.findByPrimaryKey( dimension.getId() );
-        assertEquals( dimensionStored.getId() , dimension.getId() );
-        assertEquals( dimensionStored.getName() , dimension.getName() );
-        assertEquals( dimensionStored.getWidth() , dimension.getWidth() );
-        assertEquals( dimensionStored.getHeight() , dimension.getHeight() );
+        dimensionStored = DimensionHome.findByPrimaryKey( dimension.getId(  ) );
+        assertEquals( dimensionStored.getId(  ), dimension.getId(  ) );
+        assertEquals( dimensionStored.getName(  ), dimension.getName(  ) );
+        assertEquals( dimensionStored.getWidth(  ), dimension.getWidth(  ) );
+        assertEquals( dimensionStored.getHeight(  ), dimension.getHeight(  ) );
 
         // List test
-//        DimensionHome.findAll();
-        
-        // Delete test
-        DimensionHome.remove( dimension.getId() );
-        dimensionStored = DimensionHome.findByPrimaryKey( dimension.getId() );
-        assertNull( dimensionStored );
-        
-    }
+        //        DimensionHome.findAll();
 
+        // Delete test
+        DimensionHome.remove( dimension.getId(  ) );
+        dimensionStored = DimensionHome.findByPrimaryKey( dimension.getId(  ) );
+        assertNull( dimensionStored );
+    }
 }

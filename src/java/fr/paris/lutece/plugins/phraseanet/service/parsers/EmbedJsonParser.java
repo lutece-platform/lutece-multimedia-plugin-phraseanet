@@ -48,37 +48,38 @@ public class EmbedJsonParser
     public static Embed parse( JSONObject jsonEmbed )
     {
         Embed embed = new Embed(  );
-        
-        embed.setPreview( getEmbedItem( jsonEmbed.getJSONObject("preview")));
-        embed.setThumbnail( getEmbedItem( jsonEmbed.getJSONObject("thumbnail")));
-        embed.setDocument( getEmbedItem( jsonEmbed.getJSONObject("document")));
+
+        embed.setPreview( getEmbedItem( jsonEmbed.getJSONObject( "preview" ) ) );
+        embed.setThumbnail( getEmbedItem( jsonEmbed.getJSONObject( "thumbnail" ) ) );
+        embed.setDocument( getEmbedItem( jsonEmbed.getJSONObject( "document" ) ) );
 
         return embed;
     }
 
-    private static EmbedItem getEmbedItem(JSONObject jsonEmbedItem)
+    private static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )
     {
-        EmbedItem ei = new EmbedItem();
-        ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject("permalink") ));
-        ei.setWidth( jsonEmbedItem.getInt("width"));
-        ei.setHeight( jsonEmbedItem.getInt("height"));
-        ei.setSize( jsonEmbedItem.getInt("size"));
-        ei.setType( jsonEmbedItem.getString("type"));
-        ei.setMime( jsonEmbedItem.getString("mime"));
-        return ei;
+        EmbedItem ei = new EmbedItem(  );
+        ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject( "permalink" ) ) );
+        ei.setWidth( jsonEmbedItem.getInt( "width" ) );
+        ei.setHeight( jsonEmbedItem.getInt( "height" ) );
+        ei.setSize( jsonEmbedItem.getInt( "size" ) );
+        ei.setType( jsonEmbedItem.getString( "type" ) );
+        ei.setMime( jsonEmbedItem.getString( "mime" ) );
 
+        return ei;
     }
 
-    private static Permalink getPermalink(JSONObject jsonPermalink )
+    private static Permalink getPermalink( JSONObject jsonPermalink )
     {
-        Permalink p = new Permalink();
-        p.setId( jsonPermalink.getInt("id"));
-        p.setCreatedOn( jsonPermalink.getString("created_on"));
-        p.setLastModified( jsonPermalink.getString("last_modified"));
-        p.setIsActivated( jsonPermalink.getBoolean("is_activated"));
-        p.setLabel( jsonPermalink.getString("label"));
-        p.setPageURL( jsonPermalink.getString("page_URL"));
-        p.setURL( jsonPermalink.getString("URL"));
+        Permalink p = new Permalink(  );
+        p.setId( jsonPermalink.getInt( "id" ) );
+        p.setCreatedOn( jsonPermalink.getString( "created_on" ) );
+        p.setLastModified( jsonPermalink.getString( "last_modified" ) );
+        p.setIsActivated( jsonPermalink.getBoolean( "is_activated" ) );
+        p.setLabel( jsonPermalink.getString( "label" ) );
+        p.setPageURL( jsonPermalink.getString( "page_URL" ) );
+        p.setURL( jsonPermalink.getString( "URL" ) );
+
         return p;
     }
 }

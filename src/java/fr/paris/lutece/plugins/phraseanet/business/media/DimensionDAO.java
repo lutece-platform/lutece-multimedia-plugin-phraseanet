@@ -31,8 +31,6 @@
  *
  * License 1.0
  */
-
-
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -45,165 +43,146 @@ import java.util.List;
 /**
  * This class provides Data Access methods for Dimension objects
  */
-
 public final class DimensionDAO implements IDimensionDAO
 {
-	
-	// Constants
-	
-	private static final String SQL_QUERY_NEW_PK = "SELECT max( id ) FROM phraseanet_dimension";
-	private static final String SQL_QUERY_SELECT = "SELECT id_dimension, dimension_name, dimension_width, dimension_height FROM phraseanet_dimension WHERE id_dimension = ?";
-	private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_dimension ( id_dimension, dimension_name, dimension_width, dimension_height ) VALUES ( ?, ?, ?, ? ) ";
-	private static final String SQL_QUERY_DELETE = "DELETE FROM phraseanet_dimension WHERE id_dimension = ? ";
-	private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_dimension SET id_dimension = ?, dimension_name = ?, dimension_width = ?, dimension_height = ? WHERE id_dimension = ?";
-	private static final String SQL_QUERY_SELECTALL = "SELECT id_dimension, dimension_name, dimension_width, dimension_height FROM phraseanet_dimension";
+    // Constants
+    private static final String SQL_QUERY_NEW_PK = "SELECT max( id ) FROM phraseanet_dimension";
+    private static final String SQL_QUERY_SELECT = "SELECT id_dimension, dimension_name, dimension_width, dimension_height FROM phraseanet_dimension WHERE id_dimension = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_dimension ( id_dimension, dimension_name, dimension_width, dimension_height ) VALUES ( ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM phraseanet_dimension WHERE id_dimension = ? ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_dimension SET id_dimension = ?, dimension_name = ?, dimension_width = ?, dimension_height = ? WHERE id_dimension = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_dimension, dimension_name, dimension_width, dimension_height FROM phraseanet_dimension";
 
+    /**
+     * Generates a new primary key
+     * @param plugin The Plugin
+     * @return The new primary key
+     */
+    public int newPrimaryKey( Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
+        daoUtil.executeQuery(  );
 
-	
-	/**
-	 * Generates a new primary key
-         * @param plugin The Plugin
-	 * @return The new primary key
-	 */
-    
-	public int newPrimaryKey( Plugin plugin)
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK , plugin  );
-		daoUtil.executeQuery();
+        int nKey;
 
-		int nKey;
+        if ( !daoUtil.next(  ) )
+        {
+            // if the table is empty
+            nKey = 1;
+        }
 
-		if( !daoUtil.next() )
-		{
-			// if the table is empty
-			nKey = 1;
-		}
+        nKey = daoUtil.getInt( 1 ) + 1;
+        daoUtil.free(  );
 
-		nKey = daoUtil.getInt( 1 ) + 1;
-		daoUtil.free();
+        return nKey;
+    }
 
-		return nKey;
-	}
+    /**
+     * Insert a new record in the table.
+     * @param dimension instance of the Dimension object to insert
+     * @param plugin The plugin
+     */
+    public void insert( Dimension dimension, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
+        dimension.setId( newPrimaryKey( plugin ) );
 
+        daoUtil.setInt( 1, dimension.getId(  ) );
+        daoUtil.setString( 2, dimension.getName(  ) );
+        daoUtil.setInt( 3, dimension.getWidth(  ) );
+        daoUtil.setInt( 4, dimension.getHeight(  ) );
 
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
 
-	/**
-	 * Insert a new record in the table.
-	 * @param dimension instance of the Dimension object to insert
-         * @param plugin The plugin
-	 */
+    /**
+     * Load the data of the dimension from the table
+     * @param nId The identifier of the dimension
+     * @param plugin The plugin
+     * @return the instance of the Dimension
+     */
+    public Dimension load( int nId, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        daoUtil.setInt( 1, nId );
+        daoUtil.executeQuery(  );
 
-	public void insert( Dimension dimension, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT , plugin );
-                
-		dimension.setId( newPrimaryKey( plugin ) );
-                
-                daoUtil.setInt ( 1, dimension.getId ( ) );
-                daoUtil.setString ( 2, dimension.getName ( ) );
-                daoUtil.setInt ( 3, dimension.getWidth ( ) );
-                daoUtil.setInt ( 4, dimension.getHeight ( ) );
+        Dimension dimension = null;
 
-		daoUtil.executeUpdate();
-		daoUtil.free();
-	}
+        if ( daoUtil.next(  ) )
+        {
+            dimension = new Dimension(  );
 
+            dimension.setId( daoUtil.getInt( 1 ) );
+            dimension.setName( daoUtil.getString( 2 ) );
+            dimension.setWidth( daoUtil.getInt( 3 ) );
+            dimension.setHeight( daoUtil.getInt( 4 ) );
+        }
 
-	/**
-	 * Load the data of the dimension from the table
-	 * @param nId The identifier of the dimension
-         * @param plugin The plugin
-	 * @return the instance of the Dimension
-	 */
+        daoUtil.free(  );
 
+        return dimension;
+    }
 
-        public Dimension load( int nId, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT , plugin );
-		daoUtil.setInt( 1 , nId );
-		daoUtil.executeQuery();
+    /**
+     * Delete a record from the table
+     * @param nDimensionId The identifier of the dimension
+     * @param plugin The plugin
+     */
+    public void delete( int nDimensionId, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
+        daoUtil.setInt( 1, nDimensionId );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
 
-		Dimension dimension = null;
+    /**
+     * Update the record in the table
+     * @param dimension The reference of the dimension
+     * @param plugin The plugin
+     */
+    public void store( Dimension dimension, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-		if ( daoUtil.next() )
-		{
-			dimension = new Dimension();
+        daoUtil.setInt( 1, dimension.getId(  ) );
+        daoUtil.setString( 2, dimension.getName(  ) );
+        daoUtil.setInt( 3, dimension.getWidth(  ) );
+        daoUtil.setInt( 4, dimension.getHeight(  ) );
+        daoUtil.setInt( 5, dimension.getId(  ) );
 
-                        dimension.setId( daoUtil.getInt(  1 ) );
-                        dimension.setName( daoUtil.getString(  2 ) );
-                        dimension.setWidth( daoUtil.getInt(  3 ) );
-                        dimension.setHeight( daoUtil.getInt(  4 ) );
-		}
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
 
-		daoUtil.free();
-		return dimension;
-	}
+    /**
+     * Load the data of all the dimensions and returns them as a List
+     * @param plugin The plugin
+     * @return The List which contains the data of all the dimensions
+     */
+    public List<Dimension> selectDimensionsList( Plugin plugin )
+    {
+        List<Dimension> dimensionList = new ArrayList<Dimension>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        daoUtil.executeQuery(  );
 
+        while ( daoUtil.next(  ) )
+        {
+            Dimension dimension = new Dimension(  );
 
-	/**
-	 * Delete a record from the table
-         * @param nDimensionId The identifier of the dimension
-         * @param plugin The plugin
-	 */
+            dimension.setId( daoUtil.getInt( 1 ) );
+            dimension.setName( daoUtil.getString( 2 ) );
+            dimension.setWidth( daoUtil.getInt( 3 ) );
+            dimension.setHeight( daoUtil.getInt( 4 ) );
 
-	public void delete( int nDimensionId, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE , plugin );
-		daoUtil.setInt( 1 , nDimensionId );
-		daoUtil.executeUpdate();
-		daoUtil.free();
-	}
+            dimensionList.add( dimension );
+        }
 
+        daoUtil.free(  );
 
-	/**
-	 * Update the record in the table
-	 * @param dimension The reference of the dimension
-         * @param plugin The plugin
-	 */
-
-	public void store( Dimension dimension, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE , plugin );
-                
-        daoUtil.setInt( 1, dimension.getId( ) );
-        daoUtil.setString( 2, dimension.getName( ) );
-        daoUtil.setInt( 3, dimension.getWidth( ) );
-        daoUtil.setInt( 4, dimension.getHeight( ) );
-        daoUtil.setInt( 5, dimension.getId( ) );
-                
-		daoUtil.executeUpdate( );
-		daoUtil.free( );
-	}
-
-
-
-	/**
-	 * Load the data of all the dimensions and returns them as a List
-         * @param plugin The plugin
-	 * @return The List which contains the data of all the dimensions
-	 */
-
-        public List<Dimension> selectDimensionsList( Plugin plugin )
-	{
-		List<Dimension> dimensionList = new ArrayList<Dimension>(  );
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL , plugin );
-		daoUtil.executeQuery(  );
-
-		while ( daoUtil.next(  ) )
-		{
-                Dimension dimension = new Dimension(  );
-
-                    dimension.setId( daoUtil.getInt( 1 ) );
-                    dimension.setName( daoUtil.getString( 2 ) );
-                    dimension.setWidth( daoUtil.getInt( 3 ) );
-                    dimension.setHeight( daoUtil.getInt( 4 ) );
-
-                dimensionList.add( dimension );
-		}
-
-		daoUtil.free();
-		return dimensionList;
-	}
-
+        return dimensionList;
+    }
 }

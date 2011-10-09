@@ -5,24 +5,11 @@
     <h2>#i18n{phraseanet.search_results.title}</h2>
     <form action="jsp/admin/plugins/phraseanet/Search.jsp" >
         <input type="hidden" name="input" value="${input}" />
-        <input type="hidden" name="width" value="${width}" />
-        <input type="hidden" name="height" value="${height}" />
+        <input type="hidden" name="media_handler" value="${media_handler}" />
         <input type="hidden" name="page" value="${results.currentPage}" />
         <p>
-            <label for="databox" >#i18n{phraseanet.search_results.labelDatabox} : </label>
-            <select name="databox">
-                <#list databoxes as databox>
-                <option value="${databox.databoxId}" <#if databox.databoxId = databox_selected> selected </#if> >${databox.name}</option>
-                </#list>
-            </select>
-        </p>
-        <p>
-            <label for="media_type" >#i18n{phraseanet.search_results.labelMediaType} : </label>
-            <select name="media_type">
-                <#list media_type_values as mt_value>
-                <option value="${mt_value}" <#if mt_value = media_type_selected> selected </#if> /> ${mt_value}</option>
-                </#list> 
-            </select>
+            <label for="search" >#i18n{phraseanet.search_results.labelQuery} : </label>
+            <input type="text" name="search" value="${query}" />
         </p>
         <p>
             <label for="items_per_page" >#i18n{phraseanet.search_results.labelItemsPerPage} : </label>
@@ -31,8 +18,6 @@
             </#list>  
         </p>
         <p>
-            <label for="search" >#i18n{phraseanet.search_results.labelQuery} : </label>
-            <input type="text" name="search" value="${query}" />
             <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
         </p>
     </form>
@@ -44,7 +29,7 @@
                 <#if i = results.currentPage >
                     <li class="active"><strong>${i}</strong></li>
                 <#else>
-                <li><a href="jsp/admin/plugins/phraseanet/Search.jsp?input=html_content&page=phraseanet&width=${width}&height=${height}&databox=${databox_selected}&media_type=${media_type_selected}&items_per_page=${items_per_page_selected}&search=${query}&current_page=${i}">${i}</a></li>
+                <li><a href="jsp/admin/plugins/phraseanet/Search.jsp?input=${input}&items_per_page=${items_per_page_selected}&search=${query}&current_page=${i}&media_handler=${media_handler}">${i}</a></li>
                 </#if>
               </#list>
         </ul>
@@ -58,10 +43,9 @@
             <td valign="middle" >
                 <form action="jsp/admin/plugins/phraseanet/DoInsertLink.jsp" >
                     <input type="hidden" name="input" value="${input}" />
-                    <input type="hidden" name="width" value="${width}" />
-                    <input type="hidden" name="height" value="${height}" />
                     <input type="hidden" name="record" value="${record.recordId}" />
-                    <input type="hidden" name="databox" value="${databox_selected}" />
+                    <input type="hidden" name="databox" value="${record.databoxId}" />
+                    <input type="hidden" name="media_handler" value="${media_handler}" />
                     <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonInsert}"/>
                 </form>
             </td>

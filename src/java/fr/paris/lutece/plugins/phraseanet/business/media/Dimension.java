@@ -30,7 +30,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */package fr.paris.lutece.plugins.phraseanet.business.media;
+ */
+package fr.paris.lutece.plugins.phraseanet.business.media;
+
 
 /**
  * Dimension
@@ -42,78 +44,76 @@ public class Dimension
     private String _strName;
     private int _nWidth;
     private int _nHeight;
-    
-    
-       /**
-        * Returns the Id
-        * @return The Id
-        */ 
-    public int getId()
+
+    /**
+     * Returns the Id
+     * @return The Id
+     */
+    public int getId(  )
     {
         return _nId;
     }
-    
-       /**
-        * Sets the Id
-        * @param nId The Id
-        */ 
+
+    /**
+     * Sets the Id
+     * @param nId The Id
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
-       /**
-        * Returns the Name
-        * @return The Name
-        */ 
-    public String getName()
+
+    /**
+     * Returns the Name
+     * @return The Name
+     */
+    public String getName(  )
     {
         return _strName;
     }
-    
-       /**
-        * Sets the Name
-        * @param strName The Name
-        */ 
+
+    /**
+     * Sets the Name
+     * @param strName The Name
+     */
     public void setName( String strName )
     {
         _strName = strName;
     }
-    
-       /**
-        * Returns the Width
-        * @return The Width
-        */ 
-    public int getWidth()
+
+    /**
+     * Returns the Width
+     * @return The Width
+     */
+    public int getWidth(  )
     {
         return _nWidth;
     }
-    
-       /**
-        * Sets the Width
-        * @param nWidth The Width
-        */ 
+
+    /**
+     * Sets the Width
+     * @param nWidth The Width
+     */
     public void setWidth( int nWidth )
     {
         _nWidth = nWidth;
     }
-    
-       /**
-        * Returns the Height
-        * @return The Height
-        */ 
-    public int getHeight()
+
+    /**
+     * Returns the Height
+     * @return The Height
+     */
+    public int getHeight(  )
     {
         return _nHeight;
     }
-    
-       /**
-        * Sets the Height
-        * @param nHeight The Height
-        */ 
+
+    /**
+     * Sets the Height
+     * @param nHeight The Height
+     */
     public void setHeight( int nHeight )
     {
         _nHeight = nHeight;
-    }    
-    
+    }
 }

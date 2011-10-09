@@ -33,12 +33,11 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service;
 
+
 /**
  *
  * @author pierre
  */
 public class MediaManagerService
 {
-
-    
 }

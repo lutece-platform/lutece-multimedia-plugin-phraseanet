@@ -3,30 +3,10 @@
     <h2>#i18n{phraseanet.search_form.title}</h2>
     <form action="jsp/admin/plugins/phraseanet/Search.jsp" >
         <input type="hidden" name="input" value="${input}" />
-        <input type="hidden" name="page" value="phraseanet" />
+        <input type="hidden" name="media_handler" value="${media_handler}" />
         <p>
-            <label for="width" >#i18n{phraseanet.search_form.labelWidth} : </label>
-            <input type="text" name="width" value="${width}" size="3" />
-        </p>
-        <p>
-            <label for="height" >#i18n{phraseanet.search_form.labelHeight} : </label>
-            <input type="text" name="height" value="${height}" size="3" />
-        </p>
-        <p>
-            <label for="databox" >#i18n{phraseanet.search_results.labelDatabox} : </label>
-            <select name="databox">
-                <#list databoxes as databox>
-                <option value="${databox.databoxId}" <#if databox.databoxId = databox_selected>selected </#if> >${databox.name}</option>
-                </#list>
-            </select>
-        </p>
-        <p>
-            <label for="media_type" >#i18n{phraseanet.search_form.labelMediaType} : </label>
-            <select name="media_type">
-                <#list media_type_values as mt_value>
-                <option value="${mt_value}" <#if mt_value = media_type_selected> selected </#if> /> ${mt_value}</option>
-                </#list> 
-            </select>
+            <label for="search" >#i18n{phraseanet.search_form.labelQuery} : </label>
+            <input type="text" name="search" value="" />
         </p>
         <p>
             <label for="items_per_page" >#i18n{phraseanet.search_form.labelItemsPerPage} : </label>
@@ -35,9 +15,7 @@
             </#list>  
         </p>
         <p>
-            <label for="search" >#i18n{phraseanet.search_form.labelQuery} : </label>
-            <input type="text" name="search" value="" />
+            <input type="submit" class="button" value="#i18n{phraseanet.search_form.buttonSearch}"/>
         </p>
-        <input type="submit" class="button" value="#i18n{phraseanet.search_form.buttonSearch}"/>
     </form>
 </div>

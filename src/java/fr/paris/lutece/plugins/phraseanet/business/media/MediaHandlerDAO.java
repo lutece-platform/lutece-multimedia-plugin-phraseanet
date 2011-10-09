@@ -31,8 +31,6 @@
  *
  * License 1.0
  */
-
-
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -45,169 +43,166 @@ import java.util.List;
 /**
  * This class provides Data Access methods for MediaHandler objects
  */
-
 public final class MediaHandlerDAO implements IMediaHandlerDAO
 {
-	
-	// Constants
-	
-	private static final String SQL_QUERY_NEW_PK = "SELECT max( id_media ) FROM phraseanet_media";
-	private static final String SQL_QUERY_SELECT = "SELECT id_media, media_name, media_description, url_icon, insert_template FROM phraseanet_media WHERE id_media = ?";
-	private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_media ( id_media, media_name, media_description, url_icon, insert_template ) VALUES ( ?, ?, ?, ?, ? ) ";
-	private static final String SQL_QUERY_DELETE = "DELETE FROM phraseanet_media WHERE id_media = ? ";
-	private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_media SET id_media = ?, media_name = ?, media_description = ?, url_icon = ?, insert_template = ? WHERE id_media = ?";
-	private static final String SQL_QUERY_SELECTALL = "SELECT id_media, media_name, media_description, url_icon, insert_template FROM phraseanet_media";
+    // Constants
+    private static final String SQL_QUERY_NEW_PK = "SELECT max( id_media ) FROM phraseanet_media";
+    private static final String SQL_QUERY_SELECT = "SELECT id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height FROM phraseanet_media WHERE id_media = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_media ( id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM phraseanet_media WHERE id_media = ? ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_media SET id_media = ?, media_name = ?, media_description = ?, url_icon = ?, insert_template = ?, media_type = ?, bases = ?, default_width = ?, default_height = ? WHERE id_media = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height FROM phraseanet_media";
 
+    /**
+     * Generates a new primary key
+     * @param plugin The Plugin
+     * @return The new primary key
+     */
+    public int newPrimaryKey( Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
+        daoUtil.executeQuery(  );
 
-	
-	/**
-	 * Generates a new primary key
-         * @param plugin The Plugin
-	 * @return The new primary key
-	 */
-    
-	public int newPrimaryKey( Plugin plugin)
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK , plugin  );
-		daoUtil.executeQuery();
+        int nKey;
 
-		int nKey;
+        if ( !daoUtil.next(  ) )
+        {
+            // if the table is empty
+            nKey = 1;
+        }
 
-		if( !daoUtil.next() )
-		{
-			// if the table is empty
-			nKey = 1;
-		}
+        nKey = daoUtil.getInt( 1 ) + 1;
+        daoUtil.free(  );
 
-		nKey = daoUtil.getInt( 1 ) + 1;
-		daoUtil.free();
+        return nKey;
+    }
 
-		return nKey;
-	}
+    /**
+     * Insert a new record in the table.
+     * @param mediaHandler instance of the MediaHandler object to insert
+     * @param plugin The plugin
+     */
+    public void insert( MediaHandler mediaHandler, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
+        mediaHandler.setId( newPrimaryKey( plugin ) );
 
+        daoUtil.setInt( 1, mediaHandler.getId(  ) );
+        daoUtil.setString( 2, mediaHandler.getName(  ) );
+        daoUtil.setString( 3, mediaHandler.getDescription(  ) );
+        daoUtil.setString( 4, mediaHandler.getIconUrl(  ) );
+        daoUtil.setString( 5, mediaHandler.getInsertTemplate(  ) );
+        daoUtil.setString( 6, mediaHandler.getMediaType(  ) );
+        daoUtil.setString( 7, mediaHandler.getBases(  ) );
+        daoUtil.setInt( 8, mediaHandler.getDefaultWidth(  ) );
+        daoUtil.setInt( 9, mediaHandler.getDefaultHeight(  ) );
 
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
 
-	/**
-	 * Insert a new record in the table.
-	 * @param mediaHandler instance of the MediaHandler object to insert
-         * @param plugin The plugin
-	 */
+    /**
+     * Load the data of the mediaHandler from the table
+     * @param nId The identifier of the mediaHandler
+     * @param plugin The plugin
+     * @return the instance of the MediaHandler
+     */
+    public MediaHandler load( int nId, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        daoUtil.setInt( 1, nId );
+        daoUtil.executeQuery(  );
 
-	public void insert( MediaHandler mediaHandler, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT , plugin );
-                
-		mediaHandler.setId( newPrimaryKey( plugin ) );
-                
-                daoUtil.setInt ( 1, mediaHandler.getId ( ) );
-                daoUtil.setString ( 2, mediaHandler.getName ( ) );
-                daoUtil.setString ( 3, mediaHandler.getDescription ( ) );
-                daoUtil.setString ( 4, mediaHandler.getIconUrl ( ) );
-                daoUtil.setString ( 5, mediaHandler.getInsertTemplate ( ) );
+        MediaHandler mediaHandler = null;
 
-		daoUtil.executeUpdate();
-		daoUtil.free();
-	}
+        if ( daoUtil.next(  ) )
+        {
+            mediaHandler = new MediaHandler(  );
 
+            mediaHandler.setId( daoUtil.getInt( 1 ) );
+            mediaHandler.setName( daoUtil.getString( 2 ) );
+            mediaHandler.setDescription( daoUtil.getString( 3 ) );
+            mediaHandler.setIconUrl( daoUtil.getString( 4 ) );
+            mediaHandler.setInsertTemplate( daoUtil.getString( 5 ) );
+            mediaHandler.setMediaType( daoUtil.getString( 6 ) );
+            mediaHandler.setBases( daoUtil.getString( 7 ) );
+            mediaHandler.setDefaultWidth( daoUtil.getInt( 8 ) );
+            mediaHandler.setDefaultHeight( daoUtil.getInt( 9 ) );
+        }
 
-	/**
-	 * Load the data of the mediaHandler from the table
-	 * @param nId The identifier of the mediaHandler
-         * @param plugin The plugin
-	 * @return the instance of the MediaHandler
-	 */
+        daoUtil.free(  );
 
+        return mediaHandler;
+    }
 
-        public MediaHandler load( int nId, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT , plugin );
-		daoUtil.setInt( 1 , nId );
-		daoUtil.executeQuery();
+    /**
+     * Delete a record from the table
+     * @param nMediaHandlerId The identifier of the mediaHandler
+     * @param plugin The plugin
+     */
+    public void delete( int nMediaHandlerId, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
+        daoUtil.setInt( 1, nMediaHandlerId );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
 
-		MediaHandler mediaHandler = null;
+    /**
+     * Update the record in the table
+     * @param mediaHandler The reference of the mediaHandler
+     * @param plugin The plugin
+     */
+    public void store( MediaHandler mediaHandler, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-		if ( daoUtil.next() )
-		{
-			mediaHandler = new MediaHandler();
+        daoUtil.setInt( 1, mediaHandler.getId(  ) );
+        daoUtil.setString( 2, mediaHandler.getName(  ) );
+        daoUtil.setString( 3, mediaHandler.getDescription(  ) );
+        daoUtil.setString( 4, mediaHandler.getIconUrl(  ) );
+        daoUtil.setString( 5, mediaHandler.getInsertTemplate(  ) );
+        daoUtil.setString( 6, mediaHandler.getMediaType(  ) );
+        daoUtil.setString( 7, mediaHandler.getBases(  ) );
+        daoUtil.setInt( 8, mediaHandler.getDefaultWidth(  ) );
+        daoUtil.setInt( 9, mediaHandler.getDefaultHeight(  ) );
+        daoUtil.setInt( 10, mediaHandler.getId(  ) );
 
-                        mediaHandler.setId( daoUtil.getInt(  1 ) );
-                        mediaHandler.setName( daoUtil.getString(  2 ) );
-                        mediaHandler.setDescription( daoUtil.getString(  3 ) );
-                        mediaHandler.setIconUrl( daoUtil.getString(  4 ) );
-                        mediaHandler.setInsertTemplate( daoUtil.getString(  5 ) );
-		}
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
 
-		daoUtil.free();
-		return mediaHandler;
-	}
+    /**
+     * Load the data of all the mediaHandlers and returns them as a List
+     * @param plugin The plugin
+     * @return The List which contains the data of all the mediaHandlers
+     */
+    public List<MediaHandler> selectMediaHandlersList( Plugin plugin )
+    {
+        List<MediaHandler> mediaHandlerList = new ArrayList<MediaHandler>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        daoUtil.executeQuery(  );
 
+        while ( daoUtil.next(  ) )
+        {
+            MediaHandler mediaHandler = new MediaHandler(  );
 
-	/**
-	 * Delete a record from the table
-         * @param nMediaHandlerId The identifier of the mediaHandler
-         * @param plugin The plugin
-	 */
+            mediaHandler.setId( daoUtil.getInt( 1 ) );
+            mediaHandler.setName( daoUtil.getString( 2 ) );
+            mediaHandler.setDescription( daoUtil.getString( 3 ) );
+            mediaHandler.setIconUrl( daoUtil.getString( 4 ) );
+            mediaHandler.setInsertTemplate( daoUtil.getString( 5 ) );
+            mediaHandler.setMediaType( daoUtil.getString( 6 ) );
+            mediaHandler.setBases( daoUtil.getString( 7 ) );
+            mediaHandler.setDefaultWidth( daoUtil.getInt( 8 ) );
+            mediaHandler.setDefaultHeight( daoUtil.getInt( 9 ) );
 
-	public void delete( int nMediaHandlerId, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE , plugin );
-		daoUtil.setInt( 1 , nMediaHandlerId );
-		daoUtil.executeUpdate();
-		daoUtil.free();
-	}
+            mediaHandlerList.add( mediaHandler );
+        }
 
+        daoUtil.free(  );
 
-	/**
-	 * Update the record in the table
-	 * @param mediaHandler The reference of the mediaHandler
-         * @param plugin The plugin
-	 */
-
-	public void store( MediaHandler mediaHandler, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE , plugin );
-                
-        daoUtil.setInt( 1, mediaHandler.getId( ) );
-        daoUtil.setString( 2, mediaHandler.getName( ) );
-        daoUtil.setString( 3, mediaHandler.getDescription( ) );
-        daoUtil.setString( 4, mediaHandler.getIconUrl( ) );
-        daoUtil.setString( 5, mediaHandler.getInsertTemplate( ) );
-        daoUtil.setInt( 6, mediaHandler.getId( ) );
-                
-		daoUtil.executeUpdate( );
-		daoUtil.free( );
-	}
-
-
-
-	/**
-	 * Load the data of all the mediaHandlers and returns them as a List
-         * @param plugin The plugin
-	 * @return The List which contains the data of all the mediaHandlers
-	 */
-
-        public List<MediaHandler> selectMediaHandlersList( Plugin plugin )
-	{
-		List<MediaHandler> mediaHandlerList = new ArrayList<MediaHandler>(  );
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL , plugin );
-		daoUtil.executeQuery(  );
-
-		while ( daoUtil.next(  ) )
-		{
-                MediaHandler mediaHandler = new MediaHandler(  );
-
-                    mediaHandler.setId( daoUtil.getInt( 1 ) );
-                    mediaHandler.setName( daoUtil.getString( 2 ) );
-                    mediaHandler.setDescription( daoUtil.getString( 3 ) );
-                    mediaHandler.setIconUrl( daoUtil.getString( 4 ) );
-                    mediaHandler.setInsertTemplate( daoUtil.getString( 5 ) );
-
-                mediaHandlerList.add( mediaHandler );
-		}
-
-		daoUtil.free();
-		return mediaHandlerList;
-	}
-
+        return mediaHandlerList;
+    }
 }

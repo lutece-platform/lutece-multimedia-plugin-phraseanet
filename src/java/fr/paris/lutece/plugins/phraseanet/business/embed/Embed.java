@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.embed;
 
+
 /**
  * Embed
  */
@@ -42,60 +43,58 @@ public class Embed
     private EmbedItem _eiPreview;
     private EmbedItem _eiThumbnail;
     private EmbedItem _eiDocument;
-    
-    
-       /**
-        * Returns the Preview
-        * @return The Preview
-        */ 
-    public EmbedItem getPreview()
+
+    /**
+     * Returns the Preview
+     * @return The Preview
+     */
+    public EmbedItem getPreview(  )
     {
         return _eiPreview;
     }
-    
-       /**
-        * Sets the Preview
-        * @param preview The Preview
-        */ 
+
+    /**
+     * Sets the Preview
+     * @param preview The Preview
+     */
     public void setPreview( EmbedItem preview )
     {
         _eiPreview = preview;
     }
-    
-       /**
-        * Returns the Thumbnail
-        * @return The Thumbnail
-        */ 
-    public EmbedItem getThumbnail()
+
+    /**
+     * Returns the Thumbnail
+     * @return The Thumbnail
+     */
+    public EmbedItem getThumbnail(  )
     {
         return _eiThumbnail;
     }
-    
-       /**
-        * Sets the Thumbnail
-        * @param thumbnail The Thumbnail
-        */ 
+
+    /**
+     * Sets the Thumbnail
+     * @param thumbnail The Thumbnail
+     */
     public void setThumbnail( EmbedItem thumbnail )
     {
         _eiThumbnail = thumbnail;
     }
-    
-       /**
-        * Returns the Document
-        * @return The Document
-        */ 
-    public EmbedItem getDocument()
+
+    /**
+     * Returns the Document
+     * @return The Document
+     */
+    public EmbedItem getDocument(  )
     {
         return _eiDocument;
     }
-    
-       /**
-        * Sets the Document
-        * @param document The Document
-        */ 
+
+    /**
+     * Sets the Document
+     * @param document The Document
+     */
     public void setDocument( EmbedItem document )
     {
         _eiDocument = document;
     }
-    
 }

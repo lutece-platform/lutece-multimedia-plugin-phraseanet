@@ -31,47 +31,37 @@
  *
  * License 1.0
  */
- 
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
+
 import java.util.List;
 
 
-
- /**
- * IDimensionDAO Interface
- */
-
+/**
+* IDimensionDAO Interface
+*/
 public interface IDimensionDAO
 {
-
-
     /**
      * Insert a new record in the table.
      * @param dimension instance of the Dimension object to inssert
      * @param plugin the Plugin
      */
-
     void insert( Dimension dimension, Plugin plugin );
 
-
-
-     /**
-     * Update the record in the table
-     * @param dimension the reference of the Dimension
-     * @param plugin the Plugin
-     */
-
+    /**
+    * Update the record in the table
+    * @param dimension the reference of the Dimension
+    * @param plugin the Plugin
+    */
     void store( Dimension dimension, Plugin plugin );
-
 
     /**
      * Delete a record from the table
      * @param nIdDimension int identifier of the Dimension to delete
      * @param plugin the Plugin
      */
-
     void delete( int nIdDimension, Plugin plugin );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -83,17 +73,12 @@ public interface IDimensionDAO
      * @param plugin the Plugin
      * @return The instance of the dimension
      */
-
     Dimension load( int nKey, Plugin plugin );
 
-
-
-     /**
-     * Load the data of all the dimension objects and returns them as a List
-     * @param plugin the Plugin
-     * @return The List which contains the data of all the dimension objects
-     */
-
+    /**
+    * Load the data of all the dimension objects and returns them as a List
+    * @param plugin the Plugin
+    * @return The List which contains the data of all the dimension objects
+    */
     List<Dimension> selectDimensionsList( Plugin plugin );
-    
 }

@@ -35,24 +35,28 @@ package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import java.util.List;
 
+
 /**
  * MediaHandler
  */
 public class MediaHandler
 {
-
     private int _nId;
     private String _strName;
     private String _strDescription;
     private String _strIconUrl;
     private String _strInsertTemplate;
+    private String _strMediaType;
+    private String _strBases;
+    private int _nDefaultWidth;
+    private int _nDefaultHeight;
     private List<Dimension> _listDimensions;
 
     /**
      * Returns the Id
      * @return The Id
      */
-    public int getId()
+    public int getId(  )
     {
         return _nId;
     }
@@ -61,7 +65,7 @@ public class MediaHandler
      * Sets the Id
      * @param nId The Id
      */
-    public void setId(int nId)
+    public void setId( int nId )
     {
         _nId = nId;
     }
@@ -70,7 +74,7 @@ public class MediaHandler
      * Returns the Name
      * @return The Name
      */
-    public String getName()
+    public String getName(  )
     {
         return _strName;
     }
@@ -79,7 +83,7 @@ public class MediaHandler
      * Sets the Name
      * @param strName The Name
      */
-    public void setName(String strName)
+    public void setName( String strName )
     {
         _strName = strName;
     }
@@ -88,7 +92,7 @@ public class MediaHandler
      * Returns the Description
      * @return The Description
      */
-    public String getDescription()
+    public String getDescription(  )
     {
         return _strDescription;
     }
@@ -97,7 +101,7 @@ public class MediaHandler
      * Sets the Description
      * @param strDescription The Description
      */
-    public void setDescription(String strDescription)
+    public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
     }
@@ -106,7 +110,7 @@ public class MediaHandler
      * Returns the IconUrl
      * @return The IconUrl
      */
-    public String getIconUrl()
+    public String getIconUrl(  )
     {
         return _strIconUrl;
     }
@@ -115,7 +119,7 @@ public class MediaHandler
      * Sets the IconUrl
      * @param strIconUrl The IconUrl
      */
-    public void setIconUrl(String strIconUrl)
+    public void setIconUrl( String strIconUrl )
     {
         _strIconUrl = strIconUrl;
     }
@@ -124,7 +128,7 @@ public class MediaHandler
      * Returns the InsertTemplate
      * @return The InsertTemplate
      */
-    public String getInsertTemplate()
+    public String getInsertTemplate(  )
     {
         return _strInsertTemplate;
     }
@@ -133,8 +137,80 @@ public class MediaHandler
      * Sets the InsertTemplate
      * @param strInsertTemplate The InsertTemplate
      */
-    public void setInsertTemplate(String strInsertTemplate)
+    public void setInsertTemplate( String strInsertTemplate )
     {
         _strInsertTemplate = strInsertTemplate;
+    }
+
+    /**
+    * Returns the MediaType
+    * @return The MediaType
+    */
+    public String getMediaType(  )
+    {
+        return _strMediaType;
+    }
+
+    /**
+     * Sets the MediaType
+     * @param strMediaType The MediaType
+     */
+    public void setMediaType( String strMediaType )
+    {
+        _strMediaType = strMediaType;
+    }
+
+    /**
+     * Returns the Bases
+     * @return The Bases
+     */
+    public String getBases(  )
+    {
+        return _strBases;
+    }
+
+    /**
+     * Sets the Bases
+     * @param strBases The Bases
+     */
+    public void setBases( String strBases )
+    {
+        _strBases = strBases;
+    }
+
+    /**
+     * Returns the DefaultWidth
+     * @return The DefaultWidth
+     */
+    public int getDefaultWidth(  )
+    {
+        return _nDefaultWidth;
+    }
+
+    /**
+     * Sets the DefaultWidth
+     * @param nDefaultWidth The DefaultWidth
+     */
+    public void setDefaultWidth( int nDefaultWidth )
+    {
+        _nDefaultWidth = nDefaultWidth;
+    }
+
+    /**
+     * Returns the DefaultHeight
+     * @return The DefaultHeight
+     */
+    public int getDefaultHeight(  )
+    {
+        return _nDefaultHeight;
+    }
+
+    /**
+     * Sets the DefaultHeight
+     * @param nDefaultHeight The DefaultHeight
+     */
+    public void setDefaultHeight( int nDefaultHeight )
+    {
+        _nDefaultHeight = nDefaultHeight;
     }
 }

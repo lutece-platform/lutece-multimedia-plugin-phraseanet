@@ -31,47 +31,37 @@
  *
  * License 1.0
  */
- 
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
+
 import java.util.List;
 
 
-
- /**
- * IMediaHandlerDAO Interface
- */
-
+/**
+* IMediaHandlerDAO Interface
+*/
 public interface IMediaHandlerDAO
 {
-
-
     /**
      * Insert a new record in the table.
      * @param mediaHandler instance of the MediaHandler object to inssert
      * @param plugin the Plugin
      */
-
     void insert( MediaHandler mediaHandler, Plugin plugin );
 
-
-
-     /**
-     * Update the record in the table
-     * @param mediaHandler the reference of the MediaHandler
-     * @param plugin the Plugin
-     */
-
+    /**
+    * Update the record in the table
+    * @param mediaHandler the reference of the MediaHandler
+    * @param plugin the Plugin
+    */
     void store( MediaHandler mediaHandler, Plugin plugin );
-
 
     /**
      * Delete a record from the table
      * @param nIdMediaHandler int identifier of the MediaHandler to delete
      * @param plugin the Plugin
      */
-
     void delete( int nIdMediaHandler, Plugin plugin );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -83,17 +73,12 @@ public interface IMediaHandlerDAO
      * @param plugin the Plugin
      * @return The instance of the mediaHandler
      */
-
     MediaHandler load( int nKey, Plugin plugin );
 
-
-
-     /**
-     * Load the data of all the mediaHandler objects and returns them as a List
-     * @param plugin the Plugin
-     * @return The List which contains the data of all the mediaHandler objects
-     */
-
+    /**
+    * Load the data of all the mediaHandler objects and returns them as a List
+    * @param plugin the Plugin
+    * @return The List which contains the data of all the mediaHandler objects
+    */
     List<MediaHandler> selectMediaHandlersList( Plugin plugin );
-    
 }

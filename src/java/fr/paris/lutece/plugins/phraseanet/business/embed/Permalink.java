@@ -31,8 +31,8 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.phraseanet.business.embed;
+
 
 /**
  * Permalink
@@ -47,132 +47,130 @@ public class Permalink
     private String _strLastModified;
     private String _strPageURL;
     private String _strURL;
-    
-    
-       /**
-        * Returns the CreatedOn
-        * @return The CreatedOn
-        */ 
-    public String getCreatedOn()
+
+    /**
+     * Returns the CreatedOn
+     * @return The CreatedOn
+     */
+    public String getCreatedOn(  )
     {
         return _strCreatedOn;
     }
-    
-       /**
-        * Sets the CreatedOn
-        * @param strCreatedOn The CreatedOn
-        */ 
+
+    /**
+     * Sets the CreatedOn
+     * @param strCreatedOn The CreatedOn
+     */
     public void setCreatedOn( String strCreatedOn )
     {
         _strCreatedOn = strCreatedOn;
     }
-    
-       /**
-        * Returns the Id
-        * @return The Id
-        */ 
-    public int getId()
+
+    /**
+     * Returns the Id
+     * @return The Id
+     */
+    public int getId(  )
     {
         return _nId;
     }
-    
-       /**
-        * Sets the Id
-        * @param nId The Id
-        */ 
+
+    /**
+     * Sets the Id
+     * @param nId The Id
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
-       /**
-        * Returns the IsActivated
-        * @return The IsActivated
-        */ 
-    public boolean getIsActivated()
+
+    /**
+     * Returns the IsActivated
+     * @return The IsActivated
+     */
+    public boolean getIsActivated(  )
     {
         return _IsActivated;
     }
-    
-       /**
-        * Sets the IsActivated
-        * @param IsActivated The IsActivated
-        */ 
+
+    /**
+     * Sets the IsActivated
+     * @param IsActivated The IsActivated
+     */
     public void setIsActivated( boolean IsActivated )
     {
         _IsActivated = IsActivated;
     }
-    
-       /**
-        * Returns the Label
-        * @return The Label
-        */ 
-    public String getLabel()
+
+    /**
+     * Returns the Label
+     * @return The Label
+     */
+    public String getLabel(  )
     {
         return _strLabel;
     }
-    
-       /**
-        * Sets the Label
-        * @param strLabel The Label
-        */ 
+
+    /**
+     * Sets the Label
+     * @param strLabel The Label
+     */
     public void setLabel( String strLabel )
     {
         _strLabel = strLabel;
     }
-    
-       /**
-        * Returns the LastModified
-        * @return The LastModified
-        */ 
-    public String getLastModified()
+
+    /**
+     * Returns the LastModified
+     * @return The LastModified
+     */
+    public String getLastModified(  )
     {
         return _strLastModified;
     }
-    
-       /**
-        * Sets the LastModified
-        * @param strLastModified The LastModified
-        */ 
+
+    /**
+     * Sets the LastModified
+     * @param strLastModified The LastModified
+     */
     public void setLastModified( String strLastModified )
     {
         _strLastModified = strLastModified;
     }
-    
-       /**
-        * Returns the PageURL
-        * @return The PageURL
-        */ 
-    public String getPageURL()
+
+    /**
+     * Returns the PageURL
+     * @return The PageURL
+     */
+    public String getPageURL(  )
     {
         return _strPageURL;
     }
-    
-       /**
-        * Sets the PageURL
-        * @param strPageURL The PageURL
-        */ 
+
+    /**
+     * Sets the PageURL
+     * @param strPageURL The PageURL
+     */
     public void setPageURL( String strPageURL )
     {
         _strPageURL = strPageURL;
     }
-    
-       /**
-        * Returns the URL
-        * @return The URL
-        */ 
-    public String getURL()
+
+    /**
+     * Returns the URL
+     * @return The URL
+     */
+    public String getURL(  )
     {
         return _strURL;
     }
-    
-       /**
-        * Sets the URL
-        * @param strURL The URL
-        */ 
+
+    /**
+     * Sets the URL
+     * @param strURL The URL
+     */
     public void setURL( String strURL )
     {
         _strURL = strURL;
     }
-     
 }
