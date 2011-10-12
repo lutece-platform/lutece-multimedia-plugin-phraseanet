@@ -1,0 +1,36 @@
+<div id="content-box-actions">
+    <form method="post" action="jsp/admin/plugins/phraseanet/CreateMediaHandler.jsp">
+        <input type="submit" value="#i18n{phraseanet.manage_media_handlers.buttonAdd}" class="button bt-toolbar" />
+    </form>
+</div>
+<div class="content-box" >
+    <h2>#i18n{phraseanet.manage_media_handlers.tableLabel}</h2>
+    <@paginationAdmin paginator=paginator combo=1 />
+    <table>
+        <tr>
+            <th>#i18n{phraseanet.manage_media_handlers.columnName}</th>
+            <th>#i18n{phraseanet.manage_media_handlers.columnIcon}</th>
+            <th>#i18n{phraseanet.manage_media_handlers.columnDescription}</th>
+            <th>#i18n{phraseanet.manage_media_handlers.columnMediaType}</th>
+            <th>#i18n{phraseanet.manage_media_handlers.columnAction}</th>
+        </tr>
+        <#list media_handler_list as media_handler >
+        <tr>
+            <td>
+                <a href="jsp/admin/plugins/phraseanet/ModifyMediaHandler.jsp?id_media_handler=${media_handler.id}" class="bullet-link">
+                     ${media_handler.name}
+                </a>
+            </td>
+            <td><img src="${media_handler.iconUrl}" alt="media_handler icon" height="40px"/></td>
+            <td>${media_handler.description}</td>
+            <td>${media_handler.mediaType}</td>
+            <td>
+                <a href="jsp/admin/plugins/phraseanet/RemoveMediaHandler.jsp?id_media_handler=${media_handler.id}" >
+                    <img src="images/admin/skin/actions/delete.png" alt="#i18n{portal.util.labelDelete}" title="#i18n{portal.util.labelDelete}" />
+                </a>
+            </td>
+        </tr>
+        </#list>
+    </table>
+    <@paginationAdmin paginator=paginator />
+</div>

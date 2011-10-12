@@ -29,6 +29,19 @@
         </application>
     </applications>
 -->
+
+    <!-- Admin features parameters -->
+    <admin-features>
+        <admin-feature>
+            <feature-id>PHRASEANET_MANAGEMENT</feature-id>
+            <feature-title>phraseanet.adminFeature.media_handler_management.name</feature-title>
+            <feature-description>phraseanet.adminFeature.media_handler_management.description</feature-description>
+            <feature-level>1</feature-level>
+            <feature-url>jsp/admin/plugins/phraseanet/ManageMediaHandlers.jsp</feature-url>
+            <feature-icon-url/>
+        </admin-feature>
+    </admin-features>
+
     <!-- Insert Services -->
     <insert-services>
         <insert-service>
