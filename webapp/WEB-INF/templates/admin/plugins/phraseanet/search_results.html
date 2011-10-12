@@ -50,17 +50,12 @@
                 </form>
             </td>
             <td>
-                <a href="${record.recordId}" target="_blank">
-                    <img src="${server}${record.thumbnail.url}" />
-                </a>
+                <img src="${server}${record.thumbnail.url}" />
             </td>
             <td valign="top" >
                 <p>
-                    <a href="${record.recordId}" target="_blank" >${record.title}</a>
-                </p>
-                <p>
                     ${record.title}
-                </p>           
+                </p>
             </td>
         </tr>
         </#list>
