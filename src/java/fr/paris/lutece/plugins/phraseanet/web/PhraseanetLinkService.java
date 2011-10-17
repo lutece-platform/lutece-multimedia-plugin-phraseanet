@@ -163,6 +163,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         {
             SearchCriterias criterias = new SearchCriterias(  );
             criterias.setRecordType( mh.getMediaType(  ) );
+            criterias.setBases( mh.getBases(  ) );
 
             SearchResults results = PhraseanetService.search( strQuery, nPage, nPerPage, criterias );
 

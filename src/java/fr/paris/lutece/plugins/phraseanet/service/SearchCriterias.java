@@ -33,8 +33,11 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service;
 
+import fr.paris.lutece.portal.service.util.AppLogService;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 /**
@@ -42,6 +45,8 @@ import java.util.List;
  */
 public class SearchCriterias
 {
+    private static final String DELIMITER = ",";
+
     // Variables declarations 
     private String _strOrd;
     private String _strSort;
@@ -110,5 +115,30 @@ public class SearchCriterias
     public void addBase( String strBaseId )
     {
         _listBases.add( strBaseId );
+    }
+
+    public void setBases( String strBases )
+    {
+        _listBases.clear(  );
+
+        if ( strBases != null )
+        {
+            StringTokenizer st = new StringTokenizer( strBases, DELIMITER );
+
+            while ( st.hasMoreTokens(  ) )
+            {
+                String strIdBase = st.nextToken(  ).trim(  );
+
+                try
+                {
+                    Integer.parseInt( strIdBase );
+                    _listBases.add( strIdBase );
+                }
+                catch ( NumberFormatException e )
+                {
+                    AppLogService.error( "Phraseanet plugin : Invalid base id in search criteria : " + strBases );
+                }
+            }
+        }
     }
 }

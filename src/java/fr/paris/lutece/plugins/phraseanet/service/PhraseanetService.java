@@ -54,6 +54,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 
@@ -75,7 +76,7 @@ public class PhraseanetService
     private static final String PARAMETER_PAGE = "page";
     private static final String PARAMETER_PER_PAGE = "per_page";
     private static final String PARAMETER_RECORD_TYPE = "record_type";
-    private static final String PARAMETER_BASES = "bases";
+    private static final String PARAMETER_BASES = "bases[]";
     private static final String DELIMITER = ",";
     private static final String SEARCH_ALL = "< All >";
     private static List<String> _listItemsPerPageValues;
@@ -96,20 +97,17 @@ public class PhraseanetService
         throws PhraseanetApiCallException
     {
         String strUrl = SERVER + PATH_SEARCH;
-        HashMap mapParameters = new HashMap(  );
-        mapParameters.put( PARAMETER_QUERY, strQuery );
-        mapParameters.put( PARAMETER_PAGE, String.valueOf( nPage ) );
-        mapParameters.put( PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );
+        Map<String, List<String>> mapParameters = new HashMap<String, List<String>>(  );
+        putParameter( mapParameters, PARAMETER_QUERY, strQuery );
+        putParameter( mapParameters, PARAMETER_PAGE, String.valueOf( nPage ) );
+        putParameter( mapParameters, PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );
 
         if ( ( criterias.getRecordType(  ) != null ) || !criterias.getRecordType(  ).equals( SEARCH_ALL ) )
         {
-            mapParameters.put( PARAMETER_RECORD_TYPE, criterias.getRecordType(  ) );
+            putParameter( mapParameters, PARAMETER_RECORD_TYPE, criterias.getRecordType(  ) );
         }
 
-        for ( String strBaseId : criterias.getBases(  ) )
-        {
-            mapParameters.put( PARAMETER_BASES, strBaseId );
-        }
+        mapParameters.put( PARAMETER_BASES, criterias.getBases(  ) );
 
         // TODO add other criterias
         JSONObject jsonResponse = PhraseanetApiCallService.getPostResponse( strUrl, mapParameters );
@@ -185,5 +183,12 @@ public class PhraseanetService
         }
 
         return _listMediaTypeValues;
+    }
+
+    private static void putParameter( Map<String, List<String>> map, String strKey, String strValue )
+    {
+        List<String> listValue = new ArrayList<String>(  );
+        listValue.add( strValue );
+        map.put( strKey, listValue );
     }
 }

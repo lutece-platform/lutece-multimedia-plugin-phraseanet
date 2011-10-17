@@ -45,7 +45,10 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.log4j.Logger;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 /**
@@ -97,17 +100,17 @@ public class PhraseanetApiCallService
         return jsonResponse;
     }
 
-    public static JSONObject getPostResponse( String strUrl, HashMap mapParameters )
+    public static JSONObject getPostResponse( String strUrl, Map<String, List<String>> mapParameters )
         throws PhraseanetApiCallException
     {
         try
         {
-            UrlItem url = new UrlItem( strUrl );
-            mapParameters.put( PARAMETER_OAUTH_TOKEN, PhraseanetApiAuthentication.getAccessToken(  ) );
+            List<String> listParam = new ArrayList<String>(  );
+            listParam.add( PhraseanetApiAuthentication.getAccessToken(  ) );
+            mapParameters.put( PARAMETER_OAUTH_TOKEN, listParam );
 
             HttpAccess httpClient = new HttpAccess(  );
-            String strResponse = httpClient.doPost( url.getUrl(  ), mapParameters );
-            System.out.println( strResponse ); // TODO remove me
+            String strResponse = httpClient.doPostMultiValues( strUrl, mapParameters );
 
             return extractResponse( strResponse );
         }
