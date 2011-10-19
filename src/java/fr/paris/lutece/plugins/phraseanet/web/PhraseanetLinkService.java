@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.phraseanet.web;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandler;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerHome;
+import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
@@ -51,6 +52,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -78,7 +80,8 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_ITEMS_PER_PAGE_VALUES = "items_per_page_values";
     private static final String MARK_ITEMS_PER_PAGE = "items_per_page_selected";
     private static final String MARK_LOCALE = "locale";
-    private static final String MARK_URL = "url";
+    private static final String MARK_EMBED = "embed";
+    private static final String MARK_METADATAS = "metadatas";
     private static final String PARAMETER_RECORD = "record";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_MEDIA_HANDLER = "media_handler";
@@ -216,13 +219,14 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         int nDataboxId = Integer.parseInt( strDataboxId );
 
         Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId );
-        String strUrl = embed.getDocument(  ).getPermalink(  ).getURL(  );
+        List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId );
 
         Map model = new HashMap(  );
         model.put( MARK_LOCALE, locale );
         model.put( MARK_WIDTH, mh.getDefaultWidth(  ) );
         model.put( MARK_HEIGHT, mh.getDefaultHeight(  ) );
-        model.put( MARK_URL, strUrl );
+        model.put( MARK_EMBED, embed );
+        model.put( MARK_METADATAS, listMetadatas );
 
         HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
         String strInsert = t.getHtml(  );

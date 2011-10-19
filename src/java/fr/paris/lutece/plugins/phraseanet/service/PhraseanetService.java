@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.phraseanet.service;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
+import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
@@ -43,6 +44,7 @@ import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.CollectionsJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.DataboxesJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.EmbedJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.MetadatasJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -68,6 +70,7 @@ public class PhraseanetService
     private static final String PROPERTY_MEDIA_TYPE_VALUES = "phraseanet.mediaTypeValues";
     private static final String SERVER = AppPropertiesService.getProperty( PROPERTY_SERVER );
     private static final String PATH_GET_RECORD = "/api/v1/records/{0}/{1}/";
+    private static final String PATH_GET_RECORD_METADATAS = "/api/v1/records/{0}/{1}/metadatas/";
     private static final String PATH_SEARCH = "/api/v1/records/search/?";
     private static final String PATH_DATABOXES = "/api/v1/databoxes/list/";
     private static final String PATH_COLLECTIONS = "/api/v1/databoxes/{0}/collections/";
@@ -91,6 +94,16 @@ public class PhraseanetService
         JSONObject jsonRecord = jsonResponse.getJSONObject( "record" );
 
         return RecordJsonParser.parse( jsonRecord );
+    }
+
+    public static List<Metadata> getRecordMetadatas( int nDataboxId, int nRecordId )
+        throws PhraseanetApiCallException
+    {
+        Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
+        String url = SERVER + MessageFormat.format( PATH_GET_RECORD_METADATAS, arguments );
+        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url );
+
+        return MetadatasJsonParser.parse( jsonResponse );
     }
 
     public static SearchResults search( String strQuery, int nPage, int nPerPage, SearchCriterias criterias )
