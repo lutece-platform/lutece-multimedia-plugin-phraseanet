@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.media;
 
-import java.util.List;
-
 
 /**
  * MediaHandler
@@ -50,7 +48,6 @@ public class MediaHandler
     private String _strBases;
     private int _nDefaultWidth;
     private int _nDefaultHeight;
-    private List<Dimension> _listDimensions;
 
     /**
      * Returns the Id

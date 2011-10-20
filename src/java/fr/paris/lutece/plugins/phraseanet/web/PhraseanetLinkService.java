@@ -126,7 +126,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
 
         int nMediaHandlerId = Integer.parseInt( strMediaHandler );
-        MediaHandler mh = MediaHandlerHome.findByPrimaryKey( nMediaHandlerId );
         String strDefaultItemsPerPage = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_DEFAULT );
 
         Map<String, Object> model = new HashMap<String, Object>(  );

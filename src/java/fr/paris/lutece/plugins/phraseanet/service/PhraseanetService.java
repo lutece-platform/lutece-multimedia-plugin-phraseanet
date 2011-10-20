@@ -41,23 +41,11 @@ import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.CollectionsJsonParser;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.DataboxesJsonParser;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.EmbedJsonParser;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.MetadatasJsonParser;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.*;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
-
-import net.sf.json.JSONObject;
-
 import java.text.MessageFormat;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
+import net.sf.json.JSONObject;
 
 
 /**
@@ -158,7 +146,7 @@ public class PhraseanetService
         return EmbedJsonParser.parse( jsonEmbed );
     }
 
-    public static List<String> getItemsPerPageValues(  )
+    public synchronized static List<String> getItemsPerPageValues(  )
     {
         if ( _listItemsPerPageValues == null )
         {
@@ -175,9 +163,10 @@ public class PhraseanetService
         }
 
         return _listItemsPerPageValues;
+        
     }
 
-    public static List<String> getMediaTypeValues(  )
+    public synchronized static List<String> getMediaTypeValues(  )
     {
         if ( _listMediaTypeValues == null )
         {

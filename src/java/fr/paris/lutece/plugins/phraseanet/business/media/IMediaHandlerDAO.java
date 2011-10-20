@@ -69,7 +69,7 @@ public interface IMediaHandlerDAO
 
     /**
      * Load the data from the table
-     * @param strId The identifier of the mediaHandler
+     * @param nKey The identifier of the mediaHandler
      * @param plugin the Plugin
      * @return The instance of the mediaHandler
      */
