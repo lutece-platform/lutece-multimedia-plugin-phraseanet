@@ -62,15 +62,14 @@ public final class PhraseanetApiCallService
     private static Logger _logger = Logger.getLogger( Constants.LOGGER );
 
     /** Private constructor */
-    private PhraseanetApiCallService()
-    { 
+    private PhraseanetApiCallService(  )
+    {
     }
-    
-    
+
     /**
      * Get a response for a GET request
      * @param strRequest The request
-     * @return The response as a JSON object 
+     * @return The response as a JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
     public static JSONObject getResponse( String strRequest )
@@ -115,7 +114,7 @@ public final class PhraseanetApiCallService
      * Get the response of a POST request
      * @param strUrl The URL
      * @param mapParameters The parameters
-     * @return The response as a JSON object 
+     * @return The response as a JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
     public static JSONObject getPostResponse( String strUrl, Map<String, List<String>> mapParameters )

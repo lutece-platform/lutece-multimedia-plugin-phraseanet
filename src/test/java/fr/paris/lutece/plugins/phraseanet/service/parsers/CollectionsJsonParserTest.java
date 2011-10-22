@@ -34,8 +34,8 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
-import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
 
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import static org.junit.Assert.*;
@@ -56,7 +56,7 @@ public class CollectionsJsonParserTest
      * Test of parse method, of class DataboxJsonParser.
      */
     @Test
-    public void testParse(  ) throws IOException
+    public void testParse(  ) throws IOException, PhraseanetApiCallException
     {
         System.out.println( "parse" );
 

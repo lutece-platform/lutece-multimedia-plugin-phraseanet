@@ -123,7 +123,7 @@ public class SearchCriterias
     public void addBase( String strBaseId )
     {
         _listBases.add( strBaseId );
-    } 
+    }
 
     /**
      * Set bases

@@ -34,7 +34,9 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
@@ -48,34 +50,42 @@ import java.util.List;
 public class MetadatasJsonParser
 {
     /** private constructor */
-    private MetadatasJsonParser()
+    private MetadatasJsonParser(  )
     {
-        
     }
-    
+
     /**
      * Parse a list of metadatas
      * @param jsonResponse The response as JSONObject
      * @return The list
      */
     public static List<Metadata> parse( JSONObject jsonResponse )
+        throws PhraseanetApiCallException
     {
-        List<Metadata> listMetadatas = new ArrayList<Metadata>(  );
-        JSONObject jsonMetadatas = jsonResponse.getJSONObject( "metadatas" );
-        Iterator i = jsonMetadatas.keys(  );
-
-        while ( i.hasNext(  ) )
+        try
         {
-            String strKey = (String) i.next(  );
-            JSONObject jsonMetadata = jsonMetadatas.getJSONObject( strKey );
-            Metadata metadata = new Metadata(  );
-            metadata.setMetaId( jsonMetadata.getInt( "meta_id" ) );
-            metadata.setMetaStructureId( jsonMetadata.getInt( "meta_structure_id" ) );
-            metadata.setName( jsonMetadata.getString( "name" ) );
-            metadata.setValue( jsonMetadata.getString( "value" ) );
-            listMetadatas.add( metadata );
-        }
+            List<Metadata> listMetadatas = new ArrayList<Metadata>(  );
+            JSONObject jsonMetadatas = jsonResponse.getJSONObject( "metadatas" );
+            Iterator i = jsonMetadatas.keys(  );
 
-        return listMetadatas;
+            while ( i.hasNext(  ) )
+            {
+                String strKey = (String) i.next(  );
+                JSONObject jsonMetadata = jsonMetadatas.getJSONObject( strKey );
+                Metadata metadata = new Metadata(  );
+                metadata.setMetaId( jsonMetadata.getInt( "meta_id" ) );
+                metadata.setMetaStructureId( jsonMetadata.getInt( "meta_structure_id" ) );
+                metadata.setName( jsonMetadata.getString( "name" ) );
+                metadata.setValue( jsonMetadata.getString( "value" ) );
+                listMetadatas.add( metadata );
+            }
+
+            return listMetadatas;
+        }
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing metadatas : " + e.getMessage(  ) + " - JSON : " +
+                jsonResponse.toString( 4 ) );
+        }
     }
 }

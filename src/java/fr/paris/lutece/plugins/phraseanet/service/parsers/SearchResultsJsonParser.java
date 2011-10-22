@@ -35,8 +35,10 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
@@ -51,43 +53,51 @@ import java.util.List;
 public class SearchResultsJsonParser
 {
     /** private constructor */
-    private SearchResultsJsonParser()
+    private SearchResultsJsonParser(  )
     {
-        
     }
-    
+
     /**
      * Parse for search results
      * @param jsonResponse The response as JSONObject
      * @return The search results
      */
     public static SearchResults parse( JSONObject jsonResponse )
+        throws PhraseanetApiCallException
     {
-        SearchResults results = new SearchResults(  );
-        results.setTotalPages( jsonResponse.getInt( "total_pages" ) );
-        results.setCurrentPage( jsonResponse.getInt( "current_page" ) );
-        results.setAvailableResults( jsonResponse.getInt( "available_results" ) );
-        results.setTotalResults( jsonResponse.getInt( "total_results" ) );
-        results.setError( jsonResponse.getString( "error" ) );
-        results.setWarning( jsonResponse.getString( "warning" ) );
-        results.setQueryTime( jsonResponse.getString( "query_time" ) );
-        results.setSearchIndexes( jsonResponse.getString( "search_indexes" ) );
-        results.setQuery( jsonResponse.getString( "query" ) );
-
-        JSONArray jsonResults = jsonResponse.getJSONArray( "results" );
-        List<Record> listResults = new ArrayList<Record>(  );
-        Iterator i = jsonResults.iterator(  );
-
-        while ( i.hasNext(  ) )
+        try
         {
-            JSONObject jsonResult = (JSONObject) i.next(  );
-            Record record = RecordJsonParser.parse( jsonResult );
-            listResults.add( record );
+            SearchResults results = new SearchResults(  );
+            results.setTotalPages( jsonResponse.getInt( "total_pages" ) );
+            results.setCurrentPage( jsonResponse.getInt( "current_page" ) );
+            results.setAvailableResults( jsonResponse.getInt( "available_results" ) );
+            results.setTotalResults( jsonResponse.getInt( "total_results" ) );
+            results.setError( jsonResponse.getString( "error" ) );
+            results.setWarning( jsonResponse.getString( "warning" ) );
+            results.setQueryTime( jsonResponse.getString( "query_time" ) );
+            results.setSearchIndexes( jsonResponse.getString( "search_indexes" ) );
+            results.setQuery( jsonResponse.getString( "query" ) );
+
+            JSONArray jsonResults = jsonResponse.getJSONArray( "results" );
+            List<Record> listResults = new ArrayList<Record>(  );
+            Iterator i = jsonResults.iterator(  );
+
+            while ( i.hasNext(  ) )
+            {
+                JSONObject jsonResult = (JSONObject) i.next(  );
+                Record record = RecordJsonParser.parse( jsonResult );
+                listResults.add( record );
+            }
+
+            results.setResults( listResults );
+
+            // TODO suggestions
+            return results;
         }
-
-        results.setResults( listResults );
-
-        // TODO suggestions
-        return results;
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing databoxes : " + e.getMessage(  ) + " - JSON : " +
+                jsonResponse.toString( 4 ) );
+        }
     }
 }

@@ -34,7 +34,9 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
@@ -48,32 +50,40 @@ import java.util.List;
 public class DataboxesJsonParser
 {
     /** private constructor */
-    private DataboxesJsonParser()
+    private DataboxesJsonParser(  )
     {
-        
     }
-    
+
     /**
      * Parse a list of databoxes
      * @param jsonResponse The response as JSONObject
      * @return The list
      */
     public static List<Databox> parse( JSONObject jsonResponse )
+        throws PhraseanetApiCallException
     {
-        List<Databox> listDataboxes = new ArrayList<Databox>(  );
-        Iterator i = jsonResponse.keys(  );
-
-        while ( i.hasNext(  ) )
+        try
         {
-            String strKey = (String) i.next(  );
-            JSONObject jsonDatabox = jsonResponse.getJSONObject( strKey );
-            Databox databox = new Databox(  );
-            databox.setDataboxId( jsonDatabox.getInt( "databox_id" ) );
-            databox.setName( jsonDatabox.getString( "name" ) );
-            databox.setVersion( jsonDatabox.getString( "version" ) );
-            listDataboxes.add( databox );
-        }
+            List<Databox> listDataboxes = new ArrayList<Databox>(  );
+            Iterator i = jsonResponse.keys(  );
 
-        return listDataboxes;
+            while ( i.hasNext(  ) )
+            {
+                String strKey = (String) i.next(  );
+                JSONObject jsonDatabox = jsonResponse.getJSONObject( strKey );
+                Databox databox = new Databox(  );
+                databox.setDataboxId( jsonDatabox.getInt( "databox_id" ) );
+                databox.setName( jsonDatabox.getString( "name" ) );
+                databox.setVersion( jsonDatabox.getString( "version" ) );
+                listDataboxes.add( databox );
+            }
+
+            return listDataboxes;
+        }
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing databoxes : " + e.getMessage(  ) + " - JSON : " +
+                jsonResponse.toString( 4 ) );
+        }
     }
 }

@@ -37,6 +37,7 @@ import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.embed.EmbedItem;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import static org.junit.Assert.*;
@@ -55,7 +56,7 @@ public class EmbedJsonParserTest
      * Test of parse method, of class RecordJsonParser.
      */
     @Test
-    public void testParse(  ) throws IOException
+    public void testParse(  ) throws IOException, PhraseanetApiCallException
     {
         System.out.println( "parse" );
 

@@ -34,7 +34,9 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 
@@ -44,27 +46,34 @@ import net.sf.json.JSONObject;
 public class MetaJsonParser
 {
     /** private constructor */
-    private MetaJsonParser()
+    private MetaJsonParser(  )
     {
-        
     }
-    
+
     /**
      * Parse meta
      * @param jsonMeta The meta as JSONObject
      * @return The meta
      */
-    public static Meta parse( JSONObject jsonMeta )
+    public static Meta parse( JSONObject jsonMeta ) throws PhraseanetApiCallException
     {
-        Meta meta = new Meta(  );
-        meta.setApiVersion( jsonMeta.getString( "api_version" ) );
-        meta.setRequest( jsonMeta.getString( "request" ) );
-        meta.setResponseTime( jsonMeta.getString( "response_time" ) );
-        meta.setHttpCode( jsonMeta.getInt( "http_code" ) );
-        meta.setErrorMessage( jsonMeta.getString( "error_message" ) );
-        meta.setErrorDetails( jsonMeta.getString( "error_details" ) );
-        meta.setCharset( jsonMeta.getString( "charset" ) );
+        try
+        {
+            Meta meta = new Meta(  );
+            meta.setApiVersion( jsonMeta.getString( "api_version" ) );
+            meta.setRequest( jsonMeta.getString( "request" ) );
+            meta.setResponseTime( jsonMeta.getString( "response_time" ) );
+            meta.setHttpCode( jsonMeta.getInt( "http_code" ) );
+            meta.setErrorMessage( jsonMeta.getString( "error_message" ) );
+            meta.setErrorDetails( jsonMeta.getString( "error_details" ) );
+            meta.setCharset( jsonMeta.getString( "charset" ) );
 
-        return meta;
+            return meta;
+        }
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing meta : " + e.getMessage(  ) + " - JSON : " +
+                jsonMeta.toString( 4 ) );
+        }
     }
 }

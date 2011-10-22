@@ -36,7 +36,9 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.embed.EmbedItem;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Permalink;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 
@@ -46,25 +48,32 @@ import net.sf.json.JSONObject;
 public class EmbedJsonParser
 {
     /** private constructor */
-    private EmbedJsonParser()
+    private EmbedJsonParser(  )
     {
-        
     }
-    
+
     /**
      * Parse an Embed object
      * @param jsonEmbed The embed as JSONObject
      * @return The embed
      */
-    public static Embed parse( JSONObject jsonEmbed )
+    public static Embed parse( JSONObject jsonEmbed ) throws PhraseanetApiCallException
     {
-        Embed embed = new Embed(  );
+        try
+        {
+            Embed embed = new Embed(  );
 
-        embed.setPreview( getEmbedItem( jsonEmbed.getJSONObject( "preview" ) ) );
-        embed.setThumbnail( getEmbedItem( jsonEmbed.getJSONObject( "thumbnail" ) ) );
-        embed.setDocument( getEmbedItem( jsonEmbed.getJSONObject( "document" ) ) );
+            embed.setPreview( getEmbedItem( jsonEmbed.getJSONObject( "preview" ) ) );
+            embed.setThumbnail( getEmbedItem( jsonEmbed.getJSONObject( "thumbnail" ) ) );
+            embed.setDocument( getEmbedItem( jsonEmbed.getJSONObject( "document" ) ) );
 
-        return embed;
+            return embed;
+        }
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing embed : " + e.getMessage(  ) + " - JSON : " +
+                jsonEmbed.toString( 4 ) );
+        }
     }
 
     private static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )

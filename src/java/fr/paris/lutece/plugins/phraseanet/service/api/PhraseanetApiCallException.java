@@ -42,7 +42,7 @@ public class PhraseanetApiCallException extends Exception
 {
     /**
      * Constructor
-     * @param strMessage An exception message 
+     * @param strMessage An exception message
      */
     public PhraseanetApiCallException( String strMessage )
     {

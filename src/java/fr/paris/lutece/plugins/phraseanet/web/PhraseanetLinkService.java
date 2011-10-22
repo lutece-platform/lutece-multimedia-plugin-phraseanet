@@ -49,6 +49,8 @@ import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+import net.sf.json.JSONException;
+
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
@@ -69,6 +71,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String TEMPLATE_CHOOSE_MEDIA = "admin/plugins/phraseanet/choose_media.html";
     private static final String TEMPLATE_SEARCH_FORM = "admin/plugins/phraseanet/search_form.html";
     private static final String TEMPLATE_SEARCH_RESULTS = "admin/plugins/phraseanet/search_results.html";
+    private static final String TEMPLATE_ERROR = "admin/plugins/phraseanet/error.html";
     private static final String MARK_MEDIA_HANDLERS = "media_handlers_list";
     private static final String MARK_MEDIA_HANDLER = "media_handler";
     private static final String MARK_INPUT = "input";
@@ -82,6 +85,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_EMBED = "embed";
     private static final String MARK_METADATAS = "metadatas";
+    private static final String MARK_ERROR = "error";
     private static final String PARAMETER_RECORD = "record";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_MEDIA_HANDLER = "media_handler";
@@ -90,7 +94,9 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String PARAMETER_CURRENT_PAGE = "current_page";
     private static final String PARAMETER_ITEMS_PER_PAGE = "items_per_page";
     private static final String PROPERTY_ITEMS_PER_PAGE_DEFAULT = "phraseanet.itemsPerPageDefault";
+    private static final String URL_JSP_ERROR = "PhraseanetError.jsp";
     private static Logger _logger = Logger.getLogger( Constants.LOGGER );
+    private String _strError;
 
     ////////////////////////////////////////////////////////////////////////////
     // Methods
@@ -211,7 +217,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @throws PhraseanetApiCallException if an error occurs
      */
     public String doInsertLink( HttpServletRequest request )
-        throws PhraseanetApiCallException
     {
         _logger.debug( "doInsertLink" );
 
@@ -228,21 +233,42 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         int nRecordId = Integer.parseInt( strRecordId );
         int nDataboxId = Integer.parseInt( strDataboxId );
 
-        Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId );
-        List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId );
+        try
+        {
+            Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId );
+            List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId );
 
+            Map model = new HashMap(  );
+            model.put( MARK_LOCALE, locale );
+            model.put( MARK_WIDTH, mh.getDefaultWidth(  ) );
+            model.put( MARK_HEIGHT, mh.getDefaultHeight(  ) );
+            model.put( MARK_EMBED, embed );
+            model.put( MARK_METADATAS, listMetadatas );
+
+            HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
+            String strInsert = t.getHtml(  );
+
+            _logger.debug( "INSERT \"" + strInsert + "\"" );
+
+            return insertUrl( request, strInput, strInsert );
+        }
+        catch ( PhraseanetApiCallException ex )
+        {
+            _strError = ex.getMessage(  );
+
+            return URL_JSP_ERROR;
+        }
+    }
+
+    public String getError( HttpServletRequest request )
+    {
+        // Gets the locale of the user
+        Locale locale = AdminUserService.getLocale( request );
         Map model = new HashMap(  );
-        model.put( MARK_LOCALE, locale );
-        model.put( MARK_WIDTH, mh.getDefaultWidth(  ) );
-        model.put( MARK_HEIGHT, mh.getDefaultHeight(  ) );
-        model.put( MARK_EMBED, embed );
-        model.put( MARK_METADATAS, listMetadatas );
+        model.put( MARK_ERROR, _strError );
 
-        HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
-        String strInsert = t.getHtml(  );
+        HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_ERROR, locale, model );
 
-        _logger.debug( "INSERT \"" + strInsert + "\"" );
-
-        return insertUrl( request, strInput, strInsert );
+        return t.getHtml(  );
     }
 }

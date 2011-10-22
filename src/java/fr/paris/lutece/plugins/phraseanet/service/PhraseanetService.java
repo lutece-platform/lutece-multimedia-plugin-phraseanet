@@ -43,9 +43,12 @@ import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.*;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
-import java.text.MessageFormat;
-import java.util.*;
+
 import net.sf.json.JSONObject;
+
+import java.text.MessageFormat;
+
+import java.util.*;
 
 
 /**
@@ -153,7 +156,7 @@ public class PhraseanetService
     }
 
     /**
-     * Get all collections of databox 
+     * Get all collections of databox
      * @param nDataboxId The databox id
      * @return a collection list
      * @throws PhraseanetApiCallException if an error occurs
@@ -207,7 +210,6 @@ public class PhraseanetService
         }
 
         return _listItemsPerPageValues;
-        
     }
 
     /**

@@ -44,11 +44,10 @@ public final class PhraseanetApiAuthentication
     private static String _strAccessToken;
 
     /** private constructor */
-    private PhraseanetApiAuthentication()
+    private PhraseanetApiAuthentication(  )
     {
     }
-    
-    
+
     /**
      * @return the _strAccessToken
      */

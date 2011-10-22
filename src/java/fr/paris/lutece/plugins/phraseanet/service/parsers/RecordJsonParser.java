@@ -35,7 +35,9 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.record.Thumbnail;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 
@@ -45,40 +47,48 @@ import net.sf.json.JSONObject;
 public class RecordJsonParser
 {
     /** private constructor */
-    private RecordJsonParser()
+    private RecordJsonParser(  )
     {
-        
     }
-    
+
     /**
      * Parse a record
      * @param jsonRecord The record as JSONObject
      * @return The record
      */
     public static Record parse( JSONObject jsonRecord )
+        throws PhraseanetApiCallException
     {
-        Record record = new Record(  );
-        record.setRecordId( jsonRecord.getInt( "record_id" ) );
-        record.setDataboxId( jsonRecord.getInt( "databox_id" ) );
-        record.setMimeType( jsonRecord.getString( "mime_type" ) );
-        record.setTitle( jsonRecord.getString( "title" ) );
-        record.setOriginalName( jsonRecord.getString( "original_name" ) );
-        record.setLastModified( jsonRecord.getString( "last_modification" ) );
-        record.setCreatedOn( jsonRecord.getString( "created_on" ) );
-        record.setCollectionId( jsonRecord.getInt( "collection_id" ) );
-        record.setPhraseaType( jsonRecord.getString( "phrasea_type" ) );
-        record.setUuid( jsonRecord.getString( "uuid" ) );
-        record.setSha256( jsonRecord.getString( "sha256" ) );
+        try
+        {
+            Record record = new Record(  );
+            record.setRecordId( jsonRecord.getInt( "record_id" ) );
+            record.setDataboxId( jsonRecord.getInt( "databox_id" ) );
+            record.setMimeType( jsonRecord.getString( "mime_type" ) );
+            record.setTitle( jsonRecord.getString( "title" ) );
+            record.setOriginalName( jsonRecord.getString( "original_name" ) );
+            record.setLastModified( jsonRecord.getString( "last_modification" ) );
+            record.setCreatedOn( jsonRecord.getString( "created_on" ) );
+            record.setCollectionId( jsonRecord.getInt( "collection_id" ) );
+            record.setPhraseaType( jsonRecord.getString( "phrasea_type" ) );
+            record.setUuid( jsonRecord.getString( "uuid" ) );
+            record.setSha256( jsonRecord.getString( "sha256" ) );
 
-        JSONObject jsonThumbnail = jsonRecord.getJSONObject( "thumbnail" );
-        Thumbnail thumbnail = new Thumbnail(  );
-        thumbnail.setUrl( jsonThumbnail.getString( "url" ) );
-        thumbnail.setMimeType( jsonThumbnail.getString( "mime_type" ) );
-        thumbnail.setHeight( jsonThumbnail.getInt( "height" ) );
-        thumbnail.setWidth( jsonThumbnail.getInt( "width" ) );
-        thumbnail.setFilesize( jsonThumbnail.getInt( "filesize" ) );
-        record.setThumbnail( thumbnail );
+            JSONObject jsonThumbnail = jsonRecord.getJSONObject( "thumbnail" );
+            Thumbnail thumbnail = new Thumbnail(  );
+            thumbnail.setUrl( jsonThumbnail.getString( "url" ) );
+            thumbnail.setMimeType( jsonThumbnail.getString( "mime_type" ) );
+            thumbnail.setHeight( jsonThumbnail.getInt( "height" ) );
+            thumbnail.setWidth( jsonThumbnail.getInt( "width" ) );
+            thumbnail.setFilesize( jsonThumbnail.getInt( "filesize" ) );
+            record.setThumbnail( thumbnail );
 
-        return record;
+            return record;
+        }
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing record : " + e.getMessage(  ) + " - JSON : " +
+                jsonRecord.toString( 4 ) );
+        }
     }
 }
