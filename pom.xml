@@ -61,7 +61,7 @@
     <properties>
         <componentName>phraseanet</componentName>
         <jiraProjectName>PHRASEANET</jiraProjectName>
-        <jiraComponentId></jiraComponentId>
+        <jiraComponentId>10620</jiraComponentId>
     </properties>
     <scm>
         <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/cms/plugin-phraseanet</connection>
