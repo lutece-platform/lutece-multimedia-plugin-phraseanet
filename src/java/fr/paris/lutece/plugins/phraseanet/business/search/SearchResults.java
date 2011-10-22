@@ -51,9 +51,9 @@ public class SearchResults
     private String _strWarning;
     private String _strQueryTime;
     private String _strSearchIndexes;
-    private List _Results;
-    private String _Query;
-    private Map _Suggestions;
+    private List _listResults;
+    private String _strQuery;
+    private Map _mapSuggestions;
 
     /**
      * Returns the TotalPages
@@ -205,16 +205,16 @@ public class SearchResults
      */
     public List getResults(  )
     {
-        return _Results;
+        return _listResults;
     }
 
     /**
      * Sets the Results
-     * @param Results The Results
+     * @param listResults The Results
      */
-    public void setResults( List Results )
+    public void setResults( List listResults )
     {
-        _Results = Results;
+        _listResults = listResults;
     }
 
     /**
@@ -223,16 +223,16 @@ public class SearchResults
      */
     public String getQuery(  )
     {
-        return _Query;
+        return _strQuery;
     }
 
     /**
      * Sets the Query
-     * @param Query The Query
+     * @param strQuery The Query
      */
-    public void setQuery( String Query )
+    public void setQuery( String strQuery )
     {
-        _Query = Query;
+        _strQuery = strQuery;
     }
 
     /**
@@ -241,15 +241,15 @@ public class SearchResults
      */
     public Map getSuggestions(  )
     {
-        return _Suggestions;
+        return _mapSuggestions;
     }
 
     /**
      * Sets the Suggestions
-     * @param Suggestions The Suggestions
+     * @param mapSuggestions The Suggestions
      */
-    public void setSuggestions( Map Suggestions )
+    public void setSuggestions( Map mapSuggestions )
     {
-        _Suggestions = Suggestions;
+        _mapSuggestions = mapSuggestions;
     }
 }

@@ -42,7 +42,7 @@ public class Permalink
     // Variables declarations 
     private String _strCreatedOn;
     private int _nId;
-    private boolean _IsActivated;
+    private boolean _bActivated;
     private String _strLabel;
     private String _strLastModified;
     private String _strPageURL;
@@ -88,18 +88,18 @@ public class Permalink
      * Returns the IsActivated
      * @return The IsActivated
      */
-    public boolean getIsActivated(  )
+    public boolean isActivated(  )
     {
-        return _IsActivated;
+        return _bActivated;
     }
 
     /**
      * Sets the IsActivated
-     * @param IsActivated The IsActivated
+     * @param bActivated The IsActivated
      */
-    public void setIsActivated( boolean IsActivated )
+    public void setActivated( boolean bActivated )
     {
-        _IsActivated = IsActivated;
+        _bActivated = bActivated;
     }
 
     /**

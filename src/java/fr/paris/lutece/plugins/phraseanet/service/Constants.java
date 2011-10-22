@@ -41,7 +41,9 @@ public final class Constants
 {
     public static final String PLUGIN_NAME = "phraseanet";
     public static final String LOGGER = "lutece.phraseanet";
+    public static final String PROPERTY_SERVER = "phraseanet.server";
 
+    /** private constructor */
     private Constants(  )
     {
     }

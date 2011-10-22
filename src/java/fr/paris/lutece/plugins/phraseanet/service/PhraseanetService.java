@@ -53,10 +53,9 @@ import net.sf.json.JSONObject;
  */
 public class PhraseanetService
 {
-    public static final String PROPERTY_SERVER = "phraseanet.server";
     private static final String PROPERTY_ITEMS_PER_PAGE_VALUES = "phraseanet.itemsPerPageValues";
     private static final String PROPERTY_MEDIA_TYPE_VALUES = "phraseanet.mediaTypeValues";
-    private static final String SERVER = AppPropertiesService.getProperty( PROPERTY_SERVER );
+    private static final String SERVER = AppPropertiesService.getProperty( Constants.PROPERTY_SERVER );
     private static final String PATH_GET_RECORD = "/api/v1/records/{0}/{1}/";
     private static final String PATH_GET_RECORD_METADATAS = "/api/v1/records/{0}/{1}/metadatas/";
     private static final String PATH_SEARCH = "/api/v1/records/search/?";
@@ -73,6 +72,13 @@ public class PhraseanetService
     private static List<String> _listItemsPerPageValues;
     private static List<String> _listMediaTypeValues;
 
+    /**
+     * Gets a record
+     * @param nDataboxId The databox id
+     * @param nRecordId The record id
+     * @return The record
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static Record getRecord( int nDataboxId, int nRecordId )
         throws PhraseanetApiCallException
     {
@@ -84,6 +90,13 @@ public class PhraseanetService
         return RecordJsonParser.parse( jsonRecord );
     }
 
+    /**
+     * Get metadatas for a given record
+     * @param nDataboxId The databox id
+     * @param nRecordId The record id
+     * @return Metadatas
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static List<Metadata> getRecordMetadatas( int nDataboxId, int nRecordId )
         throws PhraseanetApiCallException
     {
@@ -94,6 +107,15 @@ public class PhraseanetService
         return MetadatasJsonParser.parse( jsonResponse );
     }
 
+    /**
+     * Searc results
+     * @param strQuery Query terms
+     * @param nPage Page number
+     * @param nPerPage Number of items per page
+     * @param criterias Criterias
+     * @return search results
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static SearchResults search( String strQuery, int nPage, int nPerPage, SearchCriterias criterias )
         throws PhraseanetApiCallException
     {
@@ -116,6 +138,11 @@ public class PhraseanetService
         return SearchResultsJsonParser.parse( jsonResponse );
     }
 
+    /**
+     * Get databoxes
+     * @return The lis of databoxes
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static List<Databox> getDataboxes(  ) throws PhraseanetApiCallException
     {
         String strUrl = SERVER + PATH_DATABOXES;
@@ -125,6 +152,12 @@ public class PhraseanetService
         return DataboxesJsonParser.parse( jsonDataboxes );
     }
 
+    /**
+     * Get all collections of databox 
+     * @param nDataboxId The databox id
+     * @return a collection list
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static List<Collection> getColletions( int nDataboxId )
         throws PhraseanetApiCallException
     {
@@ -135,6 +168,13 @@ public class PhraseanetService
         return CollectionsJsonParser.parse( jsonResponse );
     }
 
+    /**
+     * Get embed data of a record
+     * @param nDataboxId The databox id
+     * @param nRecordId The record id
+     * @return embed data
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static Embed getEmbed( int nDataboxId, int nRecordId )
         throws PhraseanetApiCallException
     {
@@ -146,6 +186,10 @@ public class PhraseanetService
         return EmbedJsonParser.parse( jsonEmbed );
     }
 
+    /**
+     * Gets items per page values
+     * @return items per page values
+     */
     public synchronized static List<String> getItemsPerPageValues(  )
     {
         if ( _listItemsPerPageValues == null )
@@ -166,6 +210,10 @@ public class PhraseanetService
         
     }
 
+    /**
+     * Get media types values
+     * @return media types values
+     */
     public synchronized static List<String> getMediaTypeValues(  )
     {
         if ( _listMediaTypeValues == null )

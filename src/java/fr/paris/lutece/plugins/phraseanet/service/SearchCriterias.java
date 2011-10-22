@@ -107,16 +107,28 @@ public class SearchCriterias
         _strRecordType = strRecordType;
     }
 
+    /**
+     * Get bases
+     * @return The bases list
+     */
     public List<String> getBases(  )
     {
         return _listBases;
     }
 
+    /**
+     * Add a base
+     * @param strBaseId The base id
+     */
     public void addBase( String strBaseId )
     {
         _listBases.add( strBaseId );
-    }
+    } 
 
+    /**
+     * Set bases
+     * @param strBases The bases id separated by a comma
+     */
     public void setBases( String strBases )
     {
         _listBases.clear(  );

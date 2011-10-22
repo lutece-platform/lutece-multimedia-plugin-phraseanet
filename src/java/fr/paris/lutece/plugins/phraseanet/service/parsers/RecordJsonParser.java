@@ -40,11 +40,21 @@ import net.sf.json.JSONObject;
 
 
 /**
- *
- * @author pierre
+ * Record JSON parser
  */
 public class RecordJsonParser
 {
+    /** private constructor */
+    private RecordJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse a record
+     * @param jsonRecord The record as JSONObject
+     * @return The record
+     */
     public static Record parse( JSONObject jsonRecord )
     {
         Record record = new Record(  );

@@ -50,6 +50,17 @@ import java.util.List;
  */
 public class SearchResultsJsonParser
 {
+    /** private constructor */
+    private SearchResultsJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse for search results
+     * @param jsonResponse The response as JSONObject
+     * @return The search results
+     */
     public static SearchResults parse( JSONObject jsonResponse )
     {
         SearchResults results = new SearchResults(  );

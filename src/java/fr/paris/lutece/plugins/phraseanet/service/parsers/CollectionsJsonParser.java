@@ -45,8 +45,19 @@ import java.util.List;
 /**
  * CollectionsJsonParser
  */
-public class CollectionsJsonParser
+public final class CollectionsJsonParser
 {
+    /** private constructor */
+    private CollectionsJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse a list of collection
+     * @param jsonResponse The response as JSONObject
+     * @return The list
+     */
     public static List<Collection> parse( JSONObject jsonResponse )
     {
         List<Collection> listCollectiones = new ArrayList<Collection>(  );

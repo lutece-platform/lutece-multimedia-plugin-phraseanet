@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2002-2011, Mairie de Paris
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
  *
@@ -49,8 +49,8 @@ public class Record
     private String _strCreatedOn;
     private int _nCollectionId;
     private String _strSha256;
-    private Thumbnail _Thumbnail;
-    private TechnicalInformations _TechnicalInformations;
+    private Thumbnail _thumbnail;
+    private TechnicalInformations _technicalInformations;
     private String _strPhraseaType;
     private String _strUuid;
 
@@ -222,16 +222,16 @@ public class Record
      */
     public Thumbnail getThumbnail(  )
     {
-        return _Thumbnail;
+        return _thumbnail;
     }
 
     /**
      * Sets the Thumbnail
-     * @param Thumbnail The Thumbnail
+     * @param thumbnail The Thumbnail
      */
-    public void setThumbnail( Thumbnail Thumbnail )
+    public void setThumbnail( Thumbnail thumbnail )
     {
-        _Thumbnail = Thumbnail;
+        _thumbnail = thumbnail;
     }
 
     /**
@@ -240,16 +240,16 @@ public class Record
      */
     public TechnicalInformations getTechnicalInformations(  )
     {
-        return _TechnicalInformations;
+        return _technicalInformations;
     }
 
     /**
      * Sets the TechnicalInformation
-     * @param TechnicalInformations The TechnicalInformation
+     * @param technicalInformations The TechnicalInformation
      */
-    public void setTechnicalInformations( TechnicalInformations TechnicalInformations )
+    public void setTechnicalInformations( TechnicalInformations technicalInformations )
     {
-        _TechnicalInformations = TechnicalInformations;
+        _technicalInformations = technicalInformations;
     }
 
     /**

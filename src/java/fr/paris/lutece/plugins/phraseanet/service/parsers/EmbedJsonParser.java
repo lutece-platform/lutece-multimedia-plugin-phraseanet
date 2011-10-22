@@ -45,6 +45,17 @@ import net.sf.json.JSONObject;
  */
 public class EmbedJsonParser
 {
+    /** private constructor */
+    private EmbedJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse an Embed object
+     * @param jsonEmbed The embed as JSONObject
+     * @return The embed
+     */
     public static Embed parse( JSONObject jsonEmbed )
     {
         Embed embed = new Embed(  );
@@ -75,7 +86,7 @@ public class EmbedJsonParser
         p.setId( jsonPermalink.getInt( "id" ) );
         p.setCreatedOn( jsonPermalink.getString( "created_on" ) );
         p.setLastModified( jsonPermalink.getString( "last_modified" ) );
-        p.setIsActivated( jsonPermalink.getBoolean( "is_activated" ) );
+        p.setActivated( jsonPermalink.getBoolean( "is_activated" ) );
         p.setLabel( jsonPermalink.getString( "label" ) );
         p.setPageURL( jsonPermalink.getString( "page_URL" ) );
         p.setURL( jsonPermalink.getString( "URL" ) );

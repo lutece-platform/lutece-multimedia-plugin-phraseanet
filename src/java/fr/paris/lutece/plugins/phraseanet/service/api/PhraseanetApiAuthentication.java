@@ -39,10 +39,16 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 /**
  * PhraseaApiAuthentication
  */
-public class PhraseanetApiAuthentication
+public final class PhraseanetApiAuthentication
 {
     private static String _strAccessToken;
 
+    /** private constructor */
+    private PhraseanetApiAuthentication()
+    {
+    }
+    
+    
     /**
      * @return the _strAccessToken
      */

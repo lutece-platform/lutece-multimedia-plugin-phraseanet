@@ -43,6 +43,17 @@ import net.sf.json.JSONObject;
  */
 public class MetaJsonParser
 {
+    /** private constructor */
+    private MetaJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse meta
+     * @param jsonMeta The meta as JSONObject
+     * @return The meta
+     */
     public static Meta parse( JSONObject jsonMeta )
     {
         Meta meta = new Meta(  );

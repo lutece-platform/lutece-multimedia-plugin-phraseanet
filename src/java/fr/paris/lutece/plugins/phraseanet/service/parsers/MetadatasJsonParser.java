@@ -47,6 +47,17 @@ import java.util.List;
  */
 public class MetadatasJsonParser
 {
+    /** private constructor */
+    private MetadatasJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse a list of metadatas
+     * @param jsonResponse The response as JSONObject
+     * @return The list
+     */
     public static List<Metadata> parse( JSONObject jsonResponse )
     {
         List<Metadata> listMetadatas = new ArrayList<Metadata>(  );

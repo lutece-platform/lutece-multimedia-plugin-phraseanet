@@ -48,13 +48,12 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 
 /**
  * PhraseanetApiCallService
  */
-public class PhraseanetApiCallService
+public final class PhraseanetApiCallService
 {
     private static final String FIELD_META = "meta";
     private static final String FIELD_RESPONSE = "response";
@@ -62,6 +61,18 @@ public class PhraseanetApiCallService
     private static final String PARAMETER_OAUTH_TOKEN = "oauth_token";
     private static Logger _logger = Logger.getLogger( Constants.LOGGER );
 
+    /** Private constructor */
+    private PhraseanetApiCallService()
+    { 
+    }
+    
+    
+    /**
+     * Get a response for a GET request
+     * @param strRequest The request
+     * @return The response as a JSON object 
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static JSONObject getResponse( String strRequest )
         throws PhraseanetApiCallException
     {
@@ -100,6 +111,13 @@ public class PhraseanetApiCallService
         return jsonResponse;
     }
 
+    /**
+     * Get the response of a POST request
+     * @param strUrl The URL
+     * @param mapParameters The parameters
+     * @return The response as a JSON object 
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     public static JSONObject getPostResponse( String strUrl, Map<String, List<String>> mapParameters )
         throws PhraseanetApiCallException
     {

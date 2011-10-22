@@ -40,6 +40,10 @@ package fr.paris.lutece.plugins.phraseanet.service.api;
  */
 public class PhraseanetApiCallException extends Exception
 {
+    /**
+     * Constructor
+     * @param strMessage An exception message 
+     */
     public PhraseanetApiCallException( String strMessage )
     {
         super( strMessage );

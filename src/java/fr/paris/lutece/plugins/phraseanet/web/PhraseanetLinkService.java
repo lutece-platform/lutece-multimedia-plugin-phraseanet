@@ -105,6 +105,11 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         return getChooseMedia( request );
     }
 
+    /**
+     * Get choose media page
+     * @param request The HTTP request
+     * @returnThe choose media page
+     */
     public String getChooseMedia( HttpServletRequest request )
     {
         String strInput = request.getParameter( PARAMETER_INPUT );
@@ -120,6 +125,11 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         return template.getHtml(  );
     }
 
+    /**
+     * Get the search form
+     * @param request The HTTP request
+     * @return The search form
+     */
     public String getSearchForm( HttpServletRequest request )
     {
         String strInput = request.getParameter( PARAMETER_INPUT );
@@ -176,7 +186,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
             model.put( MARK_QUERY, ( strQuery != null ) ? strQuery : "" );
             model.put( MARK_RESULTS, results );
-            model.put( MARK_SERVER, AppPropertiesService.getProperty( PhraseanetService.PROPERTY_SERVER ) );
+            model.put( MARK_SERVER, AppPropertiesService.getProperty( Constants.PROPERTY_SERVER ) );
 
             model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
             model.put( MARK_ITEMS_PER_PAGE, strItemsPerPage );
@@ -198,6 +208,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * Insert the link into the editor
      * @param request The HTTP request
      * @return The code to insert
+     * @throws PhraseanetApiCallException if an error occurs
      */
     public String doInsertLink( HttpServletRequest request )
         throws PhraseanetApiCallException

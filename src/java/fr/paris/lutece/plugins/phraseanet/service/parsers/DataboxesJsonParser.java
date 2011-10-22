@@ -47,6 +47,17 @@ import java.util.List;
  */
 public class DataboxesJsonParser
 {
+    /** private constructor */
+    private DataboxesJsonParser()
+    {
+        
+    }
+    
+    /**
+     * Parse a list of databoxes
+     * @param jsonResponse The response as JSONObject
+     * @return The list
+     */
     public static List<Databox> parse( JSONObject jsonResponse )
     {
         List<Databox> listDataboxes = new ArrayList<Databox>(  );
