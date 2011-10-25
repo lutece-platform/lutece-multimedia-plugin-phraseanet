@@ -42,10 +42,19 @@ import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
-import fr.paris.lutece.plugins.phraseanet.service.parsers.*;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.CollectionsJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.DataboxesJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.EmbedJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.MetadatasJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
+import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 import net.sf.json.JSONObject;
 
 
