@@ -45,7 +45,7 @@ import net.sf.json.JSONObject;
 /**
  * EmbedJsonParser
  */
-public class EmbedJsonParser
+public final class EmbedJsonParser
 {
     /** private constructor */
     private EmbedJsonParser(  )
@@ -56,7 +56,8 @@ public class EmbedJsonParser
      * Parse an Embed object
      * @param jsonEmbed The embed as JSONObject
      * @return The embed
-     */
+     * @throws PhraseanetApiCallException if an error occurs
+    */
     public static Embed parse( JSONObject jsonEmbed ) throws PhraseanetApiCallException
     {
         try
@@ -76,6 +77,11 @@ public class EmbedJsonParser
         }
     }
 
+    /**
+     * Get embed item
+     * @param jsonEmbedItem The embed item as JSON object
+     * @return The embed item object
+     */
     private static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )
     {
         EmbedItem ei = new EmbedItem(  );
@@ -89,6 +95,11 @@ public class EmbedJsonParser
         return ei;
     }
 
+    /**
+     * Get Permalink
+     * @param jsonPermalink The permalink as JSON object
+     * @return  The permalink object
+     */
     private static Permalink getPermalink( JSONObject jsonPermalink )
     {
         Permalink p = new Permalink(  );

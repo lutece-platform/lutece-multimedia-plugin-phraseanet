@@ -57,6 +57,7 @@ public final class CollectionsJsonParser
     /**
      * Parse a list of collection
      * @param jsonResponse The response as JSONObject
+     * @throws PhraseanetApiCallException if an error occurs
      * @return The list
      */
     public static List<Collection> parse( JSONObject jsonResponse )
@@ -64,7 +65,7 @@ public final class CollectionsJsonParser
     {
         try
         {
-            List<Collection> listCollectiones = new ArrayList<Collection>(  );
+            List<Collection> listCollections = new ArrayList<Collection>(  );
             JSONObject jsonCollections = jsonResponse.getJSONObject( "collections" );
             Iterator i = jsonCollections.keys(  );
 
@@ -72,15 +73,15 @@ public final class CollectionsJsonParser
             {
                 String strKey = (String) i.next(  );
                 JSONObject jsonCollection = jsonCollections.getJSONObject( strKey );
-                Collection Collection = new Collection(  );
-                Collection.setBaseId( jsonCollection.getInt( "base_id" ) );
-                Collection.setCollId( jsonCollection.getInt( "coll_id" ) );
-                Collection.setName( jsonCollection.getString( "name" ) );
-                Collection.setRecordAmount( jsonCollection.getInt( "record_amount" ) );
-                listCollectiones.add( Collection );
+                Collection collection = new Collection(  );
+                collection.setBaseId( jsonCollection.getInt( "base_id" ) );
+                collection.setCollId( jsonCollection.getInt( "coll_id" ) );
+                collection.setName( jsonCollection.getString( "name" ) );
+                collection.setRecordAmount( jsonCollection.getInt( "record_amount" ) );
+                listCollections.add( collection );
             }
 
-            return listCollectiones;
+            return listCollections;
         }
         catch ( JSONException e )
         {

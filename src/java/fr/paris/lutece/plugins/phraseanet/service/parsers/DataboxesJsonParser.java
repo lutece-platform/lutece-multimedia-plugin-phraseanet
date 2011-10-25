@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * Databoxes Json Parser
  */
-public class DataboxesJsonParser
+public final class DataboxesJsonParser
 {
     /** private constructor */
     private DataboxesJsonParser(  )
@@ -57,6 +57,7 @@ public class DataboxesJsonParser
     /**
      * Parse a list of databoxes
      * @param jsonResponse The response as JSONObject
+     * @throws PhraseanetApiCallException if an error occurs
      * @return The list
      */
     public static List<Databox> parse( JSONObject jsonResponse )

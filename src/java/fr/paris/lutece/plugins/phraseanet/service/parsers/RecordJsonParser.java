@@ -44,7 +44,7 @@ import net.sf.json.JSONObject;
 /**
  * Record JSON parser
  */
-public class RecordJsonParser
+public final class RecordJsonParser
 {
     /** private constructor */
     private RecordJsonParser(  )
@@ -55,6 +55,7 @@ public class RecordJsonParser
      * Parse a record
      * @param jsonRecord The record as JSONObject
      * @return The record
+     * @throws PhraseanetApiCallException if an error occurs
      */
     public static Record parse( JSONObject jsonRecord )
         throws PhraseanetApiCallException

@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * Metadata Json Parser
  */
-public class MetadatasJsonParser
+public final class MetadatasJsonParser
 {
     /** private constructor */
     private MetadatasJsonParser(  )
@@ -58,6 +58,7 @@ public class MetadatasJsonParser
      * Parse a list of metadatas
      * @param jsonResponse The response as JSONObject
      * @return The list
+     * @throws PhraseanetApiCallException if an error occurs
      */
     public static List<Metadata> parse( JSONObject jsonResponse )
         throws PhraseanetApiCallException

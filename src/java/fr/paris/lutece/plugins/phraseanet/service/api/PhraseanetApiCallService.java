@@ -39,15 +39,12 @@ import fr.paris.lutece.plugins.phraseanet.service.parsers.MetaJsonParser;
 import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.url.UrlItem;
-
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -93,6 +90,12 @@ public final class PhraseanetApiCallService
         }
     }
 
+    /**
+     * Extract response as JSON object
+     * @param strResponse The complete response as String
+     * @return The response as JSON object
+     * @throws PhraseanetApiCallException if an error occurs
+     */
     static JSONObject extractResponse( String strResponse )
         throws PhraseanetApiCallException
     {

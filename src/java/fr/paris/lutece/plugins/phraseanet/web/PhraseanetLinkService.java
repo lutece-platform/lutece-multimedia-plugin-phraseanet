@@ -48,17 +48,12 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
-
-import net.sf.json.JSONException;
-
-import org.apache.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -114,7 +109,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     /**
      * Get choose media page
      * @param request The HTTP request
-     * @returnThe choose media page
+     * @return The choose media page
      */
     public String getChooseMedia( HttpServletRequest request )
     {
@@ -141,7 +136,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         String strInput = request.getParameter( PARAMETER_INPUT );
         String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
 
-        int nMediaHandlerId = Integer.parseInt( strMediaHandler );
         String strDefaultItemsPerPage = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_DEFAULT );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
@@ -214,7 +208,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * Insert the link into the editor
      * @param request The HTTP request
      * @return The code to insert
-     * @throws PhraseanetApiCallException if an error occurs
      */
     public String doInsertLink( HttpServletRequest request )
     {
@@ -260,6 +253,12 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         }
     }
 
+
+    /**
+     * Get The Error page
+     * @param request The HTTP request
+     * @return The error page
+     */
     public String getError( HttpServletRequest request )
     {
         // Gets the locale of the user

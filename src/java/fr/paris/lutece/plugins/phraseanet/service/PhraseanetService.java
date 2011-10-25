@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service;
 
+
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
@@ -43,18 +44,15 @@ import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.*;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
-
-import net.sf.json.JSONObject;
-
 import java.text.MessageFormat;
-
 import java.util.*;
+import net.sf.json.JSONObject;
 
 
 /**
  * PhraseanetService
  */
-public class PhraseanetService
+public final class PhraseanetService
 {
     private static final String PROPERTY_ITEMS_PER_PAGE_VALUES = "phraseanet.itemsPerPageValues";
     private static final String PROPERTY_MEDIA_TYPE_VALUES = "phraseanet.mediaTypeValues";
@@ -74,6 +72,13 @@ public class PhraseanetService
     private static final String SEARCH_ALL = "< All >";
     private static List<String> _listItemsPerPageValues;
     private static List<String> _listMediaTypeValues;
+    
+    /** private constructor */
+    private PhraseanetService()
+    {
+        
+    }
+    
 
     /**
      * Gets a record
@@ -193,7 +198,7 @@ public class PhraseanetService
      * Gets items per page values
      * @return items per page values
      */
-    public synchronized static List<String> getItemsPerPageValues(  )
+    public static synchronized List<String> getItemsPerPageValues(  )
     {
         if ( _listItemsPerPageValues == null )
         {
@@ -216,7 +221,7 @@ public class PhraseanetService
      * Get media types values
      * @return media types values
      */
-    public synchronized static List<String> getMediaTypeValues(  )
+    public static synchronized List<String> getMediaTypeValues(  )
     {
         if ( _listMediaTypeValues == null )
         {
@@ -237,6 +242,12 @@ public class PhraseanetService
         return _listMediaTypeValues;
     }
 
+    /**
+     * Add parameters to a map
+     * @param map The map
+     * @param strKey The parameter key
+     * @param strValue The parameter value
+     */
     private static void putParameter( Map<String, List<String>> map, String strKey, String strValue )
     {
         List<String> listValue = new ArrayList<String>(  );

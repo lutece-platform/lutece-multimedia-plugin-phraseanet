@@ -43,7 +43,7 @@ import net.sf.json.JSONObject;
 /**
  * MetaJsonParser
  */
-public class MetaJsonParser
+public final class MetaJsonParser
 {
     /** private constructor */
     private MetaJsonParser(  )
@@ -54,6 +54,7 @@ public class MetaJsonParser
      * Parse meta
      * @param jsonMeta The meta as JSONObject
      * @return The meta
+     * @throws PhraseanetApiCallException if an error occurs
      */
     public static Meta parse( JSONObject jsonMeta ) throws PhraseanetApiCallException
     {

@@ -47,10 +47,9 @@ import java.util.List;
 
 
 /**
- *
- * @author pierre
+ * Search Results Json Parser
  */
-public class SearchResultsJsonParser
+public final class SearchResultsJsonParser
 {
     /** private constructor */
     private SearchResultsJsonParser(  )
@@ -61,6 +60,7 @@ public class SearchResultsJsonParser
      * Parse for search results
      * @param jsonResponse The response as JSONObject
      * @return The search results
+     * @throws PhraseanetApiCallException if an error occurs
      */
     public static SearchResults parse( JSONObject jsonResponse )
         throws PhraseanetApiCallException
