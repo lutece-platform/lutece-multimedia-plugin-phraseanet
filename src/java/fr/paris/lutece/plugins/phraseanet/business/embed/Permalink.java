@@ -142,7 +142,7 @@ public class Permalink
      * Returns the PageURL
      * @return The PageURL
      */
-    public String getPageURL(  )
+    public String getPageUrl(  )
     {
         return _strPageURL;
     }
@@ -151,7 +151,7 @@ public class Permalink
      * Sets the PageURL
      * @param strPageURL The PageURL
      */
-    public void setPageURL( String strPageURL )
+    public void setPageUrl( String strPageURL )
     {
         _strPageURL = strPageURL;
     }
@@ -160,7 +160,7 @@ public class Permalink
      * Returns the URL
      * @return The URL
      */
-    public String getURL(  )
+    public String getUrl(  )
     {
         return _strURL;
     }
@@ -169,7 +169,7 @@ public class Permalink
      * Sets the URL
      * @param strURL The URL
      */
-    public void setURL( String strURL )
+    public void setUrl( String strURL )
     {
         _strURL = strURL;
     }

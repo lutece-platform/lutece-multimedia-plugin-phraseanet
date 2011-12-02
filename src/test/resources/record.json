@@ -9,8 +9,17 @@
             "collection_id": 1,
             "sha256": "669f161400fe81fa3024b074a1c0cfe0d0d7643470a2f450e6b005ce8daf0f8d",
             "thumbnail": {
-                "url": "/web//db_trunk/subdefs/2011/03/24/0000/295_thumbnail.jpg",
+                "permalink": {
+                    "created_on": "2011-11-09T11:33:34+01:00",
+                    "id": 2384,
+                    "is_activated": true,
+                    "label": "Fondation",
+                    "last_modified": "2011-11-09T11:33:34+01:00",
+                    "page_url": "https://localhost/permalink/v1/Fondation/1/2151/HLm5eyxA/thumbnail/view/",
+                    "url": "https://localhost/permalink/v1/Fondation/1/2151/HLm5eyxA/thumbnail/"
+                },
                 "mime_type": "image/jpeg",
+                "player_type": "IMAGE",
                 "height": 48,
                 "width": 48,
                 "filesize": 1017

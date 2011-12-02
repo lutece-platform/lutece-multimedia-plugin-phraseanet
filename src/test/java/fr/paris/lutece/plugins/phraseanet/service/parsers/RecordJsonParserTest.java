@@ -70,11 +70,12 @@ public class RecordJsonParserTest
         assertEquals( record.getCreatedOn(  ), "2011-03-24T12:05:04+01:00" );
         assertEquals( record.getCollectionId(  ), 1 );
         assertEquals( record.getSha256(  ), "669f161400fe81fa3024b074a1c0cfe0d0d7643470a2f450e6b005ce8daf0f8d" );
-        assertEquals( record.getThumbnail(  ).getUrl(  ), "/web//db_trunk/subdefs/2011/03/24/0000/295_thumbnail.jpg" );
         assertEquals( record.getThumbnail(  ).getMimeType(  ), "image/jpeg" );
         assertEquals( record.getThumbnail(  ).getHeight(  ), 48 );
         assertEquals( record.getThumbnail(  ).getWidth(  ), 48 );
         assertEquals( record.getThumbnail(  ).getFilesize(  ), 1017 );
+        assertNotNull( record.getThumbnail().getPermalink());
+        assertNotNull( record.getThumbnail().getPlayerType() );
         assertEquals( record.getPhraseaType(  ), "image" );
         assertEquals( record.getUuid(  ), "b65b957f-ed22-4291-9811-35c09a43ba28" );
     }

@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.embed.EmbedItem;
-import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import net.sf.json.JSONObject;
@@ -64,7 +63,7 @@ public class EmbedJsonParserTest
         JSONObject jsonEmbed = (JSONObject) JSONSerializer.toJSON( strJson );
         Embed embed = EmbedJsonParser.parse( jsonEmbed );
         EmbedItem document = embed.getDocument(  );
-        assertEquals( document.getWidth(  ), 1024 );
-        assertEquals( document.getHeight(  ), 1024 );
+        assertEquals( document.getWidth(  ), 320 );
+        assertEquals( document.getHeight(  ), 240 );
     }
 }

@@ -43,9 +43,9 @@ public class EmbedItem
     private Permalink _permalink;
     private int _nHeight;
     private int _nWidth;
-    private int _nSize;
-    private String _strType;
-    private String _strMime;
+    private int _nFilesize;
+    private String _strPlayerType;
+    private String _strMimeType;
 
     /**
      * Returns the Permalink
@@ -105,53 +105,53 @@ public class EmbedItem
      * Returns the Size
      * @return The Size
      */
-    public int getSize(  )
+    public int getFilesize(  )
     {
-        return _nSize;
+        return _nFilesize;
     }
 
     /**
      * Sets the Size
      * @param nSize The Size
      */
-    public void setSize( int nSize )
+    public void setFilesize( int nSize )
     {
-        _nSize = nSize;
+        _nFilesize = nSize;
     }
 
     /**
      * Returns the Type
      * @return The Type
      */
-    public String getType(  )
+    public String getPlayerType(  )
     {
-        return _strType;
+        return _strPlayerType;
     }
 
     /**
      * Sets the Type
      * @param strType The Type
      */
-    public void setType( String strType )
+    public void setPlayerType( String strType )
     {
-        _strType = strType;
+        _strPlayerType = strType;
     }
 
     /**
      * Returns the Mime
      * @return The Mime
      */
-    public String getMime(  )
+    public String getMimeType(  )
     {
-        return _strMime;
+        return _strMimeType;
     }
 
     /**
      * Sets the Mime
      * @param strMime The Mime
      */
-    public void setMime( String strMime )
+    public void setMimeType( String strMime )
     {
-        _strMime = strMime;
+        _strMimeType = strMime;
     }
 }

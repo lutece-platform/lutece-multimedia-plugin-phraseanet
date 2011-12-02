@@ -77,11 +77,12 @@ public final class RecordJsonParser
 
             JSONObject jsonThumbnail = jsonRecord.getJSONObject( "thumbnail" );
             Thumbnail thumbnail = new Thumbnail(  );
-            thumbnail.setUrl( jsonThumbnail.getString( "url" ) );
+            thumbnail.setPermalink( EmbedJsonParser.getPermalink(jsonThumbnail.getJSONObject( "permalink" )) );
             thumbnail.setMimeType( jsonThumbnail.getString( "mime_type" ) );
             thumbnail.setHeight( jsonThumbnail.getInt( "height" ) );
             thumbnail.setWidth( jsonThumbnail.getInt( "width" ) );
             thumbnail.setFilesize( jsonThumbnail.getInt( "filesize" ) );
+            thumbnail.setPlayerType( jsonThumbnail.getString("player_type"));
             record.setThumbnail( thumbnail );
 
             return record;

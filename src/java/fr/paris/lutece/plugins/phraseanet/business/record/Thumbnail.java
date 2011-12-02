@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.record;
 
+import fr.paris.lutece.plugins.phraseanet.business.embed.Permalink;
+
 
 /**
  * This is the business class for the object Thumbnail
@@ -40,28 +42,29 @@ package fr.paris.lutece.plugins.phraseanet.business.record;
 public class Thumbnail
 {
     // Variables declarations 
-    private String _strUrl;
-    private String _strMimeType;
+    private Permalink _permalink;
     private int _nHeight;
     private int _nWidth;
     private int _nFilesize;
+    private String _strPlayerType;
+    private String _strMimeType;
 
     /**
-     * Returns the Url
-     * @return The Url
+     * Returns the Permalink
+     * @return The Permalink
      */
-    public String getUrl(  )
+    public Permalink getPermalink(  )
     {
-        return _strUrl;
+        return _permalink;
     }
 
     /**
-     * Sets the Url
-     * @param strUrl The Url
+     * Sets the Permalink
+     * @param permalink The Permalink
      */
-    public void setUrl( String strUrl )
+    public void setPermalink( Permalink permalink )
     {
-        _strUrl = strUrl;
+        _permalink = permalink;
     }
 
     /**
@@ -135,4 +138,24 @@ public class Thumbnail
     {
         _nFilesize = nFilesize;
     }
+    
+    /**
+     * Returns the PlayerType
+     * @return The PlayerType
+     */
+    public String getPlayerType(  )
+    {
+        return _strPlayerType;
+    }
+
+    /**
+     * Sets the PlayerType
+     * @param strPlayerType The PlayerType
+     */
+    public void setPlayerType( String strPlayerType )
+    {
+        _strPlayerType = strPlayerType;
+    }
+
+
 }

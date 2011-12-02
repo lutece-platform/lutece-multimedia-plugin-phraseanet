@@ -82,15 +82,15 @@ public final class EmbedJsonParser
      * @param jsonEmbedItem The embed item as JSON object
      * @return The embed item object
      */
-    private static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )
+    public static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )
     {
         EmbedItem ei = new EmbedItem(  );
         ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject( "permalink" ) ) );
         ei.setWidth( jsonEmbedItem.getInt( "width" ) );
         ei.setHeight( jsonEmbedItem.getInt( "height" ) );
-        ei.setSize( jsonEmbedItem.getInt( "size" ) );
-        ei.setType( jsonEmbedItem.getString( "type" ) );
-        ei.setMime( jsonEmbedItem.getString( "mime" ) );
+        ei.setFilesize( jsonEmbedItem.getInt( "filesize" ) );
+        ei.setPlayerType( jsonEmbedItem.getString( "player_type" ) );
+        ei.setMimeType( jsonEmbedItem.getString( "mime_type" ) );
 
         return ei;
     }
@@ -100,17 +100,22 @@ public final class EmbedJsonParser
      * @param jsonPermalink The permalink as JSON object
      * @return  The permalink object
      */
-    private static Permalink getPermalink( JSONObject jsonPermalink )
+    public static Permalink getPermalink( JSONObject jsonPermalink )
     {
-        Permalink p = new Permalink(  );
-        p.setId( jsonPermalink.getInt( "id" ) );
-        p.setCreatedOn( jsonPermalink.getString( "created_on" ) );
-        p.setLastModified( jsonPermalink.getString( "last_modified" ) );
-        p.setActivated( jsonPermalink.getBoolean( "is_activated" ) );
-        p.setLabel( jsonPermalink.getString( "label" ) );
-        p.setPageURL( jsonPermalink.getString( "page_URL" ) );
-        p.setURL( jsonPermalink.getString( "URL" ) );
-
+        
+        Permalink p = null;
+        
+        if( jsonPermalink != null )
+        {
+            p = new Permalink(  );
+            p.setId( jsonPermalink.getInt( "id" ) );
+            p.setCreatedOn( jsonPermalink.getString( "created_on" ) );
+            p.setLastModified( jsonPermalink.getString( "last_modified" ) );
+            p.setActivated( jsonPermalink.getBoolean( "is_activated" ) );
+            p.setLabel( jsonPermalink.getString( "label" ) );
+            p.setPageUrl( jsonPermalink.getString( "page_url" ) );
+            p.setUrl( jsonPermalink.getString( "url" ) );
+        }
         return p;
     }
 }

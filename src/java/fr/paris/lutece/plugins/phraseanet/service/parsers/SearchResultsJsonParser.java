@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
+import fr.paris.lutece.portal.service.util.AppLogService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -84,9 +85,16 @@ public final class SearchResultsJsonParser
 
             while ( i.hasNext(  ) )
             {
-                JSONObject jsonResult = (JSONObject) i.next(  );
-                Record record = RecordJsonParser.parse( jsonResult );
-                listResults.add( record );
+                try 
+                {
+                    JSONObject jsonResult = (JSONObject) i.next(  );
+                    Record record = RecordJsonParser.parse( jsonResult );
+                    listResults.add( record );
+                }
+                catch( PhraseanetApiCallException e )
+                {
+                    AppLogService.error( "Error parsing records list " + e.getMessage() );
+                }
             }
 
             results.setResults( listResults );
