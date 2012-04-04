@@ -37,6 +37,7 @@ import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.embed.EmbedItem;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Permalink;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
+import java.util.Iterator;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -63,10 +64,13 @@ public final class EmbedJsonParser
         try
         {
             Embed embed = new Embed(  );
-
-            embed.setPreview( getEmbedItem( jsonEmbed.getJSONObject( "preview" ) ) );
-            embed.setThumbnail( getEmbedItem( jsonEmbed.getJSONObject( "thumbnail" ) ) );
-            embed.setDocument( getEmbedItem( jsonEmbed.getJSONObject( "document" ) ) );
+            
+            Iterator i = jsonEmbed.keys();
+            while( i.hasNext() )
+            {
+                String key = (String) i.next();
+                embed.addEmbedItem(key,  getEmbedItem( jsonEmbed.getJSONObject( key ) ));
+            }
 
             return embed;
         }
@@ -85,7 +89,11 @@ public final class EmbedJsonParser
     public static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )
     {
         EmbedItem ei = new EmbedItem(  );
-        ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject( "permalink" ) ) );
+        JSONObject permalink = jsonEmbedItem.getJSONObject( "permalink" );
+        if( ! permalink.isNullObject())
+        {
+            ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject( "permalink" ) ) );
+        }
         ei.setWidth( jsonEmbedItem.getInt( "width" ) );
         ei.setHeight( jsonEmbedItem.getInt( "height" ) );
         ei.setFilesize( jsonEmbedItem.getInt( "filesize" ) );

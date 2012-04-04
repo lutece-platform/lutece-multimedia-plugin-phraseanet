@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.phraseanet.business.embed;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Embed
@@ -40,61 +43,25 @@ package fr.paris.lutece.plugins.phraseanet.business.embed;
 public class Embed
 {
     // Variables declarations 
-    private EmbedItem _eiPreview;
-    private EmbedItem _eiThumbnail;
-    private EmbedItem _eiDocument;
+    private Map<String, EmbedItem> _mapEmbedItems = new HashMap<String, EmbedItem>();
 
     /**
-     * Returns the Preview
-     * @return The Preview
+     * Add an Embed Item
+     * @param strKey The key
+     * @param item The item
      */
-    public EmbedItem getPreview(  )
+    public void addEmbedItem( String strKey , EmbedItem item )
     {
-        return _eiPreview;
+        _mapEmbedItems.put(strKey, item );
     }
-
+    
     /**
-     * Sets the Preview
-     * @param preview The Preview
+     * Get an Embed Item
+     * @param strKey The key
+     * @return The item
      */
-    public void setPreview( EmbedItem preview )
+    public EmbedItem getEmbedItem( String strKey )
     {
-        _eiPreview = preview;
-    }
-
-    /**
-     * Returns the Thumbnail
-     * @return The Thumbnail
-     */
-    public EmbedItem getThumbnail(  )
-    {
-        return _eiThumbnail;
-    }
-
-    /**
-     * Sets the Thumbnail
-     * @param thumbnail The Thumbnail
-     */
-    public void setThumbnail( EmbedItem thumbnail )
-    {
-        _eiThumbnail = thumbnail;
-    }
-
-    /**
-     * Returns the Document
-     * @return The Document
-     */
-    public EmbedItem getDocument(  )
-    {
-        return _eiDocument;
-    }
-
-    /**
-     * Sets the Document
-     * @param document The Document
-     */
-    public void setDocument( EmbedItem document )
-    {
-        _eiDocument = document;
+        return _mapEmbedItems.get(strKey);
     }
 }
