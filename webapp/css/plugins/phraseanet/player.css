@@ -1,0 +1,24 @@
+section.blurb .box{
+    padding:0;
+}
+
+/* styling of the container. */
+a.phraseaPlayer {
+    display:block;
+    width: 100%;
+    height:100%;
+    text-align:center;
+    margin:15px;
+    float:left;
+    border:1px solid #999;
+}
+ 
+/* Start image */
+a.phraseaPlayer img {
+    border:0px;
+}
+ 
+/* when container is hovered we alter the border color */
+a.phraseaPlayer:hover {
+    border:1px solid #000;
+}
