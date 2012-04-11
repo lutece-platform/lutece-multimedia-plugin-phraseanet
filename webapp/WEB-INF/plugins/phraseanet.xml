@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<plug-in>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     
     <!-- Plugin Informations -->
     <name>phraseanet</name>
@@ -64,4 +63,4 @@
         <javascript-file>phraseanet/player.js</javascript-file>
     </javascript-files>
 	    
-</plug-in>   
+</plug-in>
