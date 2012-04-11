@@ -3,7 +3,7 @@
     <!-- Plugin Informations -->
     <name>phraseanet</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <description>phraseanet.plugin.description</description>
     <provider>phraseanet.plugin.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
