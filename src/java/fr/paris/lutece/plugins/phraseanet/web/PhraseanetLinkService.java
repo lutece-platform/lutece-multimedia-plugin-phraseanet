@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.phraseanet.web;
 
+import fr.paris.lutece.plugins.phraseanet.business.account.Account;
+import fr.paris.lutece.plugins.phraseanet.business.account.AccountHome;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandler;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerHome;
@@ -48,6 +50,8 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.string.StringUtil;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -72,8 +76,6 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_INPUT = "input";
     private static final String MARK_QUERY = "query";
     private static final String MARK_RESULTS = "results";
-    private static final String MARK_WIDTH = "width";
-    private static final String MARK_HEIGHT = "height";
     private static final String MARK_SERVER = "server";
     private static final String MARK_ITEMS_PER_PAGE_VALUES = "items_per_page_values";
     private static final String MARK_ITEMS_PER_PAGE = "items_per_page_selected";
@@ -162,7 +164,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     {
         String strInput = request.getParameter( PARAMETER_INPUT );
         String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
-        String strQuery = request.getParameter( PARAMETER_SEARCH );
+        String strQuery =  request.getParameter( PARAMETER_SEARCH );
         String strCurrentPage = request.getParameter( PARAMETER_CURRENT_PAGE );
         String strItemsPerPage = request.getParameter( PARAMETER_ITEMS_PER_PAGE );
 
@@ -175,9 +177,10 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         {
             SearchCriterias criterias = new SearchCriterias(  );
             criterias.setRecordType( mh.getMediaType(  ) );
-            criterias.setBases( mh.getBases(  ) );
-
-            SearchResults results = PhraseanetService.search( strQuery, nPage, nPerPage, criterias );
+            
+        	Account account = AccountHome.findByPrimaryKey( mh.getIdAccount(  ) );
+        	
+            SearchResults results = PhraseanetService.search( StringUtil.replaceAccent( strQuery ), nPage, nPerPage, criterias, account );
 
             HashMap<String, Object> model = new HashMap<String, Object>(  );
 
@@ -186,7 +189,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
             model.put( MARK_QUERY, ( strQuery != null ) ? strQuery : "" );
             model.put( MARK_RESULTS, results );
-            model.put( MARK_SERVER, AppPropertiesService.getProperty( Constants.PROPERTY_SERVER ) );
+            model.put( MARK_SERVER, account.getAccessURL(  ) );
 
             model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
             model.put( MARK_ITEMS_PER_PAGE, strItemsPerPage );
@@ -228,16 +231,16 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
 
         try
         {
-            Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId );
-            List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId );
+        	//FIXME test d'un compte provisoir
+        	Account account = AccountHome.findByPrimaryKey( mh.getIdAccount(  ) );
+        	
+            Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId, account );
+            List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId, account );
 
-            Map model = new HashMap(  );
+            Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_LOCALE, locale );
-            model.put( MARK_WIDTH, mh.getDefaultWidth(  ) );
-            model.put( MARK_HEIGHT, mh.getDefaultHeight(  ) );
             model.put( MARK_EMBED, embed );
             model.put( MARK_METADATAS, listMetadatas );
-
             HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
             String strInsert = t.getHtml(  );
 
@@ -263,7 +266,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     {
         // Gets the locale of the user
         Locale locale = AdminUserService.getLocale( request );
-        Map model = new HashMap(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( MARK_ERROR, _strError );
 
         HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_ERROR, locale, model );

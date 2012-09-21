@@ -1,15 +1,24 @@
 
 --
--- Dumping data for table `phraseanet_media`
+-- Dumping data for table `phraseanet_templates`
 --
-
-INSERT INTO phraseanet_media (id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height ) 
-VALUES (1, 'Toute vidéo - Player standard', 'Ensemble des vidéos disponible de la banque de contenu.', 'images/admin/skin/plugins/phraseanet/video_icon.png', '<!-- Player standard 1.1 -->\r\n<div id="video" style="width: ${embed.getEmbedItem("thumbnail").getWidth()}px; height:${embed.getEmbedItem("thumbnail").getHeight()}px;">\r\n  <a class="phraseaPlayer" \r\n     href="${embed.getEmbedItem("preview").permalink.getUrl()}">\r\n    <img src="${embed.getEmbedItem("thumbnail").permalink.getUrl()}" \r\n         alt="${embed.getEmbedItem("preview").permalink.getLabel()}" />\r\n  </a>\r\n</div>', 'video', '', 0, 0);
-INSERT INTO `phraseanet_media` (`id_media`, `media_name`, `media_description`, `url_icon`, `insert_template`, `media_type`, `bases`, `default_width`, `default_height`) 
-VALUES (2, 'Vidéo tous public - Player large', 'Vidéos utilisable sur Paris.fr', 'images/admin/skin/plugins/phraseanet/video_icon.png', '<!-- Player large 1.1 -->\r\n<div id="video" style="width: ${embed.getEmbedItem("thumbnail_690").getWidth()}px; height:${embed.getEmbedItem("thumbnail_690").getHeight()}px;">\r\n  <a class="phraseaPlayer" \r\n     href="${embed.getEmbedItem("preview").permalink.getUrl()}">\r\n    <img src="${embed.getEmbedItem("thumbnail_690").permalink.getUrl()}" \r\n         alt="${embed.getEmbedItem("preview").permalink.getLabel()}" />\r\n  </a>\r\n</div>', 'video', '54,57,59,60,62,63,64,65,68,69', 0, 0);
-INSERT INTO `phraseanet_media` (`id_media`, `media_name`, `media_description`, `url_icon`, `insert_template`, `media_type`, `bases`, `default_width`, `default_height`) 
-VALUES (3, 'Vidéo intranet - Player mini', 'Vidéos diffusable uniquement en intranet', 'images/admin/skin/plugins/phraseanet/video_icon.png', '<!-- Player mini 1.1 -->\r\n<div id="video" style="width: ${embed.getEmbedItem("thumbnail_170").getWidth()}px; height:${embed.getEmbedItem("thumbnail_170").getHeight()}px;">\r\n  <a class="phraseaPlayer" \r\n     href="${embed.getEmbedItem("preview").permalink.getUrl()}">\r\n    <img src="${embed.getEmbedItem("thumbnail_170").permalink.getUrl()}" \r\n         alt="${embed.getEmbedItem("preview").permalink.getLabel()}" />\r\n  </a>\r\n</div>', 'video', '58,55,70,72,76,79', 0, 0);
-INSERT INTO `phraseanet_media` (`id_media`, `media_name`, `media_description`, `url_icon`, `insert_template`, `media_type`, `bases`, `default_width`, `default_height`) 
-VALUES (4,'Image','Images de la collection ','images/admin/skin/plugins/phraseanet/image_icon.png','<img src="${embed.document.permalink.getURL()}" width="${width}" height="${height}" />', 'image', NULL, 400, 300 );
-INSERT INTO phraseanet_media (id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height) 
-VALUES (5,'Audio','Documents audio','images/admin/skin/plugins/phraseanet/audio_icon.png', 'player audio', 'audio', NULL, 400, 300 );
+INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
+VALUES (1, 'Template pour les vidéos', '
+<p style="text-align: center;">
+  <a id="video" 
+     class="phraseaPlayer" 
+     style="width: ${embed.getEmbedItem("thumbnail").width}px; height:${embed.getEmbedItem("thumbnail").height}px; float: none;"
+     href="${embed.getEmbedItem("preview").permalink.Url}">
+    <img src="${embed.getEmbedItem("thumbnail").permalink.Url}" 
+         alt="${embed.getEmbedItem("preview").permalink.label}" />
+  </a>
+</p>
+', 'video' );
+INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
+VALUES (2, 'Template pour les audios', '', 'audio' );
+INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
+VALUES (3, 'Template pour les images', '<img src="${embed.getEmbedItem(\'document\').permalink.Url}" width="${embed.getEmbedItem(\'document\').width}" height="${embed.getEmbedItem(\'document\').height}" />', 'image' );
+INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
+VALUES (4, 'Template pour les flashs', '', 'flash' );
+INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
+VALUES (5, 'Template pour les documents', '', 'document' );

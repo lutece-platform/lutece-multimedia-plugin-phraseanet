@@ -40,14 +40,12 @@ package fr.paris.lutece.plugins.phraseanet.business.media;
 public class MediaHandler
 {
     private int _nId;
+    private int _nIdAccount;
     private String _strName;
     private String _strDescription;
     private String _strIconUrl;
     private String _strInsertTemplate;
     private String _strMediaType;
-    private String _strBases;
-    private int _nDefaultWidth;
-    private int _nDefaultHeight;
 
     /**
      * Returns the Id
@@ -65,6 +63,24 @@ public class MediaHandler
     public void setId( int nId )
     {
         _nId = nId;
+    }
+    
+    /**
+     * Returns the IdAccount
+     * @return The IdAccount
+     */
+    public int getIdAccount(  )
+    {
+        return _nIdAccount;
+    }
+
+    /**
+     * Sets the nIdAccount
+     * @param nIdAccount The nIdAccount
+     */
+    public void setIdAccount( int nIdAccount )
+    {
+    	_nIdAccount = nIdAccount;
     }
 
     /**
@@ -155,59 +171,5 @@ public class MediaHandler
     public void setMediaType( String strMediaType )
     {
         _strMediaType = strMediaType;
-    }
-
-    /**
-     * Returns the Bases
-     * @return The Bases
-     */
-    public String getBases(  )
-    {
-        return _strBases;
-    }
-
-    /**
-     * Sets the Bases
-     * @param strBases The Bases
-     */
-    public void setBases( String strBases )
-    {
-        _strBases = strBases;
-    }
-
-    /**
-     * Returns the DefaultWidth
-     * @return The DefaultWidth
-     */
-    public int getDefaultWidth(  )
-    {
-        return _nDefaultWidth;
-    }
-
-    /**
-     * Sets the DefaultWidth
-     * @param nDefaultWidth The DefaultWidth
-     */
-    public void setDefaultWidth( int nDefaultWidth )
-    {
-        _nDefaultWidth = nDefaultWidth;
-    }
-
-    /**
-     * Returns the DefaultHeight
-     * @return The DefaultHeight
-     */
-    public int getDefaultHeight(  )
-    {
-        return _nDefaultHeight;
-    }
-
-    /**
-     * Sets the DefaultHeight
-     * @param nDefaultHeight The DefaultHeight
-     */
-    public void setDefaultHeight( int nDefaultHeight )
-    {
-        _nDefaultHeight = nDefaultHeight;
     }
 }

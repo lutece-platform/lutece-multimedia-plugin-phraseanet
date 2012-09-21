@@ -65,11 +65,11 @@ public final class EmbedJsonParser
         {
             Embed embed = new Embed(  );
             
-            Iterator i = jsonEmbed.keys();
-            while( i.hasNext() )
+            Iterator i = jsonEmbed.keys(  );
+            while( i.hasNext(  ) )
             {
-                String key = (String) i.next();
-                embed.addEmbedItem(key,  getEmbedItem( jsonEmbed.getJSONObject( key ) ));
+                String key = ( String ) i.next(  );
+                embed.addEmbedItem( key,  getEmbedItem( jsonEmbed.getJSONObject( key ) ) );
             }
 
             return embed;
@@ -90,7 +90,7 @@ public final class EmbedJsonParser
     {
         EmbedItem ei = new EmbedItem(  );
         JSONObject permalink = jsonEmbedItem.getJSONObject( "permalink" );
-        if( ! permalink.isNullObject())
+        if( ! permalink.isNullObject(  ) )
         {
             ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject( "permalink" ) ) );
         }

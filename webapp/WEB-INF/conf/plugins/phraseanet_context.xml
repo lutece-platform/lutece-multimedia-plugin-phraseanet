@@ -3,6 +3,7 @@
 
 <beans>
     
-  <bean id="phraseanet.mediaHandlerDAO"  class="fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerDAO" />   
-
+ 	<bean id="phraseanet.mediaHandlerDAO"  class="fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerDAO" />   
+	<bean id="phraseanet.accountDAO"  class="fr.paris.lutece.plugins.phraseanet.business.account.AccountDAO" />
+	<bean id="phraseanet.templateDAO"  class="fr.paris.lutece.plugins.phraseanet.business.template.TemplateDAO" />
 </beans>

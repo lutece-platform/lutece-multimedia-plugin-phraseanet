@@ -1,0 +1,32 @@
+<div id="content-box-actions">
+    <form method="post" action="jsp/admin/plugins/phraseanet/CreateAccount.jsp">
+        <input type="submit" value="#i18n{phraseanet.manage_accounts.buttonAdd}" class="button bt-toolbar" />
+    </form>    
+</div>
+<div class="content-box" >
+    <h2>#i18n{phraseanet.manage_accounts.tableLabel}</h2>
+    <@paginationAdmin paginator=paginator combo=1 />
+    <table>
+        <tr>
+            <th>#i18n{phraseanet.manage_accounts.columnName}</th>
+            <th>#i18n{phraseanet.manage_accounts.columnDescription}</th>
+            <th>#i18n{phraseanet.manage_accounts.columnActions}</th>
+        </tr>
+        <#list account_list as account >
+        <tr>
+            <td>
+                <a href="jsp/admin/plugins/phraseanet/ModifyAccount.jsp?id_account=${account.id}" class="bullet-link">
+                     ${account.name}
+                </a>
+            </td>
+            <td>${account.description}</td>
+            <td>
+                <a href="jsp/admin/plugins/phraseanet/RemoveAccount.jsp?id_account=${account.id}" >
+                    <img src="images/admin/skin/actions/delete.png" alt="#i18n{portal.util.labelDelete}" title="#i18n{portal.util.labelDelete}" />
+                </a>
+            </td>
+        </tr>
+        </#list>
+    </table>
+    <@paginationAdmin paginator=paginator />
+</div>

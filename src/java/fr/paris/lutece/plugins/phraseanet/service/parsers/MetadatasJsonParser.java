@@ -89,4 +89,37 @@ public final class MetadatasJsonParser
                 jsonResponse.toString( 4 ) );
         }
     }
+    
+    /**
+     * Parse a list of metadatas
+     * @param jsonResponse The response as JSONObject
+     * @return The list
+     * @throws PhraseanetApiCallException if an error occurs
+     */
+    public static List<Metadata> parseByDataboxe( JSONObject jsonResponse )
+        throws PhraseanetApiCallException
+    {
+        try
+        {
+            List<Metadata> listMetadatas = new ArrayList<Metadata>(  );
+            JSONObject jsonMetadatas = jsonResponse.getJSONObject( "metadatas" );
+            Iterator i = jsonMetadatas.keys(  );
+
+            while ( i.hasNext(  ) )
+            {
+                String strKey = (String) i.next(  );
+                JSONObject jsonMetadata = jsonMetadatas.getJSONObject( strKey );
+                Metadata metadata = new Metadata(  );
+                metadata.setName( jsonMetadata.getString( "name" ) );
+                listMetadatas.add( metadata );
+            }
+
+            return listMetadatas;
+        }
+        catch ( JSONException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing metadatas : " + e.getMessage(  ) + " - JSON : " +
+                jsonResponse.toString( 4 ) );
+        }
+    }
 }

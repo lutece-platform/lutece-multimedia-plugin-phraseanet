@@ -81,4 +81,12 @@ public interface IMediaHandlerDAO
     * @return The List which contains the data of all the mediaHandler objects
     */
     List<MediaHandler> selectMediaHandlersList( Plugin plugin );
+    
+    /**
+     * Check if some Account is used by Media
+     * @param nIdAccount the id account to check
+     * @param plugin the Plugin
+     * @return true if the account is used
+     */
+    boolean checkMediaHandlerByAccount( int nIdAccount, Plugin plugin );
 }

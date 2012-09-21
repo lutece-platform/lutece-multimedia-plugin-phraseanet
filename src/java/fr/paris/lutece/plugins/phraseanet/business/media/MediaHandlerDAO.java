@@ -47,11 +47,12 @@ public final class MediaHandlerDAO implements IMediaHandlerDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_media ) FROM phraseanet_media";
-    private static final String SQL_QUERY_SELECT = "SELECT id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height FROM phraseanet_media WHERE id_media = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_media ( id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_media, id_account, media_name, media_description, url_icon, insert_template, media_type FROM phraseanet_media WHERE id_media = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_media ( id_media, id_account, media_name, media_description, url_icon, insert_template, media_type ) VALUES ( ?, ?, ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM phraseanet_media WHERE id_media = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_media SET id_media = ?, media_name = ?, media_description = ?, url_icon = ?, insert_template = ?, media_type = ?, bases = ?, default_width = ?, default_height = ? WHERE id_media = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_media, media_name, media_description, url_icon, insert_template, media_type, bases, default_width, default_height FROM phraseanet_media";
+    private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_media SET id_media = ?, id_account = ?, media_name = ?, media_description = ?, url_icon = ?, insert_template = ?, media_type = ? WHERE id_media = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_media, id_account, media_name, media_description, url_icon, insert_template, media_type FROM phraseanet_media";
+    private static final String SQL_QUERY_CHECK_ACCOUNT = "SELECT id_media FROM phraseanet_media WHERE id_account = ? ;";
 
     /**
      * Generates a new primary key
@@ -89,14 +90,12 @@ public final class MediaHandlerDAO implements IMediaHandlerDAO
         mediaHandler.setId( newPrimaryKey( plugin ) );
 
         daoUtil.setInt( 1, mediaHandler.getId(  ) );
-        daoUtil.setString( 2, mediaHandler.getName(  ) );
-        daoUtil.setString( 3, mediaHandler.getDescription(  ) );
-        daoUtil.setString( 4, mediaHandler.getIconUrl(  ) );
-        daoUtil.setString( 5, mediaHandler.getInsertTemplate(  ) );
-        daoUtil.setString( 6, mediaHandler.getMediaType(  ) );
-        daoUtil.setString( 7, mediaHandler.getBases(  ) );
-        daoUtil.setInt( 8, mediaHandler.getDefaultWidth(  ) );
-        daoUtil.setInt( 9, mediaHandler.getDefaultHeight(  ) );
+        daoUtil.setInt( 2, mediaHandler.getIdAccount(  ) );
+        daoUtil.setString( 3, mediaHandler.getName(  ) );
+        daoUtil.setString( 4, mediaHandler.getDescription(  ) );
+        daoUtil.setString( 5, mediaHandler.getIconUrl(  ) );
+        daoUtil.setString( 6, mediaHandler.getInsertTemplate(  ) );
+        daoUtil.setString( 7, mediaHandler.getMediaType(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -121,14 +120,12 @@ public final class MediaHandlerDAO implements IMediaHandlerDAO
             mediaHandler = new MediaHandler(  );
 
             mediaHandler.setId( daoUtil.getInt( 1 ) );
-            mediaHandler.setName( daoUtil.getString( 2 ) );
-            mediaHandler.setDescription( daoUtil.getString( 3 ) );
-            mediaHandler.setIconUrl( daoUtil.getString( 4 ) );
-            mediaHandler.setInsertTemplate( daoUtil.getString( 5 ) );
-            mediaHandler.setMediaType( daoUtil.getString( 6 ) );
-            mediaHandler.setBases( daoUtil.getString( 7 ) );
-            mediaHandler.setDefaultWidth( daoUtil.getInt( 8 ) );
-            mediaHandler.setDefaultHeight( daoUtil.getInt( 9 ) );
+            mediaHandler.setIdAccount( daoUtil.getInt( 2 ) );
+            mediaHandler.setName( daoUtil.getString( 3 ) );
+            mediaHandler.setDescription( daoUtil.getString( 4 ) );
+            mediaHandler.setIconUrl( daoUtil.getString( 5 ) );
+            mediaHandler.setInsertTemplate( daoUtil.getString( 6 ) );
+            mediaHandler.setMediaType( daoUtil.getString( 7 ) );
         }
 
         daoUtil.free(  );
@@ -159,15 +156,13 @@ public final class MediaHandlerDAO implements IMediaHandlerDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
         daoUtil.setInt( 1, mediaHandler.getId(  ) );
-        daoUtil.setString( 2, mediaHandler.getName(  ) );
-        daoUtil.setString( 3, mediaHandler.getDescription(  ) );
-        daoUtil.setString( 4, mediaHandler.getIconUrl(  ) );
-        daoUtil.setString( 5, mediaHandler.getInsertTemplate(  ) );
-        daoUtil.setString( 6, mediaHandler.getMediaType(  ) );
-        daoUtil.setString( 7, mediaHandler.getBases(  ) );
-        daoUtil.setInt( 8, mediaHandler.getDefaultWidth(  ) );
-        daoUtil.setInt( 9, mediaHandler.getDefaultHeight(  ) );
-        daoUtil.setInt( 10, mediaHandler.getId(  ) );
+        daoUtil.setInt( 2, mediaHandler.getIdAccount(  ) );
+        daoUtil.setString( 3, mediaHandler.getName(  ) );
+        daoUtil.setString( 4, mediaHandler.getDescription(  ) );
+        daoUtil.setString( 5, mediaHandler.getIconUrl(  ) );
+        daoUtil.setString( 6, mediaHandler.getInsertTemplate(  ) );
+        daoUtil.setString( 7, mediaHandler.getMediaType(  ) );
+        daoUtil.setInt( 8, mediaHandler.getId(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -189,14 +184,12 @@ public final class MediaHandlerDAO implements IMediaHandlerDAO
             MediaHandler mediaHandler = new MediaHandler(  );
 
             mediaHandler.setId( daoUtil.getInt( 1 ) );
-            mediaHandler.setName( daoUtil.getString( 2 ) );
-            mediaHandler.setDescription( daoUtil.getString( 3 ) );
-            mediaHandler.setIconUrl( daoUtil.getString( 4 ) );
-            mediaHandler.setInsertTemplate( daoUtil.getString( 5 ) );
-            mediaHandler.setMediaType( daoUtil.getString( 6 ) );
-            mediaHandler.setBases( daoUtil.getString( 7 ) );
-            mediaHandler.setDefaultWidth( daoUtil.getInt( 8 ) );
-            mediaHandler.setDefaultHeight( daoUtil.getInt( 9 ) );
+            mediaHandler.setIdAccount( daoUtil.getInt( 2 ) );
+            mediaHandler.setName( daoUtil.getString( 3 ) );
+            mediaHandler.setDescription( daoUtil.getString( 4 ) );
+            mediaHandler.setIconUrl( daoUtil.getString( 5 ) );
+            mediaHandler.setInsertTemplate( daoUtil.getString( 6 ) );
+            mediaHandler.setMediaType( daoUtil.getString( 7 ) );
 
             mediaHandlerList.add( mediaHandler );
         }
@@ -204,5 +197,28 @@ public final class MediaHandlerDAO implements IMediaHandlerDAO
         daoUtil.free(  );
 
         return mediaHandlerList;
+    }
+    
+    /**
+     * Check if some Account is used by Media
+     * @param nIdAccount the id account to check
+     * @param plugin the plugin
+     * @return true if the account is used
+     */
+    public boolean checkMediaHandlerByAccount( int nIdAccount, Plugin plugin )
+    {
+    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_CHECK_ACCOUNT, plugin );
+    	daoUtil.setInt( 1, nIdAccount );
+        daoUtil.executeQuery(  );
+        if( daoUtil.next(  ) )
+        {
+        	daoUtil.free(  );
+        	return true;
+        }
+        else
+        {
+        	daoUtil.free(  );
+        	return false;
+        }        
     }
 }

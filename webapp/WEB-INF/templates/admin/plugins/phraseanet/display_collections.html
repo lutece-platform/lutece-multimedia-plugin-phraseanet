@@ -1,0 +1,20 @@
+<div id="wrapper">
+<div id="admin-header">
+<p id="admin-header-toolbar">
+    <img  id="logo" src="images/logo-header.png" alt="" title="" />
+    <a href="jsp/admin/AdminLogin.jsp" title=""><img src="images/admin/skin/login.png" alt="" title="" />&nbsp;</a>
+  </p>
+   <div id="admin-header-main">
+       <div id="admin-header-sitename">&nbsp; <!-- Add Sitename --></div>
+       <div class="clear"></div>
+    </div>
+</div>
+</br>
+<ul>
+	<#list collections_list as collection>
+	<li>
+		${collection.name}
+	</li>	
+	</#list>
+</ul>
+</div>

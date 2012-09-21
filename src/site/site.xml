@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Lutece">
+	<version />
+	<body>
+		<links>
+			<item name="FR" href="/fr/index.html" />
+		</links>
+
+		<menu name="Phraseanet">
+			<item name="Plugin Phraseanet" href="index.html" />
+		</menu>
+	</body>
+</project>

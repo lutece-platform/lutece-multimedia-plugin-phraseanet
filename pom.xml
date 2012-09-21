@@ -14,7 +14,6 @@
     <version>1.0.3-SNAPSHOT</version>
     <name>Lutece phraseanet plugin</name>
 
-
     <repositories>
         <repository>
             <id>lutece</id>
@@ -68,4 +67,5 @@
         <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/cms/plugin-phraseanet</developerConnection>
         <url>http://dev.lutece.paris.fr/viewvc/lutece/portal/trunk/plugins/cms/plugin-phraseanet</url>
     </scm>
+    
 </project>

@@ -1,0 +1,14 @@
+<div class="content-box" >
+    <h2>#i18n{phraseanet.modify_template.tableLabel} ${template.name}</h2>
+    <form method="post" enctype="multipart/form-data" name="modify_template" id="modify_template" action="jsp/admin/plugins/phraseanet/DoModifyTemplate.jsp">
+    	<input type="hidden" id="media_type" name="media_type" value="${template.mediaType}"/>
+        <p>
+            <label for="name" >#i18n{phraseanet.modify_template.labelTemplateDefault} * :</label>
+            <textarea cols="80" rows="5"  id="default_template" name="default_template" tabindex="1" >${template.template}</textarea>
+        </p>    
+        <p>	
+            <input type="submit" value="#i18n{phraseanet.modify_template.buttonSave}" class="button" tabindex="2" />
+            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" />	
+        </p>    
+    </form>
+</div>

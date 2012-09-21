@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
+import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.MetaJsonParser;
@@ -66,16 +67,17 @@ public final class PhraseanetApiCallService
     /**
      * Get a response for a GET request
      * @param strRequest The request
+     * @param account the user phraseanet account
      * @return The response as a JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static JSONObject getResponse( String strRequest )
+    public static JSONObject getResponse( String strRequest, Account account )
         throws PhraseanetApiCallException
     {
         try
         {
             UrlItem url = new UrlItem( strRequest );
-            url.addParameter( PARAMETER_OAUTH_TOKEN, PhraseanetApiAuthentication.getAccessToken(  ) );
+            url.addParameter( PARAMETER_OAUTH_TOKEN, PhraseanetApiAuthentication.getAccessToken( account ) );
 
             HttpAccess httpClient = new HttpAccess(  );
             String strResponse = httpClient.doGet( url.getUrl(  ) );
@@ -117,16 +119,17 @@ public final class PhraseanetApiCallService
      * Get the response of a POST request
      * @param strUrl The URL
      * @param mapParameters The parameters
+     * @param account the user account
      * @return The response as a JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static JSONObject getPostResponse( String strUrl, Map<String, List<String>> mapParameters )
+    public static JSONObject getPostResponse( String strUrl, Map<String, List<String>> mapParameters, Account account )
         throws PhraseanetApiCallException
     {
         try
         {
             List<String> listParam = new ArrayList<String>(  );
-            listParam.add( PhraseanetApiAuthentication.getAccessToken(  ) );
+            listParam.add( PhraseanetApiAuthentication.getAccessToken( account ) );
             mapParameters.put( PARAMETER_OAUTH_TOKEN, listParam );
 
             HttpAccess httpClient = new HttpAccess(  );

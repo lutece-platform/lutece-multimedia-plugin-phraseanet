@@ -43,7 +43,7 @@ import java.util.Map;
 public class Embed
 {
     // Variables declarations 
-    private Map<String, EmbedItem> _mapEmbedItems = new HashMap<String, EmbedItem>();
+    private Map<String, EmbedItem> _mapEmbedItems = new HashMap<String, EmbedItem>(  );
 
     /**
      * Add an Embed Item
@@ -52,7 +52,7 @@ public class Embed
      */
     public void addEmbedItem( String strKey , EmbedItem item )
     {
-        _mapEmbedItems.put(strKey, item );
+        _mapEmbedItems.put( strKey, item );
     }
     
     /**
@@ -62,6 +62,6 @@ public class Embed
      */
     public EmbedItem getEmbedItem( String strKey )
     {
-        return _mapEmbedItems.get(strKey);
+        return _mapEmbedItems.get( strKey );
     }
 }

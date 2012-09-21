@@ -1,0 +1,41 @@
+<div class="content-box" >
+    <h2>#i18n{phraseanet.modify_media_handler.title}</h2>
+    <form method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandlerStep2.jsp">
+    	<input type="hidden" name="id_media_handler" value="${media_handler.id}" />
+        <p>
+            <label for="name" >#i18n{phraseanet.create_media_handler.labelName} * :</label>
+            <input type="text" id="name" name="name" size="50" maxlength="50" tabindex="1" value="${media_handler.name}"/>
+        </p>
+        <p>
+            <label for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * :</label>
+            <input type="text" id="description" name="description" size="50" maxlength="50" tabindex="2" value="${media_handler.description}"/>
+        </p>
+        <p>
+            <label for="description" >#i18n{phraseanet.create_media_handler.labelAccount} * :</label>
+            <select id="account" name="id_account">
+	            <#list account_list as account>
+	            	<#if account.id == media_handler.idAccount >
+	            		<option value="${account.id}" selected="selected">${account.name}</option>
+	            	<#else>
+	            		<option value="${account.id}">${account.name}</option>
+	            	</#if>
+	            </#list>
+            </select>
+        </p>
+        <p>
+            <label for="media_type" >#i18n{phraseanet.create_media_handler.labelMediaType} * :</label>
+            <#list record_type_list as record_type>
+	        	<#if record_type.name == media_handler.mediaType>
+	        		<input class="radio" type="radio" name="media_type" value="${record_type.name}" checked="checked"/>
+	        	<#else>
+	        		<input class="radio" type="radio" name="media_type" value="${record_type.name}" />
+	        	</#if> 
+	        	<img height="40px" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}"/>
+	        </#list>
+        </p>
+               <p>
+            <input type="submit" value="#i18n{phraseanet.create_media_handler.buttonNext}" class="button" tabindex="9" />
+            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" />	
+        </p>
+    </form>
+</div>

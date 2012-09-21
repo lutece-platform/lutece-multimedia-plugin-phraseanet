@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <document>
+      <properties>
+          <title>
+              Plugin Phraseanet
+          </title>
+      </properties>
+      <body>
+          <section name="Plugin Phraseanet">
+          	<subsection name="Introduction">
+	              <p>
+	                  Ce plugin vous permet récupérer des informations sur les données stockées par l'outil <a href="https://www.phraseanet.com/">Phraseanet</a>, à travers une interface d'administration Lutèce.
+	              </p>
+	              <p>
+	                  L'utilisation de ce plugin nécessite d'avoir un serveur phraseanet avec un compte préalablement créé.                  
+	              </p>
+	              <p>
+	                  Cette page va vous expliquer comment utiliser ce plugin, comment le configurer dans le but de pouvoir afficher les médias contenus sur le serveur phraseanet. La suite considèrera que le plugin est bien fonctionnel sur votre webapp. (plugin activé + base de données à jour + droit d'administration) 
+	              </p>
+              </subsection>
+	          <subsection name="Configuration d'un compte">
+				<p>
+					Pour y accèder, aller dans le menu Lutèce, Phraseanet, puis dans Paramètres avancés. Cette partie vous permet d'ajouter des comptes présents dans phraseanet.				
+				</p>
+				<p>
+					<center>
+	                	<img src="images/manage_account.png" /> 
+	                </center>	
+	            </p>
+	            <p>
+	            	Spécifiez un nom de compte et une description. L'URL d'accès à l'API correspond à l'URL où est installé votre serveur Phraseanet. Pour compléter les informations de votre compte utilisateur Phraseanet, vous devez vous reporter dans Phraseanet même, dans le compte de l'utilisateur concernée puis dans la partie Développeur. Choisissez l'application concernée. 
+				</p>
+				<p>
+					<center>
+	                	<img src="images/account_phraseanet_info.png" /> 
+	                </center>
+				</p>
+				<p>
+					Un bouton "Tester l'accès" permettra de vérifier si le compte est valide.
+				</p>
+			  </subsection>
+			  <subsection name="Gestion des templates">
+			  	<p>
+					Cette partie est surement la plus utile de phraseanet. Elle permet d'utiliser les informations renvoyées par Phraseanet pour afficher nos média.
+					Il est possible d'avoir un template par type de média :
+					<ul>
+						<li><img src="images/video_icon.png" /> Vidéo</li>
+						<li><img src="images/audio_icon.png" /> Audio</li>
+						<li><img src="images/image_icon.png" /> Photo</li>
+						<li><img src="images/flash_icon.png" /> Flash</li>
+						<li><img src="images/document_icon.png" /> Document</li>
+					</ul>
+					A noter que ces templates par défaut seront utilisés lors de la création d'un nouveau player ou de la modification d'un type de média pour un player existant. 
+					Pour accèder à la gestion des templates par défaut, aller dans le menu Lutèce, Phraseanet, puis dans Gestion des templates.
+				</p>	
+				<p>
+					Dans un premier temps, il est possible d'afficher les métadatas d'un média. Les métadatas sont renvoyés sous forme de liste. Pour chaque métadata, il est possible d'afficher son identifiant, son identifiant de sa meta structure, son nom et sa valeur.
+					Voici un exemple d'affichage :
+					<div class="source">
+<pre>					
+&lt;ul&gt;
+&lt;#list metadatas as metadata&gt;
+	${metadata.metaId}</br>
+	${metadata.metaStructureId}</br>
+	${metadata.name}</br>
+	${metadata.value}
+&lt;/#list&gt;
+&lt;/ul&gt;
+</pre>
+					</div>
+					</pre>
+				</p>
+				<p>
+					Ensuite, les données renvoyées par phraseanet se retrouvent sous trois formats :
+					<ul>
+						<li>document</li>
+						<li>thumbnail</li>
+						<li>préview</li>
+					</ul>
+					Pour récupérer les données avec l'un des trois formats, utiliser :
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('document').[+ methode]}					
+</pre>
+					</div>
+					ou
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('thumbnail').[+ methode]}						
+</pre>
+					</div>
+					ou
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').[+ methode]}					
+</pre>
+					</div>
+					Une fois l'un des trois formats spécifiées, nous pouvons utiliser (la suite prendre exemple sur document:
+					longueur :
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').height}
+</pre>
+					</div>
+					largeur :
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').width}
+</pre>
+					</div>
+					taille du media :
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').filesize}
+</pre>
+					</div>
+					type du player :
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').playerType}
+</pre>
+					</div>
+					mine Type:
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').mineType}				
+</pre>
+					</div>
+					Ensuite, reste la partie de l'url. Pour pouvoir récupérer l'url, utilisez les méthodes suivantes :
+					<div class="source">					
+<pre>
+	${embed.getEmbedItem('preview').permalink.createdOn}
+</pre>
+					</div>
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').permalink.id}
+</pre>
+					</div>
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').permalink.label}
+</pre>
+					</div>
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').permalink.lastModified}
+</pre>
+					</div>
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').permalink.pageUrl}
+</pre>
+					</div>
+					<div class="source">
+<pre>
+	${embed.getEmbedItem('preview').permalink.Url}					
+</pre>
+					</div>
+				</p>
+				<p>
+					Pour meilleur utilisation et gestion des objets pour la template, s'aider de la documentation : <a href="http://freemarker.sourceforge.net/docs/index.html">http://freemarker.sourceforge.net/docs/index.html</a>
+				</p>
+			  </subsection>
+			  <subsection name="Gestion des media players">
+			  	<p>
+			  		Pour ajouter ou modifier un player, il suffit de spécifier un nom, une description, choisir un type de média, choisir un compte, puis créer une template ou utilise celle par défaut selon le type de média choisi.
+			  	</p>
+			  </subsection>
+          </section>
+		  
+      </body>
+  </document>
+          

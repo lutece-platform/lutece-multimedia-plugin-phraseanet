@@ -33,37 +33,72 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import fr.paris.lutece.plugins.phraseanet.business.account.Account;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
+import fr.paris.lutece.util.httpaccess.HttpAccess;
+import fr.paris.lutece.util.httpaccess.HttpAccessException;
+import fr.paris.lutece.util.url.UrlItem;
 
 
 /**
  * PhraseaApiAuthentication
  */
 public final class PhraseanetApiAuthentication
-{
-    private static String _strAccessToken;
+{   
+    //parameters
+    private static final String PARAMETER_CLIENT_ID = "client_id";
+    private static final String PARAMETER_REDIRECT_URI = "redirect_uri";
+    private static final String PARAMETER_REDIRECT_URI_VALUE = "urn:ietf:wg:oauth:2.0:oob";
+    private static final String PARAMETER_RESPONSE_TYPE = "response_type";
+    private static final String PARAMETER_RESPONSE_TYPE_VALUE = "code";
+    private static final String PARAMETER_LOGIN = "login";
+    private static final String PARAMETER_PASSWORD = "password";
+    private static final String PARAMETER_ACTION_LOGIN = "action_login";
+    private static final String PARAMETER_ACTION_LOGIN_VALUE = "ok";
+    private static final String PARAMETER_ACCESS_TOKEN = "access_token";
+    
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
 
     /** private constructor */
     private PhraseanetApiAuthentication(  )
     {
-    }
-
+    	
+    }   
+    
     /**
+     * Get Access Token with an account
+     * @param account API Phraseanet Account
      * @return the _strAccessToken
+     * @throws PhraseanetApiCallException PhraseanetApiCallException
      */
-    public static String getAccessToken(  )
+    public static String getAccessToken( Account account )throws PhraseanetApiCallException
     {
-        // FIXME temporary authentication
-        _strAccessToken = AppPropertiesService.getProperty( "phraseanet.oauthToken" );
-
-        return _strAccessToken;
-    }
-
-    /**
-     * @param strAccessToken the _strAccessToken to set
-     */
-    public static void setAccessToken( String strAccessToken )
-    {
-        _strAccessToken = strAccessToken;
+    	String strAccessToken = StringUtils.EMPTY;
+    	try
+        {
+			UrlItem url = new UrlItem( account.getAuthorizeEndPoint(  ) );
+			url.addParameter( PARAMETER_CLIENT_ID, account.getCustomerId(  ) );
+			url.addParameter( PARAMETER_REDIRECT_URI, PARAMETER_REDIRECT_URI_VALUE );
+			url.addParameter( PARAMETER_RESPONSE_TYPE, PARAMETER_RESPONSE_TYPE_VALUE );
+			url.addParameter( PARAMETER_LOGIN, account.getPhraseanetId(  ) );
+			url.addParameter( PARAMETER_PASSWORD, account.getPassword(  ) );
+			url.addParameter( PARAMETER_ACTION_LOGIN, PARAMETER_ACTION_LOGIN_VALUE );
+			HttpAccess httpClient = new HttpAccess(  );
+            String strResponse = httpClient.doGet( url.getUrl(  ) );
+            if( strResponse.contains( PARAMETER_ACCESS_TOKEN ) )
+            {
+            	String[] tab = strResponse.substring( strResponse.indexOf( "value=" ) ).split( "\"" ) ;
+                strAccessToken = tab[1];
+            }            
+        }
+        catch ( HttpAccessException ex )
+        {
+            throw new PhraseanetApiCallException( ex.getMessage(  ) );
+        }
+        
+        return strAccessToken;
     }
 }

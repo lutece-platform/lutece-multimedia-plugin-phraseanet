@@ -50,12 +50,6 @@ public class MediaHandlerTest extends LuteceTestCase
     private final static String INSERTTEMPLATE2 = "InsertTemplate2";
     private final static String MEDIATYPE1 = "MediaType1";
     private final static String MEDIATYPE2 = "MediaType2";
-    private final static String BASES1 = "Bases1";
-    private final static String BASES2 = "Bases2";
-    private final static int DEFAULTWIDTH1 = 1;
-    private final static int DEFAULTWIDTH2 = 2;
-    private final static int DEFAULTHEIGHT1 = 1;
-    private final static int DEFAULTHEIGHT2 = 2;
 
     public void testBusiness(  )
     {
@@ -67,9 +61,6 @@ public class MediaHandlerTest extends LuteceTestCase
         mediaHandler.setIconUrl( ICONURL1 );
         mediaHandler.setInsertTemplate( INSERTTEMPLATE1 );
         mediaHandler.setMediaType( MEDIATYPE1 );
-        mediaHandler.setBases( BASES1 );
-        mediaHandler.setDefaultWidth( DEFAULTWIDTH1 );
-        mediaHandler.setDefaultHeight( DEFAULTHEIGHT1 );
 
         // Create test
         MediaHandlerHome.create( mediaHandler );
@@ -81,9 +72,6 @@ public class MediaHandlerTest extends LuteceTestCase
         assertEquals( mediaHandlerStored.getIconUrl(  ), mediaHandler.getIconUrl(  ) );
         assertEquals( mediaHandlerStored.getInsertTemplate(  ), mediaHandler.getInsertTemplate(  ) );
         assertEquals( mediaHandlerStored.getMediaType(  ), mediaHandler.getMediaType(  ) );
-        assertEquals( mediaHandlerStored.getBases(  ), mediaHandler.getBases(  ) );
-        assertEquals( mediaHandlerStored.getDefaultWidth(  ), mediaHandler.getDefaultWidth(  ) );
-        assertEquals( mediaHandlerStored.getDefaultHeight(  ), mediaHandler.getDefaultHeight(  ) );
 
         // Update test
         mediaHandler.setId( ID2 );
@@ -92,9 +80,6 @@ public class MediaHandlerTest extends LuteceTestCase
         mediaHandler.setIconUrl( ICONURL2 );
         mediaHandler.setInsertTemplate( INSERTTEMPLATE2 );
         mediaHandler.setMediaType( MEDIATYPE2 );
-        mediaHandler.setBases( BASES2 );
-        mediaHandler.setDefaultWidth( DEFAULTWIDTH2 );
-        mediaHandler.setDefaultHeight( DEFAULTHEIGHT2 );
         MediaHandlerHome.update( mediaHandler );
         mediaHandlerStored = MediaHandlerHome.findByPrimaryKey( mediaHandler.getId(  ) );
         assertEquals( mediaHandlerStored.getId(  ), mediaHandler.getId(  ) );
@@ -103,9 +88,6 @@ public class MediaHandlerTest extends LuteceTestCase
         assertEquals( mediaHandlerStored.getIconUrl(  ), mediaHandler.getIconUrl(  ) );
         assertEquals( mediaHandlerStored.getInsertTemplate(  ), mediaHandler.getInsertTemplate(  ) );
         assertEquals( mediaHandlerStored.getMediaType(  ), mediaHandler.getMediaType(  ) );
-        assertEquals( mediaHandlerStored.getBases(  ), mediaHandler.getBases(  ) );
-        assertEquals( mediaHandlerStored.getDefaultWidth(  ), mediaHandler.getDefaultWidth(  ) );
-        assertEquals( mediaHandlerStored.getDefaultHeight(  ), mediaHandler.getDefaultHeight(  ) );
 
         // List test
         MediaHandlerHome.findAll(  );

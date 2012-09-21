@@ -112,4 +112,14 @@ public final class MediaHandlerHome
     {
         return _dao.selectMediaHandlersList( _plugin );
     }
+    
+    /**
+     * Check if some Account is used by Media
+     * @param nIdAccount the id account to check
+     * @return true if the account is used
+     */
+    public static boolean checkMediaHandlerByAccount( int nIdAccount )
+    {
+    	return _dao.checkMediaHandlerByAccount( nIdAccount, _plugin );
+    }
 }

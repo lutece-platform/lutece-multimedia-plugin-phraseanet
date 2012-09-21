@@ -1,7 +1,13 @@
 <div id="content-box-actions">
-    <form method="post" action="jsp/admin/plugins/phraseanet/CreateMediaHandler.jsp">
-        <input type="submit" value="#i18n{phraseanet.manage_media_handlers.buttonAdd}" class="button bt-toolbar" />
+	<form method="post" action="jsp/admin/plugins/phraseanet/ManageTemplates.jsp">
+        <input type="submit" value="#i18n{phraseanet.manage_media_handlers.buttonDefaultTemplate}" class="button bt-toolbar" />
     </form>
+	<form method="post" action="jsp/admin/plugins/phraseanet/ManageAccounts.jsp">
+        <input type="submit" value="#i18n{phraseanet.manage_media_handlers.buttonAdvancedParameters}" class="button bt-toolbar" />
+    </form>
+    <form method="post" action="jsp/admin/plugins/phraseanet/CreateMediaHandlerStep1.jsp">
+        <input type="submit" value="#i18n{phraseanet.manage_media_handlers.buttonAdd}" class="button bt-toolbar" />
+    </form>    
 </div>
 <div class="content-box" >
     <h2>#i18n{phraseanet.manage_media_handlers.tableLabel}</h2>
@@ -17,7 +23,7 @@
         <#list media_handler_list as media_handler >
         <tr>
             <td>
-                <a href="jsp/admin/plugins/phraseanet/ModifyMediaHandler.jsp?id_media_handler=${media_handler.id}" class="bullet-link">
+                <a href="jsp/admin/plugins/phraseanet/ModifyMediaHandlerStep1.jsp?id_media_handler=${media_handler.id}" class="bullet-link">
                      ${media_handler.name}
                 </a>
             </td>
