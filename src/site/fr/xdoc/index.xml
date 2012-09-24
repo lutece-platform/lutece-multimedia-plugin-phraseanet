@@ -60,15 +60,14 @@
 <pre>					
 &lt;ul&gt;
 &lt;#list metadatas as metadata&gt;
-	${metadata.metaId}</br>
-	${metadata.metaStructureId}</br>
-	${metadata.name}</br>
+	${metadata.metaId}<br/>
+	${metadata.metaStructureId}<br/>
+	${metadata.name}<br/>
 	${metadata.value}
 &lt;/#list&gt;
 &lt;/ul&gt;
 </pre>
 					</div>
-					</pre>
 				</p>
 				<p>
 					Ensuite, les données renvoyées par phraseanet se retrouvent sous trois formats :
