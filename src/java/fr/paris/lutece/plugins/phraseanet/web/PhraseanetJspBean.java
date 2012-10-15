@@ -825,7 +825,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
             	url.addParameter( PARAMETER_PHRASEANET_ID, strPhraseanetId );
             	url.addParameter( PARAMETER_PASSWORD, strPassword );
             	url.addParameter( PARAMETER_CHECK_ACCOUNT, PARAMETER_CHECK_ACCOUNT );
-            	strUrl = url.getUrlWithEntity(  ) .replaceAll( " ", "%20" );
+            	strUrl = url.getUrl(  ).replaceAll( " ", "%20" );
             }
         }
         else
