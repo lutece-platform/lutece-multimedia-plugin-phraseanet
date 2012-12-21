@@ -130,11 +130,13 @@ public final class PhraseanetApiCallService
         {
             List<String> listParam = new ArrayList<String>(  );
             listParam.add( PhraseanetApiAuthentication.getAccessToken( account ) );
+
             mapParameters.put( PARAMETER_OAUTH_TOKEN, listParam );
 
             HttpAccess httpClient = new HttpAccess(  );
             String strResponse = httpClient.doPostMultiValues( strUrl, mapParameters );
-
+            _logger.debug( strResponse );
+            
             return extractResponse( strResponse );
         }
         catch ( HttpAccessException ex )

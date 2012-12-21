@@ -50,6 +50,7 @@ public class Account
     private String _strAccessEndPoint;
     private String _strPhraseanetId;
     private String _strPassword;
+    private String _strToken;
     
 	/**
 	 * @return the _nId
@@ -197,7 +198,20 @@ public class Account
 	{
 		_strPassword = strPassword;
 	}
-    
-    
+	/**
+	 *  @return the _strToken to set
+	 */
+    public String getToken(  )
+    {
+        return _strToken;
+    }
+	/**
+	 * @param strPassword the _strPassword to set
+	 */
+	public void setToken( String strToken ) 
+	{
+		_strToken = strToken;
+	}    
 
+    
 }

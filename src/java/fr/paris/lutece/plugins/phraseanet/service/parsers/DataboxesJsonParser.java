@@ -38,10 +38,12 @@ import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 
 
 /**
@@ -49,6 +51,8 @@ import java.util.List;
  */
 public final class DataboxesJsonParser
 {
+
+
     /** private constructor */
     private DataboxesJsonParser(  )
     {

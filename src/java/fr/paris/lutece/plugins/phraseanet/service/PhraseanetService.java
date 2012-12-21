@@ -34,14 +34,9 @@
 package fr.paris.lutece.plugins.phraseanet.service;
 
 
-import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
-import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
-import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
-import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.CollectionsJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.DataboxesJsonParser;
@@ -49,14 +44,25 @@ import fr.paris.lutece.plugins.phraseanet.service.parsers.EmbedJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.MetadatasJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.RecordJsonParser;
 import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParser;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
+
+
+import fr.paris.lutece.plugins.phraseanet.business.account.Account;
+import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
+import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
-import net.sf.json.JSONObject;
+
+import org.apache.log4j.Logger;
+
 
 
 /**
@@ -82,6 +88,7 @@ public final class PhraseanetService
     private static final String SEARCH_ALL = "< All >";
     private static List<String> _listItemsPerPageValues;
     private static List<String> _listMediaTypeValues;
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
     
     /** private constructor */
     private PhraseanetService()
@@ -157,11 +164,13 @@ public final class PhraseanetService
     public static SearchResults search( String strQuery, int nPage, int nPerPage, SearchCriterias criterias, Account account )
         throws PhraseanetApiCallException
     {
-        String strUrl = account.getAccessURL(  ) + PATH_SEARCH;
+        String strUrl = account.getAccessURL(  ) + PATH_SEARCH ;
+        _logger.debug("URL de la reqette API : " + strUrl);
         Map<String, List<String>> mapParameters = new HashMap<String, List<String>>(  );
         putParameter( mapParameters, PARAMETER_QUERY, strQuery );
         putParameter( mapParameters, PARAMETER_PAGE, String.valueOf( nPage ) );
         putParameter( mapParameters, PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );
+        _logger.debug("Parametres de la requette : " + mapParameters);
 
         if ( ( criterias.getRecordType(  ) != null ) || !criterias.getRecordType(  ).equals( SEARCH_ALL ) )
         {
@@ -186,7 +195,8 @@ public final class PhraseanetService
     {
         String strUrl = account.getAccessURL(  ) + PATH_DATABOXES;
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
-        JSONObject jsonDataboxes = jsonResponse.getJSONObject( "databoxes" );
+        JSONArray jsonDataboxesList = jsonResponse.getJSONArray( "databoxes" );
+        JSONObject jsonDataboxes = jsonDataboxesList.toJSONObject( jsonDataboxesList ) ;
 
         return DataboxesJsonParser.parse( jsonDataboxes );
     }

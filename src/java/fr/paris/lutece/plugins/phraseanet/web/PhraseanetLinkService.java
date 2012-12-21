@@ -51,7 +51,6 @@ import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.string.StringUtil;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -135,6 +134,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String getSearchForm( HttpServletRequest request )
     {
+        
         String strInput = request.getParameter( PARAMETER_INPUT );
         String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
 
@@ -167,6 +167,9 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         String strQuery =  request.getParameter( PARAMETER_SEARCH );
         String strCurrentPage = request.getParameter( PARAMETER_CURRENT_PAGE );
         String strItemsPerPage = request.getParameter( PARAMETER_ITEMS_PER_PAGE );
+        
+        _logger.debug( "Query search : " + strQuery );
+
 
         int nMediaHandlerId = Integer.parseInt( strMediaHandler );
         MediaHandler mh = MediaHandlerHome.findByPrimaryKey( nMediaHandlerId );

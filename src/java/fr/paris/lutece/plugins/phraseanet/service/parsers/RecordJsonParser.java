@@ -68,7 +68,7 @@ public final class RecordJsonParser
             record.setMimeType( jsonRecord.getString( "mime_type" ) );
             record.setTitle( jsonRecord.getString( "title" ) );
             record.setOriginalName( jsonRecord.getString( "original_name" ) );
-            record.setLastModified( jsonRecord.getString( "last_modification" ) );
+            record.setLastModified( jsonRecord.getString( "updated_on" ) );
             record.setCreatedOn( jsonRecord.getString( "created_on" ) );
             record.setCollectionId( jsonRecord.getInt( "collection_id" ) );
             record.setPhraseaType( jsonRecord.getString( "phrasea_type" ) );

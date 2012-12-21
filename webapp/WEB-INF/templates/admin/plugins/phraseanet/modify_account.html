@@ -25,13 +25,14 @@
         <p>
             <label for="description" >#i18n{phraseanet.create_account.labelAccessUrl} * :</label>
             <input type="text" id="accessUrl" name="accessUrl" size="50" maxlength="255" tabindex="3" value="${account.accessURL}"/>
+             (sans / à la fin)
         </p>
         <p>
             <label for="description" >#i18n{phraseanet.create_account.labelCustomerId} * :</label>
             <input type="text" id="customerId" name="customerId" size="32" maxlength="32" tabindex="4" value="${account.customerId}"/>
         </p>
         <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelCustomerSecret} * :</label>
+            <label for="description" >#i18n{phraseanet.create_account.labelCustomerSecret} :</label>
             <input type="text" id="customerSecret" name=customerSecret size="32" maxlength="32" tabindex="5" value="${account.customerSecret}"/>
         </p>
         <p>
@@ -51,9 +52,13 @@
             <input type="password" id="password" name="password" size="50" maxlength="255" tabindex="9" value="${account.password}"/>
         </p>
         <p>
-        	<input type="submit" value="#i18n{phraseanet.create_account.buttonAccessCheck}" class="button" tabindex="10" />		
-            <input type="submit" value="Enregistrer" name="Enregistrer" class="button" tabindex="11" />
-            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" />	
+            <label for="description" >#i18n{phraseanet.manage_accounts.labelAccessToken} :</label>
+            <input type="text" id="token" name="token" size="50" maxlength="255" tabindex="10" value="${account.token}"/>
+        </p>        
+        <p>
+        	<input type="submit" value="#i18n{phraseanet.create_account.buttonAccessCheck}" name="get_token" class="button" tabindex="10" />		
+            <input type="submit" value="#i18n{phraseanet.create_account.buttonSave}" name="save" class="button" tabindex="11" />
+            <input type="submit"  value="#i18n{portal.admin.message.buttonCancel}" name="cancel" class="button" tabindex="12" />	
         </p>
     </form>
 </div>  

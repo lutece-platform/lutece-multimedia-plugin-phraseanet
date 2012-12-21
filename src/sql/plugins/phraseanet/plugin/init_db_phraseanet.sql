@@ -3,13 +3,13 @@
 -- Dumping data for table `phraseanet_templates`
 --
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
-VALUES (1, 'Template pour les vidéos', '
+VALUES (1, 'Template pour les videos', '
 <p style="text-align: center;">
   <a id="video" 
      class="phraseaPlayer" 
      style="width: ${embed.getEmbedItem("thumbnail").width}px; height:${embed.getEmbedItem("thumbnail").height}px; float: none;"
-     href="${embed.getEmbedItem("preview").permalink.Url}">
-    <img src="${embed.getEmbedItem("thumbnail").permalink.Url}" 
+     href="${embed.getEmbedItem("preview").permalink.url}">
+    <img src="${embed.getEmbedItem("thumbnail").permalink.url}" 
          alt="${embed.getEmbedItem("preview").permalink.label}" />
   </a>
 </p>

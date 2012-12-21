@@ -47,11 +47,13 @@ public final class AccountDAO implements IAccountDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_account ) FROM phraseanet_account";
-    private static final String SQL_QUERY_SELECT = "SELECT id_account, name, description, access_url, customer_id, customer_secret, autthorize_end_point, access_end_point, phraseanet_id, password FROM phraseanet_account WHERE id_account = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_account ( id_account, name, description, access_url, customer_id, customer_secret, autthorize_end_point, access_end_point, phraseanet_id, password ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_account, name, description, access_url, customer_id, customer_secret, autthorize_end_point, access_end_point, phraseanet_id, password, token FROM phraseanet_account WHERE id_account = ?";
+    private static final String SQL_QUERY_SELECT_TOKEN = "SELECT token FROM phraseanet_account WHERE id_account = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO phraseanet_account ( id_account, name, description, access_url, customer_id, customer_secret, autthorize_end_point, access_end_point, phraseanet_id, password, token ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM phraseanet_account WHERE id_account = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_account SET name = ?, description = ?, access_url = ?, customer_id = ?, customer_secret = ?, autthorize_end_point = ?, access_end_point = ?, phraseanet_id = ?, password = ? WHERE id_account = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_account, name, description, access_url, customer_id, customer_secret, autthorize_end_point, access_end_point, phraseanet_id, password FROM phraseanet_account";
+    private static final String SQL_QUERY_UPDATE = "UPDATE phraseanet_account SET name = ?, description = ?, access_url = ?, customer_id = ?, customer_secret = ?, autthorize_end_point = ?, access_end_point = ?, phraseanet_id = ?, password = ?, token = ? WHERE id_account = ?";
+    private static final String SQL_QUERY_UPDATE_TOKEN = "UPDATE phraseanet_account SET token = ? WHERE id_account = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_account, name, description, access_url, customer_id, customer_secret, autthorize_end_point, access_end_point, phraseanet_id, password, token FROM phraseanet_account";
 
     /**
      * Generates a new primary key
@@ -98,6 +100,7 @@ public final class AccountDAO implements IAccountDAO
         daoUtil.setString( 8, account.getAccessEndPoint(  ) );
         daoUtil.setString( 9, account.getPhraseanetId(  ) );
         daoUtil.setString( 10, account.getPassword(  ) );
+        daoUtil.setString( 11, account.getToken(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -131,6 +134,7 @@ public final class AccountDAO implements IAccountDAO
             account.setAccessEndPoint( daoUtil.getString( 8 ) );
             account.setPhraseanetId( daoUtil.getString( 9 ) );
             account.setPassword( daoUtil.getString( 10 ) );
+            account.setToken( daoUtil.getString( 11 ) );
         }
 
         daoUtil.free(  );
@@ -152,7 +156,7 @@ public final class AccountDAO implements IAccountDAO
     }
 
     /**
-     * Update the record in the table
+     * Update the account record in the table
      * @param account The reference of the Account
      * @param plugin The plugin
      */
@@ -169,12 +173,29 @@ public final class AccountDAO implements IAccountDAO
         daoUtil.setString( 7, account.getAccessEndPoint(  ) );
         daoUtil.setString( 8, account.getPhraseanetId(  ) );
         daoUtil.setString( 9, account.getPassword(  ) );
-        daoUtil.setInt( 10, account.getId(  ) );
+        daoUtil.setString( 10, account.getToken(  ) );
+        daoUtil.setInt( 11, account.getId(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
     }
 
+     /**
+     * Update the token record in the table
+     * @param account The reference of the Account
+     * @param plugin The plugin
+     */
+    public void updateToken( Account account, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_TOKEN, plugin );
+
+        daoUtil.setString( 1, account.getToken(  ) );
+        daoUtil.setInt( 2, account.getId(  ) );
+
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
+    
     /**
      * Load the data of all the Accounts and returns them as a List
      * @param plugin The plugin
@@ -200,6 +221,7 @@ public final class AccountDAO implements IAccountDAO
             account.setAccessEndPoint( daoUtil.getString( 8 ) );
             account.setPhraseanetId( daoUtil.getString( 9 ) );
             account.setPassword( daoUtil.getString( 10 ) );
+            account.setToken( daoUtil.getString( 11 ) );
 
             accountList.add( account );
         }

@@ -33,17 +33,6 @@
  */
 package fr.paris.lutece.plugins.phraseanet.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.account.AccountHome;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
@@ -68,6 +57,14 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -95,8 +92,10 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_ACCESS_END_POINT = "accessEndPoint";
     private static final String PARAMETER_PHRASEANET_ID = "phraseanetId";
     private static final String PARAMETER_PASSWORD = "password";
+    private static final String PARAMETER_TOKEN = "token";
     
-    private static final String PARAMETER_ENREGISTRER = "Enregistrer";
+    private static final String PARAMETER_ENREGISTRER = "save";
+    private static final String PARAMETER_GET_TOKEN = "get_token";
     private static final String PARAMETER_CHECK_ACCOUNT = "check_account";
     
     private static final String PARAMETER_DEFAULT_TEMPLATE = "default_template";
@@ -169,6 +168,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
     private static final String JSP_URL_CREATE_ACCOUNT = "CreateAccount.jsp";
     private static final String JSP_URL_MODIFY_ACCOUNT = "ModifyAccount.jsp";
     private static final String JSP_REDIRECT_TO_MANAGE_ACCOUNTS = "ManageAccounts.jsp";
+    private static final String JSP_REDIRECT_TO_CALLBACK ="Callback.jsp";
     
     private static final String JSP_URL_MANAGE_TEMPLATES = "ManageTemplates.jsp";
 
@@ -740,6 +740,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
             String strAccessEndPoint = request.getParameter( PARAMETER_ACCESS_END_POINT );
             String strPhraseanetId = request.getParameter( PARAMETER_PHRASEANET_ID );
             String strPassword = request.getParameter( PARAMETER_PASSWORD );
+            String strToken = request.getParameter( PARAMETER_TOKEN );
             
             account.setName( strAccountName );
             account.setDescription( strDescription );
@@ -750,6 +751,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
             account.setAccessEndPoint( strAccessEndPoint );
             account.setPhraseanetId( strPhraseanetId );
             account.setPassword( strPassword );
+            account.setToken( strToken );
             model.put( MARK_ACCOUNT, account );
             try 
 			{					
@@ -788,11 +790,16 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
         String strAccessEndPoint = request.getParameter( PARAMETER_ACCESS_END_POINT );
         String strPhraseanetId = request.getParameter( PARAMETER_PHRASEANET_ID );
         String strPassword = request.getParameter( PARAMETER_PASSWORD );
+        String strToken = request.getParameter( PARAMETER_TOKEN );
 
-        if ( StringUtils.isNotBlank( strAccountName ) && StringUtils.isNotBlank( strDescription ) &&
-                StringUtils.isNotBlank( strAccessUrl ) && StringUtils.isNotBlank( strCustomerId ) &&
-                StringUtils.isNotBlank( strCustomerSecret ) && StringUtils.isNotBlank( strAuthorizeEndPoint ) &&
-                StringUtils.isNotBlank( strAccessEndPoint ) && StringUtils.isNotBlank( strPhraseanetId ) &&
+        if ( StringUtils.isNotBlank( strAccountName ) && 
+                StringUtils.isNotBlank( strDescription ) &&
+                StringUtils.isNotBlank( strAccessUrl ) && 
+                StringUtils.isNotBlank( strCustomerId ) &&
+                //StringUtils.isNotBlank( strCustomerSecret ) && 
+                StringUtils.isNotBlank( strAuthorizeEndPoint ) &&
+                StringUtils.isNotBlank( strAccessEndPoint ) && 
+                StringUtils.isNotBlank( strPhraseanetId ) &&
                 StringUtils.isNotBlank( strPassword ) )
         {
         	
@@ -806,6 +813,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
             account.setAccessEndPoint( strAccessEndPoint );
             account.setPhraseanetId( strPhraseanetId );
             account.setPassword( strPassword );
+            account.setToken( strToken );
             
             if( StringUtils.isNotBlank( request.getParameter( PARAMETER_ENREGISTRER ) ) )
     		{
@@ -813,19 +821,8 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
                 strUrl = JSP_REDIRECT_TO_MANAGE_ACCOUNTS;
     		}
             else
-            {
-            	UrlItem url = new UrlItem( JSP_URL_CREATE_ACCOUNT );
-            	url.addParameter( PARAMETER_NAME, strAccountName ); 
-            	url.addParameter( PARAMETER_DESCRIPTION, strDescription );        
-            	url.addParameter( PARAMETER_ACCESS_URL, strAccessUrl );
-            	url.addParameter( PARAMETER_CUSTOMER_ID, strCustomerId );
-            	url.addParameter( PARAMETER_CUSTOMER_SECRET, strCustomerSecret );
-            	url.addParameter( PARAMETER_AUTHORIZE_END_POINT, strAuthorizeEndPoint );
-            	url.addParameter( PARAMETER_ACCESS_END_POINT, strAccessEndPoint );
-            	url.addParameter( PARAMETER_PHRASEANET_ID, strPhraseanetId );
-            	url.addParameter( PARAMETER_PASSWORD, strPassword );
-            	url.addParameter( PARAMETER_CHECK_ACCOUNT, PARAMETER_CHECK_ACCOUNT );
-            	strUrl = url.getUrl(  ).replaceAll( " ", "%20" );
+            {           
+                strUrl = JSP_REDIRECT_TO_MANAGE_ACCOUNTS;              	
             }
         }
         else
@@ -923,6 +920,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
                 String strAccessEndPoint = request.getParameter( PARAMETER_ACCESS_END_POINT );
                 String strPhraseanetId = request.getParameter( PARAMETER_PHRASEANET_ID );
                 String strPassword = request.getParameter( PARAMETER_PASSWORD );
+                String strToken = request.getParameter( PARAMETER_TOKEN );
                 
                 account.setId( nAccountId );
                 account.setName( strAccountName );
@@ -934,6 +932,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
                 account.setAccessEndPoint( strAccessEndPoint );
                 account.setPhraseanetId( strPhraseanetId );
                 account.setPassword( strPassword );
+                account.setToken( strToken );
                 
 				try 
 				{					
@@ -998,11 +997,16 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
         String strAccessEndPoint = request.getParameter( PARAMETER_ACCESS_END_POINT );
         String strPhraseanetId = request.getParameter( PARAMETER_PHRASEANET_ID );
         String strPassword = request.getParameter( PARAMETER_PASSWORD );
+        String strToken = request.getParameter( PARAMETER_TOKEN );
 
-        if ( StringUtils.isNotBlank( strAccountName ) && StringUtils.isNotBlank( strDescription ) &&
-                StringUtils.isNotBlank( strAccessUrl ) && StringUtils.isNotBlank( strCustomerId ) &&
-                StringUtils.isNotBlank( strCustomerSecret ) && StringUtils.isNotBlank( strAuthorizeEndPoint ) &&
-                StringUtils.isNotBlank( strAccessEndPoint ) && StringUtils.isNotBlank( strPhraseanetId ) &&
+        if ( StringUtils.isNotBlank( strAccountName ) && 
+                StringUtils.isNotBlank( strDescription ) &&
+                StringUtils.isNotBlank( strAccessUrl ) && 
+                StringUtils.isNotBlank( strCustomerId ) &&
+                //StringUtils.isNotBlank( strCustomerSecret ) && 
+                StringUtils.isNotBlank( strAuthorizeEndPoint ) &&
+                StringUtils.isNotBlank( strAccessEndPoint ) && 
+                StringUtils.isNotBlank( strPhraseanetId ) &&
                 StringUtils.isNotBlank( strPassword ) )
         {
             int nAccountId = Integer.parseInt( strAccountId );
@@ -1019,27 +1023,36 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
                 account.setAccessEndPoint( strAccessEndPoint );
                 account.setPhraseanetId( strPhraseanetId );
                 account.setPassword( strPassword );
+                account.setToken( strToken );
                 
                 if( StringUtils.isNotBlank( request.getParameter( PARAMETER_ENREGISTRER ) ) )
         		{
                 	AccountHome.update( account );
-                    strUrl = JSP_REDIRECT_TO_MANAGE_ACCOUNTS;
-        		}
-                else
-                {
-                	UrlItem url = new UrlItem( JSP_URL_MODIFY_ACCOUNT );
+                    UrlItem url = new UrlItem( JSP_URL_MODIFY_ACCOUNT );
                 	url.addParameter( PARAMETER_ID_ACCOUNT, strAccountId );
-                	url.addParameter( PARAMETER_NAME, strAccountName ); 
-                	url.addParameter( PARAMETER_DESCRIPTION, strDescription );        
-                	url.addParameter( PARAMETER_ACCESS_URL, strAccessUrl );
+                    strUrl = url.getUrl(  );
+                    
+        		}
+                else if(StringUtils.isNotBlank( request.getParameter( PARAMETER_GET_TOKEN ) ))
+                {
+                    AccountHome.update( account );
+                    UrlItem url = new UrlItem(JSP_REDIRECT_TO_CALLBACK);
+                	url.addParameter( PARAMETER_ID_ACCOUNT, strAccountId );
+                	//url.addParameter( PARAMETER_NAME, strAccountName ); 
+                	//url.addParameter( PARAMETER_DESCRIPTION, strDescription );        
+                	//url.addParameter( PARAMETER_ACCESS_URL, strAccessUrl );
                 	url.addParameter( PARAMETER_CUSTOMER_ID, strCustomerId );
-                	url.addParameter( PARAMETER_CUSTOMER_SECRET, strCustomerSecret );
+                	//url.addParameter( PARAMETER_CUSTOMER_SECRET, strCustomerSecret );
                 	url.addParameter( PARAMETER_AUTHORIZE_END_POINT, strAuthorizeEndPoint );
                 	url.addParameter( PARAMETER_ACCESS_END_POINT, strAccessEndPoint );
                 	url.addParameter( PARAMETER_PHRASEANET_ID, strPhraseanetId );
                 	url.addParameter( PARAMETER_PASSWORD, strPassword );
-                	url.addParameter( PARAMETER_CHECK_ACCOUNT, PARAMETER_CHECK_ACCOUNT );
-                	strUrl = url.getUrl(  ).replaceAll( " ", "%20" );              	
+                	//url.addParameter( PARAMETER_CHECK_ACCOUNT, PARAMETER_CHECK_ACCOUNT );
+                    strUrl = url.getUrl(  ).replaceAll( " ", "%20" );
+                }
+                else
+                {           
+                    strUrl = JSP_REDIRECT_TO_MANAGE_ACCOUNTS;              	
                 }                
             }
             else

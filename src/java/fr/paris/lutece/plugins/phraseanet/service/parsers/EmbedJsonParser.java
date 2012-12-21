@@ -118,7 +118,7 @@ public final class EmbedJsonParser
             p = new Permalink(  );
             p.setId( jsonPermalink.getInt( "id" ) );
             p.setCreatedOn( jsonPermalink.getString( "created_on" ) );
-            p.setLastModified( jsonPermalink.getString( "last_modified" ) );
+            p.setLastModified( jsonPermalink.getString( "updated_on" ) );
             p.setActivated( jsonPermalink.getBoolean( "is_activated" ) );
             p.setLabel( jsonPermalink.getString( "label" ) );
             p.setPageUrl( jsonPermalink.getString( "page_url" ) );

@@ -69,10 +69,14 @@ public final class SearchResultsJsonParser
         try
         {
             SearchResults results = new SearchResults(  );
-            results.setTotalPages( jsonResponse.getInt( "total_pages" ) );
-            results.setCurrentPage( jsonResponse.getInt( "current_page" ) );
+            int total_results = jsonResponse.getInt( "total_results" );
+            int per_page = jsonResponse.getInt( "per_page" );
+            int total_pages = (int) Math.ceil(total_results / per_page) ;
+            int offset_start = (total_pages - 1) * per_page ;
+            results.setTotalPages( total_pages );
+            results.setCurrentPage( offset_start );
             results.setAvailableResults( jsonResponse.getInt( "available_results" ) );
-            results.setTotalResults( jsonResponse.getInt( "total_results" ) );
+            results.setTotalResults( total_results );
             results.setError( jsonResponse.getString( "error" ) );
             results.setWarning( jsonResponse.getString( "warning" ) );
             results.setQueryTime( jsonResponse.getString( "query_time" ) );

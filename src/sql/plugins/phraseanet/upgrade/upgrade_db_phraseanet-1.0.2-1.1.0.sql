@@ -6,15 +6,17 @@ CREATE TABLE phraseanet_account
 (
 	id_account int NOT NULL,
 	name varchar(255) NOT NULL,
-	description varchar(255) NOT NULL,
-    access_url varchar(255) NOT NULL,
-    customer_id varchar(255) NOT NULL,
-	customer_secret varchar(255) NOT NULL,
-	autthorize_end_point varchar(255) NOT NULL,
-	access_end_point varchar(255) NOT NULL,
-	phraseanet_id varchar(255) NOT NULL,
-	password varchar(255) NOT NULL,
-	PRIMARY KEY (id_account)
+	description varchar(255) default NULL,
+    access_url varchar(255) default NULL,
+    customer_id CHAR(32) NOT NULL,
+	customer_secret CHAR(32) default NULL,
+	autthorize_end_point varchar(255) default NULL,
+	access_end_point varchar(255) default NULL,
+	phraseanet_id varchar(255) default NULL,
+	password varchar(255) default NULL,
+	token CHAR(32) default NULL,
+	PRIMARY KEY (id_account),
+    UNIQUE (customer_id)
 );
 
 --
@@ -25,7 +27,7 @@ CREATE TABLE phraseanet_template
 (	
 	id_template int NOT NULL,
 	name varchar(255) NOT NULL,
-	default_template long varchar default NULL,
+	default_template TEXT default NULL,
 	media_type varchar(255) NOT NULL,
 	PRIMARY KEY (id_template)
 );

@@ -33,14 +33,13 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.url.UrlItem;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -67,6 +66,7 @@ public final class PhraseanetApiAuthentication
     {
     	
     }   
+
     
     /**
      * Get Access Token with an account
@@ -76,6 +76,7 @@ public final class PhraseanetApiAuthentication
      */
     public static String getAccessToken( Account account )throws PhraseanetApiCallException
     {
+        /**
     	String strAccessToken = StringUtils.EMPTY;
     	try
         {
@@ -92,13 +93,16 @@ public final class PhraseanetApiAuthentication
             {
             	String[] tab = strResponse.substring( strResponse.indexOf( "value=" ) ).split( "\"" ) ;
                 strAccessToken = tab[1];
-            }            
+            }       
         }
         catch ( HttpAccessException ex )
         {
             throw new PhraseanetApiCallException( ex.getMessage(  ) );
         }
-        
+       
         return strAccessToken;
+        */
+       
+      return account.getToken(  );
     }
 }
