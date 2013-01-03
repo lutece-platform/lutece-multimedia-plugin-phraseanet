@@ -47,7 +47,7 @@ VALUES (5, 'Template pour les documents', '', 'document' );
 TRUNCATE TABLE phraseanet_media;
 
 ALTER TABLE phraseanet_media ADD COLUMN id_account int NOT NULL AFTER id_media;
-ALTER TABLE phraseanet_media ADD CONSTRAINT FK_ID_ACCOUNT FOREIGN KEY (id_account) REFERENCES ods_acte (phraseanet_media);
+ALTER TABLE phraseanet_media ADD CONSTRAINT FK_ID_ACCOUNT FOREIGN KEY (id_account) REFERENCES id_account (phraseanet_account);
 
 ALTER TABLE phraseanet_media DROP bases;
 ALTER TABLE phraseanet_media DROP default_width;
