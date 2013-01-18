@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -42,6 +43,7 @@ import net.sf.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import net.sf.json.JSONArray;
 
 
 /**
@@ -66,7 +68,9 @@ public final class CollectionsJsonParser
         try
         {
             List<Collection> listCollections = new ArrayList<Collection>(  );
-            JSONObject jsonCollections = jsonResponse.getJSONObject( "collections" );
+            JSONArray jsonCollectionsList = jsonResponse.getJSONArray( "collections" );
+            JSONObject jsonCollections = jsonCollectionsList.toJSONObject( jsonCollectionsList ) ;            
+            
             Iterator i = jsonCollections.keys(  );
 
             while ( i.hasNext(  ) )
@@ -75,7 +79,7 @@ public final class CollectionsJsonParser
                 JSONObject jsonCollection = jsonCollections.getJSONObject( strKey );
                 Collection collection = new Collection(  );
                 collection.setBaseId( jsonCollection.getInt( "base_id" ) );
-                collection.setCollId( jsonCollection.getInt( "coll_id" ) );
+                collection.setCollId( jsonCollection.getInt( "collection_id" ) );
                 collection.setName( jsonCollection.getString( "name" ) );
                 collection.setRecordAmount( jsonCollection.getInt( "record_amount" ) );
                 listCollections.add( collection );

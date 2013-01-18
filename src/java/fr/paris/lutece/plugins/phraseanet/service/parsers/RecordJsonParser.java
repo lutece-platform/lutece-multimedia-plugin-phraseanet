@@ -35,10 +35,12 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.record.Thumbnail;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -46,6 +48,7 @@ import net.sf.json.JSONObject;
  */
 public final class RecordJsonParser
 {
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
     /** private constructor */
     private RecordJsonParser(  )
     {
@@ -60,6 +63,7 @@ public final class RecordJsonParser
     public static Record parse( JSONObject jsonRecord )
         throws PhraseanetApiCallException
     {
+        _logger.debug( "RecordJsonParser" );
         try
         {
             Record record = new Record(  );

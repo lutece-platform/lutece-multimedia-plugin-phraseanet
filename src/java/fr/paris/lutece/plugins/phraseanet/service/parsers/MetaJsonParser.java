@@ -34,10 +34,12 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -45,6 +47,7 @@ import net.sf.json.JSONObject;
  */
 public final class MetaJsonParser
 {
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
     /** private constructor */
     private MetaJsonParser(  )
     {
@@ -58,6 +61,7 @@ public final class MetaJsonParser
      */
     public static Meta parse( JSONObject jsonMeta ) throws PhraseanetApiCallException
     {
+        _logger.debug( "MetaJsonParser" );
         try
         {
             Meta meta = new Meta(  );

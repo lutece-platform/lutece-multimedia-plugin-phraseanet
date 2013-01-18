@@ -56,6 +56,7 @@ import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import java.util.HashMap;
 import java.util.List;
@@ -128,7 +129,9 @@ public final class PhraseanetService
     {
         Object[] arguments = { Integer.toString( nDataboxId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_GET_DATABOXE_METADATAS, arguments );
+        _logger.debug("getDataboxeMetadatas : " + url ) ;
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
+        _logger.debug("getDataboxeMetadatas (response) : " + jsonResponse ) ;
 
         return MetadatasJsonParser.parseByDataboxe( jsonResponse );
     }
@@ -147,7 +150,7 @@ public final class PhraseanetService
         Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_GET_RECORD_METADATAS, arguments );
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
-
+        
         return MetadatasJsonParser.parse( jsonResponse );
     }
 
@@ -214,6 +217,7 @@ public final class PhraseanetService
         Object[] arguments = { nDataboxId };
         String strUrl = account.getAccessURL(  ) + MessageFormat.format( PATH_COLLECTIONS, arguments );
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
+        _logger.debug("Collections : " + jsonResponse);
 
         return CollectionsJsonParser.parse( jsonResponse );
     }
@@ -232,7 +236,8 @@ public final class PhraseanetService
         Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_EMBED, arguments );
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
-        JSONObject jsonEmbed = jsonResponse.getJSONObject( "embed" );
+        JSONArray jsonEmbedList = jsonResponse.getJSONArray( "embed" );
+        JSONObject jsonEmbed = jsonEmbedList.toJSONObject( jsonEmbedList ) ;
 
         return EmbedJsonParser.parse( jsonEmbed );
     }

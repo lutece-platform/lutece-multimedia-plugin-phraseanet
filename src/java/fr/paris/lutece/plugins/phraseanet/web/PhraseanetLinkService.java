@@ -134,7 +134,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String getSearchForm( HttpServletRequest request )
     {
-        
+        _logger.debug( "getSearchForm" );
         String strInput = request.getParameter( PARAMETER_INPUT );
         String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
 
@@ -238,16 +238,22 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         	Account account = AccountHome.findByPrimaryKey( mh.getIdAccount(  ) );
         	
             Embed embed = PhraseanetService.getEmbed( nDataboxId, nRecordId, account );
+            _logger.debug( "embed : " + embed );
             List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId, account );
+            _logger.debug( "listMetadatas : " + listMetadatas );
 
             Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_LOCALE, locale );
             model.put( MARK_EMBED, embed );
             model.put( MARK_METADATAS, listMetadatas );
+           
             HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
+                      
+            _logger.debug( "Template : " + mh.getInsertTemplate() );
+                      
             String strInsert = t.getHtml(  );
-
-            _logger.debug( "INSERT \"" + strInsert + "\"" );
+            
+            _logger.debug( "INSERT Html : \"" + strInsert + "\"" );
 
             return insertUrl( request, strInput, strInsert );
         }

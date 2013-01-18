@@ -42,6 +42,7 @@ import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
 import fr.paris.lutece.plugins.phraseanet.business.template.Template;
 import fr.paris.lutece.plugins.phraseanet.business.template.TemplateHome;
 import fr.paris.lutece.plugins.phraseanet.dto.recordtype.RecordTypeDTO;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiAuthentication;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
@@ -65,6 +66,7 @@ import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -187,6 +189,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
     private static final String CONSTANT_NAME_ICON_PICTURE = "_icon.png";
     private static final String CONSTANT_PATH_ICONE_PICTURE = "images/admin/skin/plugins/phraseanet/";
     private static final String CONSTANT_DEFAULT_URL_DOCUMENTATION = "http://dev.lutece.paris.fr/plugins/plugin-phraseanet/fr/";
+     private static Logger _logger = Logger.getLogger( Constants.LOGGER );
     
     // Variables
     private int _nDefaultItemsPerPage;
@@ -619,6 +622,8 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
     	
     	String strIdAccount = request.getParameter( PARAMETER_ID_ACCOUNT );
     	String strIdDataboxe = request.getParameter( PARAMETER_ID_DATABOXE );
+        
+        _logger.debug("Liste metadatas Databox Id : " + strIdDataboxe);
     	
     	if( StringUtils.isNotBlank( strIdAccount ) && StringUtils.isNumeric( strIdAccount ) && StringUtils.isNotBlank( strIdDataboxe ) && StringUtils.isNumeric( strIdDataboxe ) )
     	{
@@ -626,11 +631,15 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
     		int nIdDataboxe = Integer.parseInt( strIdDataboxe );
     		
     		Account account = AccountHome.findByPrimaryKey( nIdAccount );
-    		
+            _logger.debug("Account : " + account);
+               		
     		List<Metadata> listMetadatas = new ArrayList<Metadata> (  );
+            
+            
             try 
             {
             	listMetadatas = PhraseanetService.getDataboxeMetadatas( nIdDataboxe, account );
+                _logger.debug("listMetadatas : " + listMetadatas);
     		} 
             catch( PhraseanetApiCallException e )
     		{
@@ -668,6 +677,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
             try 
             {
             	listCollections = PhraseanetService.getColletions( nIdDataboxe, account );
+                _logger.debug("listCollections : " + listCollections);
     		} 
             catch( PhraseanetApiCallException e )
     		{
@@ -1076,6 +1086,7 @@ public class PhraseanetJspBean extends PluginAdminPageJspBean
      */
     public String getManageTemplates( HttpServletRequest request )
     {
+        
         setPageTitleProperty( PROPERTY_PAGE_TITLE_MANAGE_TEMPLATES );
         Map<String, Object> model = new HashMap<String, Object>(  );
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_TEMPLATES, getLocale(  ), model );

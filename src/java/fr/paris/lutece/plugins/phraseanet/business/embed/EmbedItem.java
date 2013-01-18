@@ -40,6 +40,7 @@ package fr.paris.lutece.plugins.phraseanet.business.embed;
 public class EmbedItem
 {
     // Variables declarations 
+    private String _itemName;
     private Permalink _permalink;
     private int _nHeight;
     private int _nWidth;
@@ -47,6 +48,24 @@ public class EmbedItem
     private String _strPlayerType;
     private String _strMimeType;
 
+    /**
+     * Returns the itemName
+     * @return The itemName
+     */
+    public String getItemName(  )
+    {
+        return _itemName;
+    }  
+    
+    /**
+     * Sets the itemName
+     * @param itemName The itemName
+     */
+    public void setItemName( String itemName )
+    {
+        _itemName = itemName;
+    }    
+    
     /**
      * Returns the Permalink
      * @return The Permalink
