@@ -54,6 +54,7 @@ public final class EmbedJsonParser
     /** private constructor */
     private EmbedJsonParser(  )
     {
+        _logger.debug( "EmbedJsonParser" );
     }
 
     /**
@@ -64,20 +65,25 @@ public final class EmbedJsonParser
     */
     public static Embed parse( JSONObject jsonEmbed ) throws PhraseanetApiCallException
     {
-        _logger.debug( "EmbedJsonParser" );
         try
         {
             Embed embed = new Embed(  );
-            //_logger.debug("jsonEmbed  : " + jsonEmbed );
+            _logger.debug("parce jsonEmbed : " + jsonEmbed );
             Iterator i = jsonEmbed.keys(  );
             while( i.hasNext(  ) )
             {
                 String key = ( String ) i.next(  );
-                //_logger.debug( "Key : " + key );
-                EmbedItem ei = getEmbedItem( jsonEmbed.getJSONObject( key ) );
-                String name = ei.getItemName();
-                //_logger.debug( "ItemName : " + name );
-                embed.addEmbedItem( name,  getEmbedItem( jsonEmbed.getJSONObject( key ) ) );
+                if (jsonEmbed.getJSONObject(key).isNullObject())
+                {
+                    _logger.error( "Item manquant");
+                }
+                else
+                {
+                    EmbedItem ei = getEmbedItem( jsonEmbed.getJSONObject( key ) );
+                    String name = ei.getItemName();
+                    _logger.debug( "ItemName : " + name );
+                    embed.addEmbedItem( name,  getEmbedItem( jsonEmbed.getJSONObject( key ) ) );
+                }
             }
 
             return embed;
@@ -121,7 +127,7 @@ public final class EmbedJsonParser
      */
     public static Permalink getPermalink( JSONObject jsonPermalink )
     {
-        //_logger.debug( "getPermalink : " + jsonPermalink);
+        _logger.debug( "getPermalink : " + jsonPermalink);
         Permalink p = null;
         
         if( jsonPermalink != null )
@@ -132,10 +138,10 @@ public final class EmbedJsonParser
             p.setLastModified( jsonPermalink.getString( "updated_on" ) );
             p.setActivated( jsonPermalink.getBoolean( "is_activated" ) );
             p.setLabel( jsonPermalink.getString( "label" ) );
-            //_logger.debug( "label : " + jsonPermalink.getString( "label" ) );
+            _logger.debug( "label : " + jsonPermalink.getString( "label" ) );
             p.setPageUrl( jsonPermalink.getString( "page_url" ) );
             p.setUrl( jsonPermalink.getString( "url" ) );
-            //_logger.debug( "url : " + jsonPermalink.getString( "url" ) );
+            _logger.debug( "url : " + jsonPermalink.getString( "url" ) );
         }
         return p;
     }

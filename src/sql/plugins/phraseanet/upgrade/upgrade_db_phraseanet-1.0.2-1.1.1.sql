@@ -38,7 +38,7 @@ CREATE TABLE phraseanet_template
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
 VALUES (1, 'Template pour les videos', '<div id="video" style="width: ${embed.getEmbedItem(\'thumbnail\').width}px; height:${embed.getEmbedItem(\'thumbnail\').height}px;">\r\n  <a class="phraseaPlayer" \r\n     href="${embed.getEmbedItem(\'preview\').permalink.url}">\r\n    <img src="${embed.getEmbedItem(\'thumbnail\').permalink.url}" \r\n         alt="${embed.getEmbedItem(\'preview\').permalink.label}" />\r\n  </a>\r\n</div>', 'video' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
-VALUES (2, 'Template pour les audios', '', 'audio' );
+VALUES (2, 'Template pour les audios', '<object type="application/x-shockwave-flash" data="plugins/phraseanet/swf/dewplayer/dewplayer-mini.swf?mp3=${embed.getEmbedItem(\'preview\').permalink.url}" width="160" height="20" id="dewplayer-mini"><param name="wmode" value="transparent" /><param name="movie" value="plugins/phraseanet/swf/dewplayer/dewplayer-mini.swf?mp3=${embed.getEmbedItem(\'preview\').permalink.url}" /></object>', 'audio' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
 VALUES (3, 'Template pour les images', '<img src="${embed.getEmbedItem(\'preview\').permalink.url}" width="${embed.getEmbedItem(\'preview\').width}" height="${embed.getEmbedItem(\'preview\').height}" />', 'image' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)

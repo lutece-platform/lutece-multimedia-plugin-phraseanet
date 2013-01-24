@@ -17,7 +17,7 @@ VALUES (1, 'Template pour les videos', '
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
 VALUES (2, 'Template pour les audios', '', 'audio' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
-VALUES (3, 'Template pour les images', '<img src="${embed.getEmbedItem(\'document\').permalink.Url}" width="${embed.getEmbedItem(\'document\').width}" height="${embed.getEmbedItem(\'document\').height}" />', 'image' );
+VALUES (3, 'Template pour les images', '<img src="${embed.getEmbedItem(\'preview\').permalink.url}" width="${embed.getEmbedItem(\'preview\').width}" height="${embed.getEmbedItem(\'preview\').height}" />', 'image' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
 VALUES (4, 'Template pour les flashs', '', 'flash' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)

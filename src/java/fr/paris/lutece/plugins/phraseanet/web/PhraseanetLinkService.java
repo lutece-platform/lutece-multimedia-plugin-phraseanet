@@ -39,6 +39,7 @@ import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandler;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerHome;
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.business.record.MetadataValue;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
@@ -241,11 +242,16 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
             _logger.debug( "embed : " + embed );
             List<Metadata> listMetadatas = PhraseanetService.getRecordMetadatas( nDataboxId, nRecordId, account );
             _logger.debug( "listMetadatas : " + listMetadatas );
+            //MetadataValue metadata = PhraseanetService.getMetadatas(nDataboxId, nRecordId, account);
+            //_logger.debug( "Metadata : " + metadata );
+            _logger.debug( "embed.getEmbedItem(\"preview\").getPlayerType() = " + embed.getEmbedItem("preview").getPlayerType() );
+            
 
             Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_LOCALE, locale );
             model.put( MARK_EMBED, embed );
             model.put( MARK_METADATAS, listMetadatas );
+            
            
             HtmlTemplate t = AppTemplateService.getTemplateFromStringFtl( mh.getInsertTemplate(  ), locale, model );
                       

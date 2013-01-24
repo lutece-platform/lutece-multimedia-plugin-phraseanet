@@ -54,6 +54,7 @@ import net.sf.json.JSONArray;
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.business.record.MetadataValue;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -109,6 +110,7 @@ public final class PhraseanetService
     public static Record getRecord( int nDataboxId, int nRecordId, Account account )
         throws PhraseanetApiCallException
     {
+        _logger.debug( "getRecord" );
         Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_GET_RECORD, arguments );
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
@@ -153,7 +155,7 @@ public final class PhraseanetService
         
         return MetadatasJsonParser.parse( jsonResponse );
     }
-
+     
     /**
      * Searc results
      * @param strQuery Query terms

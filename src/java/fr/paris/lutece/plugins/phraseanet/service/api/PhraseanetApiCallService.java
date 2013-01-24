@@ -62,6 +62,7 @@ public final class PhraseanetApiCallService
     /** Private constructor */
     private PhraseanetApiCallService(  )
     {
+       _logger.debug("PhraseanetApiCallService");
     }
 
     /**
@@ -82,7 +83,7 @@ public final class PhraseanetApiCallService
             HttpAccess httpClient = new HttpAccess(  );
             String strResponse = httpClient.doGet( url.getUrl(  ) );
 
-            _logger.debug( strResponse );
+            _logger.debug( "getResponse : " + strResponse );
 
             return extractResponse( strResponse );
         }

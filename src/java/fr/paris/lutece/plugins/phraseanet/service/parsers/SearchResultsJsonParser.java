@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
@@ -45,6 +46,7 @@ import net.sf.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -52,9 +54,13 @@ import java.util.List;
  */
 public final class SearchResultsJsonParser
 {
+    private static Logger _logger = Logger.getLogger( Constants.LOGGER );
+    
     /** private constructor */
     private SearchResultsJsonParser(  )
     {
+        _logger.debug("SearchResultsJsonParser");
+        //AppLogService.debug("SearchResultsJsonParser");
     }
 
     /**
@@ -92,12 +98,13 @@ public final class SearchResultsJsonParser
                 try 
                 {
                     JSONObject jsonResult = (JSONObject) i.next(  );
+                    _logger.debug("jsonResult" + jsonResult);
                     Record record = RecordJsonParser.parse( jsonResult );
                     listResults.add( record );
                 }
                 catch( PhraseanetApiCallException e )
                 {
-                    AppLogService.error( "Error parsing records list " + e.getMessage() );
+                    AppLogService.error( "Error parsing records list i = " + i.hashCode() + " - msg : " + e.getMessage() );
                 }
             }
 

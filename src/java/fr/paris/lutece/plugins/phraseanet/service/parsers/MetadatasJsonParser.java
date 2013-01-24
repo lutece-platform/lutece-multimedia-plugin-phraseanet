@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.business.record.MetadataValue;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -59,7 +60,9 @@ public final class MetadatasJsonParser
     /** private constructor */
     private MetadatasJsonParser(  )
     {
+        _logger.debug( "MetadatasJsonParser" );
     }
+    
 
     /**
      * Parse a list of metadatas
@@ -97,7 +100,7 @@ public final class MetadatasJsonParser
             return null;
         }     
     }
-    
+
     /**
      * Parse a list of metadatas
      * @param jsonResponse The response as JSONObject
