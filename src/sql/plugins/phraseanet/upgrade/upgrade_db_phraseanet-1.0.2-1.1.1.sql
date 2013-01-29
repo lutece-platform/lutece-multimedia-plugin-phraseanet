@@ -46,7 +46,13 @@ VALUES (4, 'Template pour les flashs', '', 'flash' );
 INSERT INTO phraseanet_template ( id_template, name, default_template, media_type)
 VALUES (5, 'Template pour les documents', '', 'document' );
 
-TRUNCATE TABLE phraseanet_media;
+/*
+  Il n'est pas nessecaire de supprimer les players déjà créer.
+  Il faut creer un compte et l'associer au player existant.
+  
+TRUNCATE TABLE phraseanet_media; 
+*/
+
 
 ALTER TABLE phraseanet_media ADD COLUMN id_account int NOT NULL AFTER id_media;
 ALTER TABLE phraseanet_media ADD CONSTRAINT FK_ID_ACCOUNT FOREIGN KEY (id_account) REFERENCES id_account (phraseanet_account);

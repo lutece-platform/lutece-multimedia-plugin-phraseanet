@@ -7,8 +7,8 @@ CREATE TABLE phraseanet_account
 	id_account int NOT NULL,
 	name varchar(255) NOT NULL,
 	description varchar(255) default NULL,
-    access_url varchar(255) default NULL,
-    customer_id CHAR(32) NOT NULL,
+  access_url varchar(255) default NULL,
+  customer_id CHAR(32) NOT NULL,
 	customer_secret CHAR(32) default NULL,
 	autthorize_end_point varchar(255) default NULL,
 	access_end_point varchar(255) default NULL,
@@ -42,8 +42,8 @@ CREATE TABLE phraseanet_media
 	id_account int NOT NULL,
 	media_name varchar(60) NOT NULL,
 	media_description varchar(255) NOT NULL,
-        url_icon varchar(255) default NULL,
-        insert_template text default NULL,
+  url_icon varchar(255) default NULL,
+  insert_template text default NULL,
 	media_type varchar(60) default NULL,
 	PRIMARY KEY (id_media)
 );
