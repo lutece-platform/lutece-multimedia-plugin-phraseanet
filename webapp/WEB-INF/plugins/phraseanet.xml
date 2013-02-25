@@ -59,7 +59,8 @@
     </css-stylesheets>
     <javascript-files>
         <javascript-files-scope>portal</javascript-files-scope>
-        <javascript-file>phraseanet/flowplayer/flowplayer-3.2.8.min.js</javascript-file>
+        <javascript-file>phraseanet/flowplayer/flowplayer-3.2.11.min.js</javascript-file>
+        <javascript-file>phraseanet/flowplayer/flowplayer.playlist-3.2.10.min.js</javascript-file>
         <javascript-file>phraseanet/player.js</javascript-file>
     </javascript-files>
 	    
