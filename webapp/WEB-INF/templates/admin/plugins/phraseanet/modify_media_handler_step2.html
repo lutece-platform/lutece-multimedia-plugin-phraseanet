@@ -1,47 +1,76 @@
-<div class="content-box" >
-    <h2>#i18n{phraseanet.modify_media_handler.title}</h2>
-    <form method="post" enctype="multipart/form-data" name="modify_media_handler" id="modify_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandler.jsp">
+<div class="row-fluid">
+	<div class="span12">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" name="modify_media_handler" id="modify_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandler.jsp">
     	<input type="hidden" name="media_type" value="${media_type}"/>
     	<input type="hidden" name="id_account" value="${account.id}"/>
     	<input type="hidden" name="description" value="${description}"/>
     	<input type="hidden" name="name" value="${media_handler_name}"/>
     	<input type="hidden" name="id_media_handler" value="${id_media_handler}" />
-        <p>
-            <label for="name" >#i18n{phraseanet.create_media_handler.labelName} * :</label>
-            <input disabled="disabled" type="text" id="name" name="name" size="50" maxlength="50" tabindex="1" value="${media_handler_name}" />
-        </p>
-        <p>
-            <label for="name" >#i18n{phraseanet.create_media_handler.labelMetaDatasList} * :</label>
-            <div style="padding: 0;">
-	            <#if databoxes_list?? && databoxes_list?has_content >
-	            	<ul style="margin: 2px 0 10px; display : inline-block;">
+		<legend>#i18n{phraseanet.modify_media_handler.title}</legend>
+		<div class="control-group">
+			<label class="control-label" for="name" >#i18n{phraseanet.create_media_handler.labelName} *</label>
+				<div class="controls">
+					<input disabled="disabled" type="text" id="name" name="name" class="input-large"  maxlength="50" tabindex="1" value="${media_handler_name}" />
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="name" >#i18n{phraseanet.create_media_handler.labelMetaDatasList} * </label>
+                <div class="controls">
+				<#if databoxes_list?? && databoxes_list?has_content >
+	            	<ul>
 			            <#list databoxes_list as databoxe>
-			            	<li><a style="cursor:pointer;" class="bullet-link" onClick="window.open('jsp/admin/plugins/phraseanet/DisplayMetadatas.jsp?id_databoxe=${databoxe.databoxId}&id_account=${account.id}','','resizable=yes, location=no, width=500, height=300, menubar=no, status=no, scrollbars=yes, menubar=no');" >${databoxe.name}</a></li>	
+			            	<li>
+							<a class="btn btn-link show-modal"  href="jsp/admin/plugins/phraseanet/DisplayMetadatas.jsp?id_databoxe=${databoxe.databoxId}&id_account=${account.id}">
+								${databoxe.name}&nbsp;<i class="icon-info-sign"></i> 
+							</a>
+							</li>	
+			            </#list>
+		            </ul>
+	            <#else>
+					<div class="alert alert-error">#i18n{portal.util.labelNoItem}</div>
+	            </#if>
+				</div>
+            </div>
+			<div class="control-group">
+				<label class="control-label" for="insert_template" >#i18n{phraseanet.create_media_handler.labelInsertTemplate} *</label>
+				 <div class="controls">
+					<textarea rows="15"  id="insert_template" name="insert_template" tabindex="3" ><#if default_template??>${default_template}</#if></textarea>
+				</div>
+            </div>
+			<div class="control-group">
+			<label class="control-label" for="bases" >#i18n{phraseanet.create_media_handler.labelCollectionsList} </label>
+				<div class="controls">
+	            <#if databoxes_list?? && databoxes_list?has_content >
+	            	<ul>
+			            <#list databoxes_list as databoxe>
+			            	<li>
+								<a class="btn btn-link show-modal" href="jsp/admin/plugins/phraseanet/DisplayCollections.jsp?id_databoxe=${databoxe.databoxId}&id_account=${account.id}" >
+									${databoxe.name}&nbsp;<i class="icon-info-sign"></i>
+								</a>
+							</li>	
 			            </#list>
 		            </ul>
 	            </#if>
+				</div>
             </div>
-        </p>
-        <p>
-            <label for="insert_template" >#i18n{phraseanet.create_media_handler.labelInsertTemplate} * <a href="${url_documentation}" target="_blank"><img title="help" alt="help" src="images/admin/skin/plugins/phraseanet/help.gif"></a>:</label>
-            <textarea cols="80" rows="5"  id="insert_template" name="insert_template" tabindex="3" ><#if default_template??>${default_template}</#if></textarea>
-        </p>
-        <p>
-            <label for="bases" >#i18n{phraseanet.create_media_handler.labelCollectionsList} :</label>
-            <div style="padding: 0;">
-	            <#if databoxes_list?? && databoxes_list?has_content >
-	            	<ul style="margin: 2px 0 10px; display : inline-block;">
-			            <#list databoxes_list as databoxe>
-			            	<li><a style="cursor:pointer;" class="bullet-link" onClick="window.open('jsp/admin/plugins/phraseanet/DisplayCollections.jsp?id_databoxe=${databoxe.databoxId}&id_account=${account.id}','','resizable=yes, location=no, width=500, height=300, menubar=no, status=no, scrollbars=yes, menubar=no');" >${databoxe.name}</a></li>	
-			            </#list>
-		            </ul>
-	            </#if>
-            </div>
-        </p>
-        <p>
-            <input type="submit" value="#i18n{phraseanet.create_media_handler.buttonValidate}" class="button" tabindex="5" />
-            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" />	
-        </p>
-    </form>
+            <div class="form-actions">
+				<button class="btn btn-primary btn-small" type="submit" tabindex="4" >
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{phraseanet.create_media_handler.buttonValidate}
+				</button>
+				<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ModifyMediaHandlerStep1.jsp?name=${media_handler_name}&description=${description}&id_account=${account.id}&media_type=${media_type}" title="#i18n{portal.admin.message.buttonCancel}" tabindex="5" >
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
+				</a>
+			</div>
+        
+		</fieldset>
+	</form>
+	</div>
 </div>
-
+<script>
+$('.show-modal').click( function(){
+	// create the backdrop and wait for next modal to be triggered
+	var url = $(this).attr('href');
+	window.open( url,'','resizable=no, location=no, width=600, height=540, left=100, menubar=no, status=no, scrollbars=no');
+	return false
+});
+ </script>

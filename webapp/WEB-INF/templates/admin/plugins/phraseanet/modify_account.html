@@ -1,64 +1,94 @@
-<div class="content-box" >
-    <h2>#i18n{phraseanet.modify_account.title}</h2>
-    <form method="post" enctype="multipart/form-data" name="modify_account" id="modify_account" action="jsp/admin/plugins/phraseanet/DoModifyAccount.jsp">
-    	<input type="hidden" id="id_account" name="id_account" value="${account.id}"/>
-    	<#if check_account??>
-    		<p>
-	            <label for="name">#i18n{phraseanet.create_account.labelCheckAccount} :</label>
-	            <span style="color:
-	            	<#if check_account == "true">
-	            		green">#i18n{phraseanet.create_account.labelCheckAccount.available}
-	            	<#else>
-	            		red">#i18n{phraseanet.create_account.labelCheckAccount.unavailable}
-	            	</#if>
-	            </span>
-	        </p>
-    	</#if>
-        <p>
-            <label for="name" >#i18n{phraseanet.create_account.labelName} * :</label>
-            <input type="text" id="name" name="name" size="25" maxlength="255" tabindex="1" value="${account.name}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * :</label>
-            <input type="text" id="description" name="description" size="50" maxlength="255" tabindex="2" value="${account.description}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelAccessUrl} * :</label>
-            <input type="text" id="accessUrl" name="accessUrl" size="50" maxlength="255" tabindex="3" value="${account.accessURL}"/>
-             (sans / à la fin)
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelCustomerId} * :</label>
-            <input type="text" id="customerId" name="customerId" size="32" maxlength="32" tabindex="4" value="${account.customerId}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelCustomerSecret} :</label>
-            <input type="text" id="customerSecret" name=customerSecret size="32" maxlength="32" tabindex="5" value="${account.customerSecret}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelAuthorizeEndPoint} * :</label>
-            <input type="text" id="authorizeEndPoint" name="authorizeEndPoint" size="50" maxlength="255" tabindex="6" value="${account.authorizeEndPoint}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelAccessEndPoint} * :</label>
-            <input type="text" id="accessEndPoint" name="accessEndPoint" size="50" maxlength="255" tabindex="7" value="${account.accessEndPoint}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelPhraseanetId} * :</label>
-            <input type="text" id="phraseanetId" name="phraseanetId" size="50" maxlength="255" tabindex="8" value="${account.phraseanetId}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelPassword} * :</label>
-            <input type="password" id="password" name="password" size="50" maxlength="255" tabindex="9" value="${account.password}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.manage_accounts.labelAccessToken} :</label>
-            <input type="text" id="token" name="token" size="50" maxlength="255" tabindex="10" value="${account.token}"/>
-        </p>        
-        <p>
-        	<input type="submit" value="#i18n{phraseanet.create_account.buttonAccessCheck}" name="get_token" class="button" tabindex="10" />		
-            <input type="submit" value="#i18n{phraseanet.create_account.buttonSave}" name="save" class="button" tabindex="11" />
-            <input type="submit"  value="#i18n{portal.admin.message.buttonCancel}" name="cancel" class="button" tabindex="12" />	
-        </p>
-    </form>
+<div class="row-fluid">
+	<div class="span12">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" name="modify_account" id="modify_account" action="jsp/admin/plugins/phraseanet/DoModifyAccount.jsp">
+    <input type="hidden" id="id_account" name="id_account" value="${account.id}">
+		<fieldset>	
+		<legend>#i18n{phraseanet.modify_account.title}</legend>
+			<#if check_account??>
+    		<div class="control-group">
+			<label class="control-label" for="name">#i18n{phraseanet.create_account.labelCheckAccount}</label>
+				<div class="controls">	        
+				<#if check_account == "true">
+	            	<span class="label label-success"><i class="icon-ok icon-white"></i>&nbsp;#i18n{phraseanet.create_account.labelCheckAccount.available}</span>
+	            <#else>
+	            	<span class="label label-important"><i class="icon-remove icon-white"></i>&nbsp;#i18n{phraseanet.create_account.labelCheckAccount.unavailable}</span>
+	            </#if>
+				</div>
+			</div>
+			</#if>
+			<div class="control-group">
+			<label class="control-label" for="name" >#i18n{phraseanet.create_account.labelName} *</label>
+				<div class="controls">
+					<input type="text" id="name" name="name" class="input-xxlarge" maxlength="255" tabindex="1" value="${account.name}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * </label>
+				<div class="controls">
+					<input type="text" id="description" name="description" class="input-xxlarge" maxlength="255" tabindex="2" value="${account.description}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="accessUrl" >#i18n{phraseanet.create_account.labelAccessUrl} *</label>
+				<div class="controls">
+					<input type="text" id="accessUrl" name="accessUrl" class="input-xxlarge" maxlength="255" tabindex="3" value="${account.accessURL}">
+					<span class="help-text">#i18n{phraseanet.create_account.labelAccessUrlComment}</span>
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="customerId" >#i18n{phraseanet.create_account.labelCustomerId} *</label>
+				<div class="controls">
+					<input type="text" id="customerId" name="customerId" class="input-xxlarge" maxlength="32" tabindex="4" value="${account.customerId}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="customerSecret" >#i18n{phraseanet.create_account.labelCustomerSecret}</label>
+				<div class="controls">
+					<input type="text" id="customerSecret" name=customerSecret class="input-xxlarge" maxlength="32" tabindex="5" value="${account.customerSecret}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="authorizeEndPoint" >#i18n{phraseanet.create_account.labelAuthorizeEndPoint} * </label>
+				<div class="controls">
+					<input type="text" id="authorizeEndPoint" name="authorizeEndPoint" class="input-xxlarge" maxlength="255" tabindex="6" value="${account.authorizeEndPoint}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="accessEndPoint" >#i18n{phraseanet.create_account.labelAccessEndPoint} * </label>
+				<div class="controls">
+					<input type="text" id="accessEndPoint" name="accessEndPoint" class="input-xxlarge" maxlength="255" tabindex="7" value="${account.accessEndPoint}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="phraseanetId" >#i18n{phraseanet.create_account.labelPhraseanetId} * </label>
+				<div class="controls">
+					<input type="text" id="phraseanetId" name="phraseanetId" class="input-xxlarge" maxlength="255" tabindex="8" value="${account.phraseanetId}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="password" >#i18n{phraseanet.create_account.labelPassword} * </label>
+				<div class="controls">
+					<input type="password" id="password" name="password" class="input-xxlarge" maxlength="255" tabindex="9" value="${account.password}">
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="token" >#i18n{phraseanet.manage_accounts.labelAccessToken} </label>
+				<div class="controls">
+					<input type="text" id="token" name="token" class="input-xxlarge" maxlength="255" tabindex="10" value="${account.token}">
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary btn-small" type="submit" name="get_token" value="get_token" tabindex="11">
+					<i class="icon-lock icon-white"></i>&nbsp;#i18n{phraseanet.create_account.buttonAccessCheck}
+				</button>	
+				<button class="btn btn-primary btn-small" type="submit" name="save" value="save" tabindex="12">
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{phraseanet.create_account.buttonSave}
+				</button>
+				<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ManageAccounts.jsp" tabindex="13">
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
+				</a>
+			</div>
+			</fieldset>
+		</form>
+	</div>  
 </div>  

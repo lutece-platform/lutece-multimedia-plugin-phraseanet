@@ -1,20 +1,18 @@
-<div id="wrapper">
-<div id="admin-header">
-<p id="admin-header-toolbar">
-    <img  id="logo" src="images/logo-header.png" alt="" title="" />
-    <a href="jsp/admin/AdminLogin.jsp" title=""><img src="images/admin/skin/login.png" alt="" title="" />&nbsp;</a>
-  </p>
-   <div id="admin-header-main">
-       <div id="admin-header-sitename">&nbsp; <!-- Add Sitename --></div>
-       <div class="clear"></div>
-    </div>
+<div class="modal-header">
+	<h3>#i18n{phraseanet.create_media_handler.labelMetaDatasList}</h3>
 </div>
-</br>
-<ul>
-	<#list metadatas_list as metadata>
-	<li>
-		${metadata.name}
-	</li>	
-	</#list>
-</ul>
+<div class="modal-body">
+	<ul>
+		<#list metadatas_list as metadata>
+			<li>${metadata.name}</li>	
+		</#list>
+	</ul>
 </div>
+<div class="modal-footer">
+	<button type="button" data-dismiss="modal" class="btn modal-close">#i18n{portal.util.labelCancel}</button>
+</div>
+<script>
+$('.modal-close').click( function(){
+	window.close();
+});
+ </script>

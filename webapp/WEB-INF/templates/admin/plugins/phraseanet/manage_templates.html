@@ -1,6 +1,25 @@
-<div class="content-box" >
-    <h2>#i18n{phraseanet.manage_templates.tableLabel}</h2>
-    <table>
+<div class="row-fluid">
+	<div class="span12">
+		<ul class="nav nav-tabs" id="seoPanels">
+			<li >
+				<a href="jsp/admin/plugins/phraseanet/ManageMediaHandlers.jsp">
+					#i18n{phraseanet.manage_media_handlers.tabLabel}
+				</a>
+			</li>
+			<li>
+				<a href="jsp/admin/plugins/phraseanet/ManageAccounts.jsp" >
+					#i18n{phraseanet.manage_media_handlers.buttonAdvancedParameters}
+				</a>
+			</li>
+			<li class="active" >
+				<a href="jsp/admin/plugins/phraseanet/ManageTemplates.jsp#panel" data-toggle="tab" >
+					#i18n{phraseanet.manage_media_handlers.buttonDefaultTemplate}
+				</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="panel">
+		<table class="table table-striped table-condensed">
         <tr>
             <th>#i18n{phraseanet.manage_accounts.columnName}</th>
             <th>#i18n{phraseanet.manage_accounts.columnActions}</th>
@@ -10,9 +29,10 @@
 				#i18n{phraseanet.manage_templates.templateVideo}
             </td>
             <td>
-                <a href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=video" >
-                    <img src="images/admin/skin/actions/modify.png" alt="#i18n{portal.util.labelModify}" title="#i18n{portal.util.labelModify}" />
-                </a>
+                <a class="btn btn-primary btn-small" href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=video"  title="#i18n{portal.util.labelModify}" >
+					<i class="icon-edit icon-white"></i>
+			</a>
+
             </td>
         </tr>
         <tr>
@@ -20,9 +40,10 @@
 				#i18n{phraseanet.manage_templates.templateAudio}
             </td>
             <td>
-                <a href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=audio" >
-                    <img src="images/admin/skin/actions/modify.png" alt="#i18n{portal.util.labelModify}" title="#i18n{portal.util.labelModify}" />
-                </a>
+                <a class="btn btn-primary btn-small" href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=audio"  title="#i18n{portal.util.labelModify}" >
+	<i class="icon-edit icon-white"></i>
+	</a>
+
             </td>
         </tr>
         <tr>
@@ -30,9 +51,10 @@
 				#i18n{phraseanet.manage_templates.templatePhoto}
             </td>
             <td>
-                <a href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=image" >
-                    <img src="images/admin/skin/actions/modify.png" alt="#i18n{portal.util.labelModify}" title="#i18n{portal.util.labelModify}" />
-                </a>
+                <a class="btn btn-primary btn-small" href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=image"  title="#i18n{portal.util.labelModify}" >
+	<i class="icon-edit icon-white"></i>
+	</a>
+
             </td>
         </tr>
         <tr>
@@ -40,9 +62,10 @@
 				#i18n{phraseanet.manage_templates.templateFlash}
             </td>
             <td>
-                <a href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=flash" >
-                    <img src="images/admin/skin/actions/modify.png" alt="#i18n{portal.util.labelModify}" title="#i18n{portal.util.labelModify}" />
-                </a>
+                <a class="btn btn-primary btn-small" href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=flash"  title="#i18n{portal.util.labelModify}" >
+	<i class="icon-edit icon-white"></i>
+	</a>
+
             </td>
         </tr>
         <tr>
@@ -50,10 +73,14 @@
 				#i18n{phraseanet.manage_templates.templateDocument}
             </td>
             <td>
-                <a href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=document" >
-                    <img src="images/admin/skin/actions/modify.png" alt="#i18n{portal.util.labelModify}" title="#i18n{portal.util.labelModify}" />
-                </a>
+                <a class="btn btn-primary btn-small" href="jsp/admin/plugins/phraseanet/ModifyTemplate.jsp?media_type=document"  title="#i18n{portal.util.labelModify}" >
+	<i class="icon-edit icon-white"></i>
+	</a>
+
             </td>
         </tr>
     </table>
+	</div>
+	</div>
+</div>
 </div>

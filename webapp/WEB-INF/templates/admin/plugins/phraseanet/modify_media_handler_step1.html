@@ -1,41 +1,55 @@
-<div class="content-box" >
-    <h2>#i18n{phraseanet.modify_media_handler.title}</h2>
-    <form method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandlerStep2.jsp">
+<div class="row-fluid">
+	<div class="span12">
+		<form class="form-horizontal" method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandlerStep2.jsp">
     	<input type="hidden" name="id_media_handler" value="${media_handler.id}" />
-        <p>
-            <label for="name" >#i18n{phraseanet.create_media_handler.labelName} * :</label>
-            <input type="text" id="name" name="name" size="50" maxlength="50" tabindex="1" value="${media_handler.name}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * :</label>
-            <input type="text" id="description" name="description" size="50" maxlength="50" tabindex="2" value="${media_handler.description}"/>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_media_handler.labelAccount} * :</label>
-            <select id="account" name="id_account">
-	            <#list account_list as account>
-	            	<#if account.id == media_handler.idAccount >
-	            		<option value="${account.id}" selected="selected">${account.name}</option>
-	            	<#else>
-	            		<option value="${account.id}">${account.name}</option>
-	            	</#if>
-	            </#list>
-            </select>
-        </p>
-        <p>
-            <label for="media_type" >#i18n{phraseanet.create_media_handler.labelMediaType} * :</label>
-            <#list record_type_list as record_type>
-	        	<#if record_type.name == media_handler.mediaType>
-	        		<input class="radio" type="radio" name="media_type" value="${record_type.name}" checked="checked"/>
-	        	<#else>
-	        		<input class="radio" type="radio" name="media_type" value="${record_type.name}" />
-	        	</#if> 
-	        	<img height="40px" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}"/>
-	        </#list>
-        </p>
-               <p>
-            <input type="submit" value="#i18n{phraseanet.create_media_handler.buttonNext}" class="button" tabindex="9" />
-            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" />	
-        </p>
-    </form>
+			<fieldset>
+			<legend>#i18n{phraseanet.modify_media_handler.title}</legend>
+			<div class="control-group">
+			<label class="control-label" for="name" >#i18n{phraseanet.create_media_handler.labelName} * </label>
+				<div class="controls">
+					<input type="text" id="name" name="name" class="input-large" maxlength="50" tabindex="1" value="${media_handler.name}"/>
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * </label>
+				<div class="controls">
+					<input type="text" id="description" name="description" class="input-large"  maxlength="50" tabindex="2" value="${media_handler.description}"/>
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelAccount} * </label>
+				<div class="controls">
+					<select id="account" name="id_account">
+					<#list account_list as account>
+						<#if account.id == media_handler.idAccount >
+							<option value="${account.id}" selected="selected">${account.name}</option>
+						<#else>
+							<option value="${account.id}">${account.name}</option>
+						</#if>
+					</#list>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="" >#i18n{phraseanet.create_media_handler.labelMediaType} * </label>
+        		<div class="controls">
+				<#list record_type_list as record_type>
+					<label class="radio inline" for="media_type" >
+						<input class="radio" type="radio" name="media_type" value="${record_type.name}" <#if record_type.name == media_handler.mediaType>checked="checked"</#if>>
+						<img class="thumblist" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}"/>
+					</label>				
+				</#list>
+				</div>
+			</div>
+	         <div class="form-actions">
+				<button class="btn btn-primary btn-small" type="submit" >
+					<i class="icon-forward	icon-white"></i>&nbsp;#i18n{phraseanet.create_media_handler.buttonNext}
+				</button>
+				<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ManageMediaHandlers.jsp" title="#i18n{portal.admin.message.buttonCancel}">
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
+				</a>
+			</div>	
+        	</fieldset>
+		</form>
+	</div>
 </div>

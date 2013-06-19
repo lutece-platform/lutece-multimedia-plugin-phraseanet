@@ -1,112 +1,93 @@
-<div class="content-box" >
-    <h2>#i18n{phraseanet.create_account.title}</h2>
-    <form method="post" enctype="multipart/form-data" name="create_account" id="create_account" action="jsp/admin/plugins/phraseanet/DoCreateAccount.jsp">
+<div class="row-fluid">
+	<div class="span12">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" name="create_account" id="create_account" action="jsp/admin/plugins/phraseanet/DoCreateAccount.jsp">
+		<fieldset>
+		<legend>#i18n{phraseanet.create_account.title}</legend>
         <#if check_account??>
-    		<p>
-	            <label for="name">#i18n{phraseanet.create_account.labelCheckAccount} :</label>
-	            <span style="color:
-	            	<#if check_account == "true">
-	            		green">#i18n{phraseanet.create_account.labelCheckAccount.available}
-	            	<#else>
-	            		red">#i18n{phraseanet.create_account.labelCheckAccount.unavailable}
-	            	</#if>
-	            </span>
-	        </p>
-    	</#if>
-    	
-        <p>
-            <label for="name" >#i18n{phraseanet.create_account.labelName} * :</label>
-            
-            <#if account?? && account.name??>
-            	<input type="text" id="name" name="name" size="25" maxlength="255" tabindex="1" value="${account.name}"/>
-            <#else>
-            	<input type="text" id="name" name="name" size="25" maxlength="255" tabindex="1" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * :</label>
-            
-            <#if account?? && account.description??>
-            	<input type="text" id="description" name="description" size="50" maxlength="255" tabindex="2"  value="${account.description}"/>
-            <#else>
-            	<input type="text" id="description" name="description" size="50" maxlength="255" tabindex="2" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelAccessUrl} * :</label>
-            
-            <#if account?? && account.accessURL??>
-            	<input type="text" id="accessUrl" name="accessUrl" size="50" maxlength="255" tabindex="3" value="${account.accessURL}"/>
-            <#else>
-            	<input type="text" id="accessUrl" name="accessUrl" size="50" maxlength="255" tabindex="3" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelCustomerId} * :</label>
-            
-            <#if account?? && account.customerId??>
-            	<input type="text" id="customerId" name="customerId" size="35" maxlength="32" tabindex="4" value="${account.customerId}"/>
-            <#else>
-            	<input type="text" id="customerId" name="customerId" size="35" maxlength="32" tabindex="4" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelCustomerSecret} :</label>
-            
-            <#if account?? && account.customerSecret??>
-            	<input type="text" id="customerSecret" name=customerSecret size="35" maxlength="32" tabindex="5" value="${account.customerSecret}"/>
-            <#else>
-            	<input type="text" id="customerSecret" name=customerSecret size="35" maxlength="32" tabindex="5" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelAuthorizeEndPoint} * :</label>
-            
-            <#if account?? && account.authorizeEndPoint??>
-            	<input type="text" id="authorizeEndPoint" name="authorizeEndPoint" size="50" maxlength="255" tabindex="6" value="${account.authorizeEndPoint}"/>
-            <#else>
-            	<input type="text" id="authorizeEndPoint" name="authorizeEndPoint" size="50" maxlength="255" tabindex="6" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelAccessEndPoint} * :</label>
-            
-            <#if account?? && account.accessEndPoint??>
-            	<input type="text" id="accessEndPoint" name="accessEndPoint" size="50" maxlength="255" tabindex="7" value="${account.accessEndPoint}"/>
-            <#else>
-            	<input type="text" id="accessEndPoint" name="accessEndPoint" size="50" maxlength="255" tabindex="7" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelPhraseanetId} * :</label>
-            
-            <#if account?? && account.phraseanetId??>
-            	<input type="text" id="phraseanetId" name="phraseanetId" size="50" maxlength="255" tabindex="8" value="${account.phraseanetId}"/>
-            <#else>
-            	<input type="text" id="phraseanetId" name="phraseanetId" size="50" maxlength="255" tabindex="8" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_account.labelPassword} * :</label>
-            
-            <#if account?? && account.password??>
-            	<input type="password" id="password" name="password" size="50" maxlength="255" tabindex="9" value="${account.password}"/>
-            <#else>
-            	<input type="password" id="password" name="password" size="50" maxlength="255" tabindex="9" />
-            </#if>
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.manage_accounts.labelAccessToken} :</label>
-            <#if account?? && account.password??>
-                <input type="text" id="token" name="token" size="50" maxlength="255" tabindex="10" value="${account.token}"/>
-            <#else>
-                <input type="text" id="token" name="token" size="50" maxlength="255" tabindex="10" />
-            </#if>
-        </p>        
-        <p>
-        	<input type="submit" value="#i18n{phraseanet.create_account.buttonAccessCheck}" class="button" tabindex="10" />	
-            <input type="submit" value="#i18n{phraseanet.create_account.buttonSave}" name="save" class="button" tabindex="11" />
-            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" tabindex="12" />	
-        </p>
-    </form>
+			<div class="control-group">
+				<label class="control-label" for="">#i18n{phraseanet.create_account.labelCheckAccount}</label>
+				<div class="controls">
+				<#if check_account == "true">
+	            	<span class="label label-success"><i class="icon-ok icon-white"></i>&nbsp;#i18n{phraseanet.create_account.labelCheckAccount.available}</span>
+	            <#else>
+	            	<span class="label label-important"><i class="icon-remove icon-white"></i>&nbsp;#i18n{phraseanet.create_account.labelCheckAccount.unavailable}</span>
+	            </#if>
+				</div>
+			</div>
+	    </#if>
+    	<div class="control-group">
+		<label class="control-label" for="name" >#i18n{phraseanet.create_account.labelName} *</label>
+           	<div class="controls">
+				<input type="text" id="name" name="name" class="input-xxlarge" maxlength="255" tabindex="1" value=" <#if account?? && account.name??>${account.name}</#if>">
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * </label>
+            <div class="controls">
+				<input type="text" id="description" name="description" class="input-xxlarge" maxlength="255" tabindex="2" value="<#if account?? && account.description??>${account.description}</#if>">
+			</div>
+		</div>
+		<div class="control-group">
+		<label class="control-label" for="accessUrl" >#i18n{phraseanet.create_account.labelAccessUrl} *</label>
+            <div class="controls">
+				<input type="text" id="accessUrl" name="accessUrl" class="input-xxlarge" maxlength="255" tabindex="3" value="<#if account?? && account.accessURL??>${account.accessURL}</#if>"/>
+				<span class="help-text">#i18n{phraseanet.create_account.labelAccessUrlComment}</span>
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="customerId" >#i18n{phraseanet.create_account.labelCustomerId} *</label>
+			<div class="controls">
+				<input type="text" id="customerId" name="customerId" class="input-xxlarge" maxlength="32" tabindex="4" value="<#if account?? && account.customerId??>${account.customerId} </#if>">
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="customerSecret" >#i18n{phraseanet.create_account.labelCustomerSecret}</label>
+			<div class="controls">
+				<input type="text" id="customerSecret" name=customerSecret class="input-xxlarge" maxlength="32" tabindex="5" value="<#if account?? && account.customerSecret??>${account.customerSecret}</#if>"/>
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="authorizeEndPoint" >#i18n{phraseanet.create_account.labelAuthorizeEndPoint} * </label>
+			<div class="controls">
+				<input type="text" id="authorizeEndPoint" name="authorizeEndPoint" class="input-xxlarge" maxlength="255" tabindex="6" value="<#if account?? && account.authorizeEndPoint??>${account.authorizeEndPoint}</#if>"/>
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="accessEndPoint" >#i18n{phraseanet.create_account.labelAccessEndPoint} * </label>
+			<div class="controls">
+				<input type="text" id="accessEndPoint" name="accessEndPoint" class="input-xxlarge" maxlength="255" tabindex="7" value=" <#if account?? && account.accessEndPoint??>${account.accessEndPoint}</#if>"/>
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="phraseanetId" >#i18n{phraseanet.create_account.labelPhraseanetId} * </label>
+			<div class="controls">
+				<input type="text" id="phraseanetId" name="phraseanetId" class="input-xxlarge" maxlength="255" tabindex="8" value="  <#if account?? && account.phraseanetId??>${account.phraseanetId}</#if>">
+			</div>
+		</div>
+        <div class="control-group">
+		<label class="control-label" for="password" >#i18n{phraseanet.create_account.labelPassword} * </label>
+			<div class="controls">
+				<input type="password" id="password" name="password" class="input-xxlarge" maxlength="255" tabindex="9" value="<#if account?? && account.password??>${account.password} </#if>">
+			</div>
+		</div>
+		<div class="control-group">
+		<label class="control-label" for="token" >#i18n{phraseanet.manage_accounts.labelAccessToken} </label>
+			<div class="controls">
+				<input type="text" id="token" name="token" class="input-xxlarge" maxlength="255" tabindex="10" value="<#if account?? && account.accessToken??>${account.token}</#if>">
+			</div>
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary btn-small" type="submit" name="get_token" value="get_token" tabindex="11">
+				<i class="icon-lock icon-white"></i>&nbsp;#i18n{phraseanet.create_account.buttonAccessCheck}
+			</button>	
+			<button class="btn btn-primary btn-small" type="submit" name="save" value="save" tabindex="12">
+				<i class="icon-ok icon-white"></i>&nbsp;#i18n{phraseanet.create_account.buttonSave}
+			</button>
+			<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ManageAccounts.jsp" tabindex="13">
+				<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
+			</a>
+		</div>
+		</fieldset>
+	</form>
+	</div>
 </div>

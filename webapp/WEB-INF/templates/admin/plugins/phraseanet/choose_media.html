@@ -1,14 +1,14 @@
-<div class="insert-service">
-    <img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" style="margin:7px;"/>
-    <h2>#i18n{phraseanet.choose_media.title}</h2>
+<div class="row-fluid">
+	<div class="span12">
+    <img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist"/>
     <ul>
         <#list media_handlers_list as mh>
         <li>
             <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input=${input}&amp;media_handler=${mh.id}">
-                <img src="${mh.iconUrl}" width="80" height="80" />
-                ${mh.name}
+                <img src="${mh.iconUrl}" class="thmblist">&nbsp;${mh.name}
             </a>
         </li>
         </#list>
     </ul>
+	</div>
 </div>

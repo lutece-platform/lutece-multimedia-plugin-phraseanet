@@ -1,21 +1,23 @@
-<div class="insert-service">
-    <img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" style="margin:7px;"/>
-    <h2>#i18n{phraseanet.search_form.title}</h2>
-    <form action="jsp/admin/plugins/phraseanet/Search.jsp" method="get">
-        <input type="hidden" name="input" value="${input}" />
-        <input type="hidden" name="media_handler" value="${media_handler}" />
-        <p>
-            <label for="search" >#i18n{phraseanet.search_form.labelQuery} : </label>
-            <input type="text" name="search" value="LAST" />
-        </p>
-        <p>
-            <label for="items_per_page" >#i18n{phraseanet.search_form.labelItemsPerPage} : </label>
-            <#list items_per_page_values as ipp_value>
-            <input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if> /> ${ipp_value}
-            </#list>  
-        </p>
-        <p>
-            <input type="submit" class="button" value="#i18n{phraseanet.search_form.buttonSearch}"/>
-        </p>
-    </form>
+<div class="row-fluid">
+	<div class="span12">
+		<img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist">
+		<form action="jsp/admin/plugins/phraseanet/Search.jsp" method="get">
+		<fieldset>
+		<legend>#i18n{phraseanet.search_form.title}</legend>
+			<input type="hidden" name="input" value="${input}" />
+			<input type="hidden" name="media_handler" value="${media_handler}" />
+			<label for="search" >#i18n{phraseanet.search_form.labelQuery} </label>
+			<input type="text" name="search" value="LAST" class="input-large">
+			<label for="items_per_page" class="radio" >#i18n{phraseanet.search_form.labelItemsPerPage} 
+				<#list items_per_page_values as ipp_value>
+					<input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if> /> ${ipp_value}
+				</#list>  
+			</label>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary btn-small">
+					<i class="icon-search icon-white"></i>&nbsp;#i18n{phraseanet.search_form.buttonSearch}
+				</button>
+			</div>
+		</form>
+	</div>
 </div>

@@ -1,27 +1,29 @@
-<div class="insert-service">    
-    <img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo"  style="margin:7px;"/>
-    
-    <h2>#i18n{phraseanet.search_results.title}</h2>
-    <form action="jsp/admin/plugins/phraseanet/Search.jsp" method="post" >
-        <input type="hidden" name="input" value="${input}" />
-        <input type="hidden" name="media_handler" value="${media_handler}" />
-        <input type="hidden" name="page" value="${results.currentPage}" />
-        <p>
-            <label for="search" >#i18n{phraseanet.search_results.labelQuery} : </label>
-            <input type="text" name="search" value="${query}" />
-        </p>
-        <p>
-            <label for="items_per_page" >#i18n{phraseanet.search_results.labelItemsPerPage} : </label>
+<div class="row-fluid">
+	<div class="span12">
+		<img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist">
+		<form class="form-horizontal" action="jsp/admin/plugins/phraseanet/Search.jsp" method="post" >
+			<fieldset>
+			<legend>#i18n{phraseanet.search_results.title}</legend>
+			<input type="hidden" name="input" value="${input}" />
+			<input type="hidden" name="media_handler" value="${media_handler}" />
+			<input type="hidden" name="page" value="${results.currentPage}" />
+			<label for="search" >#i18n{phraseanet.search_results.labelQuery} : </label>
+            <input type="text" name="search" value="${query}" class="input-large">
+			<label class="radio" for="items_per_page" >#i18n{phraseanet.search_results.labelItemsPerPage}
             <#list items_per_page_values as ipp_value>
-                <input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if>/> ${ipp_value}
+				<input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if>/> ${ipp_value}
             </#list>  
-        </p>
-        <p>
-            <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonSearch}"/>
-        </p>
-    </form>
-    
-       <div id="lutece-paginator">
+			</label>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary btn-small">
+					<i class="icon-search icon-white"></i>&nbsp;#i18n{phraseanet.search_form.buttonSearch}
+				</button>
+			</div>
+			</fieldset>
+		</form>
+		<@paginationAdmin paginator=paginator />
+		<!--
+		<div id="lutece-paginator">
         <span>
          <ul>
              <#list 1..results.totalPages as i>
@@ -36,29 +38,24 @@
 
         #i18n{phraseanet.search_results.labelResultsCount} : ${results.totalResults}
     </div>
-    <table>
-        <#list results.results as record >
-        <tr>
-            <td valign="middle" >
-                <form action="jsp/admin/plugins/phraseanet/DoInsertLink.jsp" >
-                    <input type="hidden" name="input" value="${input}" />
-                    <input type="hidden" name="record" value="${record.recordId}" />
-                    <input type="hidden" name="databox" value="${record.databoxId}" />
-                    <input type="hidden" name="media_handler" value="${media_handler}" />
-                    <input type="submit" class="button" value="#i18n{phraseanet.search_results.buttonInsert}"/>
-                </form>
-            </td>
-            <td>
-                <img src="${record.thumbnail.permalink.url}" width="160px"/>
-            </td>
-            <td valign="top" >
-                <p>
-                    ${record.title}
-                </p>
-            </td>
-        </tr>
-        </#list>
-    </table>      
-    
+	-->
+		<table class="table table-striped table-condensed">
+			<#list results.results as record >
+			<tr>
+				<td>
+					<form class="form-inline" action="jsp/admin/plugins/phraseanet/DoInsertLink.jsp" >
+						<input type="hidden" name="input" value="${input}" />
+						<input type="hidden" name="record" value="${record.recordId}" />
+						<input type="hidden" name="databox" value="${record.databoxId}" />
+						<input type="hidden" name="media_handler" value="${media_handler}" />
+						<button class="btn btn-primary btn-small" type="submit" >#i18n{phraseanet.search_results.buttonInsert}</button>
+					</form>
+				</td>
+				<td><img src="${record.thumbnail.permalink.url}" class="thumblist"></td>
+				<td> ${record.title}</td>
+			</tr>
+			</#list>
+		</table>      
+    </div>
 </div>
 

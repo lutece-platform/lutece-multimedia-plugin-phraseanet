@@ -1,31 +1,51 @@
-<div class="content-box" >
-    <h2>#i18n{phraseanet.create_media_handler.title}</h2>
-    <form method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoCreateMediaHandlerStep2.jsp">
-        <p>
-            <label for="name" >#i18n{phraseanet.create_media_handler.labelName} * :</label>
-            <input type="text" id="name" name="name" size="50" maxlength="50" tabindex="1" />
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * :</label>
-            <input type="text" id="description" name="description" size="50" maxlength="50" tabindex="2" />
-        </p>
-        <p>
-            <label for="description" >#i18n{phraseanet.create_media_handler.labelAccount} * :</label>
-            <select id="account" name="id_account">
-	            <#list account_list as account>
-	            	<option value="${account.id}" >${account.name}</option>
-	            </#list>
-            </select>
-        </p>
-        <p>
-            <label for="media_type" >#i18n{phraseanet.create_media_handler.labelMediaType} * :</label>
-            <#list record_type_list as record_type>		
-	        	<input class="radio" type="radio" name="media_type" value="${record_type.name}" /><img height="40px" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}"/>
-	        </#list>
-        </p>
-               <p>
-            <input type="submit" value="#i18n{phraseanet.create_media_handler.buttonNext}" class="button" tabindex="9" />
-            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{portal.admin.message.buttonCancel}" />	
-        </p>
-    </form>
+<div class="row-fluid">
+	<div class="span12">
+		<form class="form-horizontal" method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoCreateMediaHandlerStep2.jsp">
+		<fieldset>
+			<legend>#i18n{phraseanet.create_media_handler.title}</legend>
+			<div class="control-group">
+			<label class="control-label" for="name" >#i18n{phraseanet.create_media_handler.labelName} * :</label>
+				<div class="controls">
+					<input type="text" id="name" name="name" class="input-large"  maxlength="50" tabindex="1" />
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelDescription} *</label>
+				<div class="controls">
+					<input type="text" id="description" name="description" class="input-large"  maxlength="50" tabindex="2" />
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelAccount} * </label>
+				<div class="controls">
+				<select id="account" name="id_account">
+					<#list account_list as account>
+						<option value="${account.id}" >${account.name}</option>
+					</#list>
+				</select>
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="" >#i18n{phraseanet.create_media_handler.labelMediaType} *</label>
+				<div class="controls">
+				<#list record_type_list as record_type>		
+				<label class="radio inline" for="media_type">
+					<input class="radio" type="radio" name="media_type" value="${record_type.name}">
+					<img class="thumblist" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}">
+				</label>
+				</#list>
+				</div>
+			</div>
+			 <div class="form-actions">
+				<button class="btn btn-primary btn-small" type="submit" >
+					<i class="icon-forward	icon-white"></i>&nbsp;#i18n{phraseanet.create_media_handler.buttonNext}
+				</button>
+				<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ManageMediaHandlers.jsp" title="#i18n{portal.admin.message.buttonCancel}">
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
+				</a>
+			</div>
+			
+		</fieldset>
+		</form>
+	</div>
 </div>
