@@ -1,55 +1,61 @@
-<div class="row-fluid">
-	<div class="span12">
-		<form class="form-horizontal" method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandlerStep2.jsp">
-    	<input type="hidden" name="id_media_handler" value="${media_handler.id}" />
-			<fieldset>
-			<legend>#i18n{phraseanet.modify_media_handler.title}</legend>
-			<div class="control-group">
-			<label class="control-label" for="name" >#i18n{phraseanet.create_media_handler.labelName} * </label>
-				<div class="controls">
-					<input type="text" id="name" name="name" class="input-large" maxlength="50" tabindex="1" value="${media_handler.name}"/>
-				</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">#i18n{phraseanet.modify_media_handler.title}</h3>
 			</div>
-			<div class="control-group">
-			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelDescription} * </label>
-				<div class="controls">
-					<input type="text" id="description" name="description" class="input-large"  maxlength="50" tabindex="2" value="${media_handler.description}"/>
-				</div>
+			<div class="box-body">
+				<form class="form-horizontal" method="post" enctype="multipart/form-data" name="create_media_handler" id="create_media_handler" action="jsp/admin/plugins/phraseanet/DoModifyMediaHandlerStep2.jsp">
+					<input type="hidden" name="id_media_handler" value="${media_handler.id}">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-3" for="name">#i18n{phraseanet.create_media_handler.labelName} * </label>
+						<div class="col-xs-12 col-sm-9">
+							<input type="text" id="name" name="name" class="form-control" maxlength="50" tabindex="1" value="${media_handler.name}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-3" for="description">#i18n{phraseanet.create_media_handler.labelDescription} * </label>
+						<div class="col-xs-12 col-sm-9">
+							<input type="text" id="description" name="description" class="form-control" maxlength="50" tabindex="2" value="${media_handler.description}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-3" for="description">#i18n{phraseanet.create_media_handler.labelAccount} * </label>
+						<div class="col-xs-12 col-sm-9">
+							<select id="account" name="id_account" class="form-control">
+								<#list account_list as account>
+									<#if account.id==media_handler.idAccount>
+										<option value="${account.id}" selected="selected">${account.name}</option>
+										<#else>
+											<option value="${account.id}">${account.name}</option>
+									</#if>
+								</#list>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-3" for="">#i18n{phraseanet.create_media_handler.labelMediaType} * </label>
+						<div class="col-xs-12 col-sm-9">
+							<#list record_type_list as record_type>
+								<label class="radio-inline" for="media_type">
+									<input class="radio" type="radio" name="media_type" value="${record_type.name}" <#if record_type.name==media_handler.mediaType>checked="checked"</#if>>
+									<img class="img-thumbnail img-responsive thumbnail thumbnail-sm" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}" />
+								</label>
+							</#list>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-offset-3 col-sm-9">
+							<button class="btn btn-primary btn-flat" type="submit">
+								<i class="fa fa-forward"></i> #i18n{phraseanet.create_media_handler.buttonNext}
+							</button>
+							<a class="btn btn-default btn-flat" href="jsp/admin/plugins/phraseanet/ManageMediaHandlers.jsp" title="#i18n{portal.admin.message.buttonCancel}">
+								<i class="fa fa-remove"></i> #i18n{portal.admin.message.buttonCancel}
+							</a>
+						</div>
+					</div>
+				</form>
 			</div>
-			<div class="control-group">
-			<label class="control-label" for="description" >#i18n{phraseanet.create_media_handler.labelAccount} * </label>
-				<div class="controls">
-					<select id="account" name="id_account">
-					<#list account_list as account>
-						<#if account.id == media_handler.idAccount >
-							<option value="${account.id}" selected="selected">${account.name}</option>
-						<#else>
-							<option value="${account.id}">${account.name}</option>
-						</#if>
-					</#list>
-					</select>
-				</div>
-			</div>
-			<div class="control-group">
-			<label class="control-label" for="" >#i18n{phraseanet.create_media_handler.labelMediaType} * </label>
-        		<div class="controls">
-				<#list record_type_list as record_type>
-					<label class="radio inline" for="media_type" >
-						<input class="radio" type="radio" name="media_type" value="${record_type.name}" <#if record_type.name == media_handler.mediaType>checked="checked"</#if>>
-						<img class="thumblist" src="images/admin/skin/plugins/phraseanet/${record_type.icon}" alt="${record_type.name}" title="${record_type.name}"/>
-					</label>				
-				</#list>
-				</div>
-			</div>
-	         <div class="form-actions">
-				<button class="btn btn-primary btn-small" type="submit" >
-					<i class="icon-forward	icon-white"></i>&nbsp;#i18n{phraseanet.create_media_handler.buttonNext}
-				</button>
-				<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ManageMediaHandlers.jsp" title="#i18n{portal.admin.message.buttonCancel}">
-					<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
-				</a>
-			</div>	
-        	</fieldset>
-		</form>
+		</div>
 	</div>
 </div>

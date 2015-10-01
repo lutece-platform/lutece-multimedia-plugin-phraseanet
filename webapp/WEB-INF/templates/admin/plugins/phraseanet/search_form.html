@@ -1,23 +1,39 @@
-<div class="row-fluid">
-	<div class="span12">
-		<img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist">
-		<form action="jsp/admin/plugins/phraseanet/Search.jsp" method="get">
-		<fieldset>
-		<legend>#i18n{phraseanet.search_form.title}</legend>
-			<input type="hidden" name="input" value="${input}" />
-			<input type="hidden" name="media_handler" value="${media_handler}" />
-			<label for="search" >#i18n{phraseanet.search_form.labelQuery} </label>
-			<input type="text" name="search" value="LAST" class="input-large">
-			<label for="items_per_page" class="radio" >#i18n{phraseanet.search_form.labelItemsPerPage} 
-				<#list items_per_page_values as ipp_value>
-					<input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if> /> ${ipp_value}
-				</#list>  
-			</label>
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary btn-small">
-					<i class="icon-search icon-white"></i>&nbsp;#i18n{phraseanet.search_form.buttonSearch}
-				</button>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">#i18n{phraseanet.modify_template.tableLabel} ${template.name}</h3>
 			</div>
-		</form>
+			<div class="box-body">
+				<img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist">
+				<form action="jsp/admin/plugins/phraseanet/Search.jsp" method="get" class="form-horizontal">
+					<input type="hidden" name="input" value="${input}">
+					<input type="hidden" name="media_handler" value="${media_handler}">
+					<div class="form-group">
+						<label for="search" class="control-label col-xs-12 col-sm-3">#i18n{phraseanet.search_form.labelQuery} </label>
+						<div class="col-xs-12 col-sm-9">
+							<input type="text" name="search" value="LAST" class="form-controm">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="items_per_page" class="control-label col-xs-12 col-sm-3">#i18n{phraseanet.search_form.labelItemsPerPage} </label>
+						<div class="col-xs-12 col-sm-9">
+							<#list items_per_page_values as ipp_value>
+								<label class="radio-inline">
+									<input type="radio" name="items_per_page" value="${ipp_value}" <#if ipp_value = items_per_page_selected> checked="checked" </#if>> ${ipp_value}
+								</label>
+							</#list>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-offset-3 col-sm-9">
+							<button type="submit" class="btn btn-primary btn-flat">
+								<i class="fa fa-searche"></i> #i18n{phraseanet.search_form.buttonSearch}
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

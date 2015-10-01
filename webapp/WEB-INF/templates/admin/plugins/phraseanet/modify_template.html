@@ -1,24 +1,30 @@
-<div class="row-fluid">
-	<div class="span12">
-		<form class="form-horizontal" method="post" enctype="multipart/form-data" name="modify_template" id="modify_template" action="jsp/admin/plugins/phraseanet/DoModifyTemplate.jsp">
-		<input type="hidden" id="media_type" name="media_type" value="${template.mediaType}">
-			<fieldset>
-				<legend>#i18n{phraseanet.modify_template.tableLabel} ${template.name}</legend>
-				<div class="control-group">
-					<label class="control-label" for="name" >#i18n{phraseanet.modify_template.labelTemplateDefault} *</label>
-					<div class="controls">
-						<textarea rows="15" id="default_template" name="default_template" tabindex="1" >${template.template}</textarea>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">#i18n{phraseanet.modify_template.tableLabel} ${template.name}</h3>
+			</div>
+			<div class="box-body">
+				<form class="form-horizontal" method="post" enctype="multipart/form-data" name="modify_template" id="modify_template" action="jsp/admin/plugins/phraseanet/DoModifyTemplate.jsp">
+					<input type="hidden" id="media_type" name="media_type" value="${template.mediaType}">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-2" for="name" >#i18n{phraseanet.modify_template.labelTemplateDefault} *</label>
+						<div class="col-xs-12 col-sm-9">
+							<textarea rows="15" id="default_template" name="default_template" tabindex="1" class="form-control">${template.template}</textarea>
+						</div>
 					</div>
-				</div>
-				<div class="form-actions">	
-					<button class="btn btn-primary btn-small" type="submit" >
-						<i class="icon-ok icon-white"></i>&nbsp;#i18n{phraseanet.modify_template.buttonSave}
-					</button>
-					<a class="btn btn-small" href="jsp/admin/plugins/phraseanet/ManageTemplates.jsp" title="">
-						<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.admin.message.buttonCancel}
-					</a>
-				</div>
-			</fieldset>
-		</form>
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-offset-2 col-sm-9">
+							<button class="btn btn-primary btn-flat" type="submit" >
+								<i class="fa fa-check"></i> #i18n{phraseanet.modify_template.buttonSave}
+							</button>
+							<a class="btn btn-default btn-flat" href="jsp/admin/plugins/phraseanet/ManageTemplates.jsp" title="">
+								<i class="fa fa-remove"></i> #i18n{portal.admin.message.buttonCancel}
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

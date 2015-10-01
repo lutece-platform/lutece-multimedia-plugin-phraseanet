@@ -1,14 +1,21 @@
-<div class="row-fluid">
-	<div class="span12">
-    <img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist"/>
-    <ul>
-        <#list media_handlers_list as mh>
-        <li>
-            <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input=${input}&amp;media_handler=${mh.id}">
-                <img src="${mh.iconUrl}" class="thmblist">&nbsp;${mh.name}
-            </a>
-        </li>
-        </#list>
-    </ul>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+			</div>
+			<div class="box-body">
+    		<img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist"/>
+		    <ul>
+		    <#list media_handlers_list as mh>
+		      <li>
+		        <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input=${input}&amp;media_handler=${mh.id}" class="btn btn-link">
+		          <img src="${mh.iconUrl}" class="img-thumbnail img-responsive thumbnail thumbnail-sm"> ${mh.name}
+		        </a>
+		      </li>
+		    </#list>
+		    </ul>
+			</div>
+		</div>
 	</div>
 </div>
