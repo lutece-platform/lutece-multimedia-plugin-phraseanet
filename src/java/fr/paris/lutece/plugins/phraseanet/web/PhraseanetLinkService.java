@@ -73,7 +73,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String TEMPLATE_ERROR = "admin/plugins/phraseanet/error.html";
     private static final String MARK_MEDIA_HANDLERS = "media_handlers_list";
     private static final String MARK_MEDIA_HANDLER = "media_handler";
-    private static final String MARK_INPUT = "input";
+    private static final String MARK_INPUT = "input_search";
     private static final String MARK_QUERY = "query";
     private static final String MARK_RESULTS = "results";
     private static final String MARK_SERVER = "server";
@@ -86,7 +86,7 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String PARAMETER_RECORD = "record";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_MEDIA_HANDLER = "media_handler";
-    private static final String PARAMETER_INPUT = "input";
+    private static final String PARAMETER_INPUT = "input_search";
     private static final String PARAMETER_DATABOX = "databox";
     private static final String PARAMETER_CURRENT_PAGE = "current_page";
     private static final String PARAMETER_ITEMS_PER_PAGE = "items_per_page";
