@@ -49,15 +49,12 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONArray;
-
-
+import net.sf.json.JSONException;
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
-import fr.paris.lutece.plugins.phraseanet.business.record.MetadataValue;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import java.util.HashMap;
 import java.util.List;
@@ -200,8 +197,18 @@ public final class PhraseanetService
     {
         String strUrl = account.getAccessURL(  ) + PATH_DATABOXES;
         JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
-        JSONArray jsonDataboxesList = jsonResponse.getJSONArray( "databoxes" );
-        JSONObject jsonDataboxes = jsonDataboxesList.toJSONObject( jsonDataboxesList ) ;
+        JSONObject jsonDataboxes;
+        
+        try
+        {
+        	jsonDataboxes = jsonResponse.getJSONObject( "databoxes" );
+        }
+        catch ( JSONException e )
+		{
+			// maybe api_version 2
+        	JSONArray jsonDataboxesList = jsonResponse.getJSONArray( "databoxes" );
+            jsonDataboxes = jsonDataboxesList.toJSONObject( jsonDataboxesList ) ;
+		}	
 
         return DataboxesJsonParser.parse( jsonDataboxes );
     }
