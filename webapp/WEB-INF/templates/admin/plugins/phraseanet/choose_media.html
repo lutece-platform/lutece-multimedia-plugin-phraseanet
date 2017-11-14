@@ -8,8 +8,8 @@
     		<img src="images/admin/skin/plugins/phraseanet/phraseanet.png" alt="phraseanet logo" class="thumblist"/>
 		    <ul>
 		    <#list media_handlers_list as mh>
-		      <li>
-		        <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input=${input}&amp;media_handler=${mh.id}" class="btn btn-link">
+		      <li>	
+		        <a href="jsp/admin/plugins/phraseanet/SearchForm.jsp?input_search=${input_search!}&amp;media_handler=${mh.id}" class="btn btn-link">
 		          <img src="${mh.iconUrl}" class="img-thumbnail img-responsive thumbnail thumbnail-sm"> ${mh.name}
 		        </a>
 		      </li>
