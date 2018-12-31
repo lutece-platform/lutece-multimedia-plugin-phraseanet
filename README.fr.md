@@ -1,0 +1,154 @@
+![](https://dev.lutece.paris.fr/jenkins/buildStatus/icon?job=multimedia-plugin-phraseanet-deploy)
+# Plugin Phraseanet
+
+![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/phrasea_logo.png)
+
+## Introduction
+
+Ce plugin vous permet récupérer des informations sur les données stockées par l'outil [Phraseanet](https://www.phraseanet.com/) , à travers une interface d'administration Lutèce.
+
+L'utilisation de ce plugin nécessite d'avoir un serveur phraseanet avec un compte préalablement créé.
+
+Cette page va vous expliquer comment utiliser ce plugin, comment le configurer dans le but de pouvoir afficher les médias contenus sur le serveur phraseanet. La suite considèrera que le plugin est bien fonctionnel sur votre webapp. (plugin activé + base de données à jour + droit d'administration)
+
+## Configuration d'un compte
+
+Pour y accèder, aller dans le menu Lutèce, Phraseanet, puis dans Paramètres avancés. Cette partie vous permet d'ajouter des comptes présents dans phraseanet.
+
+![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/manage_account.png)
+
+Spécifiez un nom de compte et une description. L'URL d'accès à l'API correspond à l'URL où est installé votre serveur Phraseanet. Pour compléter les informations de votre compte utilisateur Phraseanet, vous devez vous reporter dans Phraseanet même, dans le compte de l'utilisateur concernée puis dans la partie Développeur. Choisissez l'application concernée.
+
+![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/account_phraseanet_info.png)
+
+Un bouton "Tester l'accès" permettra de vérifier si le compte est valide.
+
+## Gestion des templates
+
+Cette partie est surement la plus utile de phraseanet. Elle permet d'utiliser les informations renvoyées par Phraseanet pour afficher nos média. Il est possible d'avoir un template par type de média :
+ 
+* ![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/video_icon.png)Vidéo
+* ![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/audio_icon.png)Audio
+* ![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/image_icon.png)Photo
+* ![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/flash_icon.png)Flash
+* ![](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/images/document_icon.png)Document
+A noter que ces templates par défaut seront utilisés lors de la création d'un nouveau player ou de la modification d'un type de média pour un player existant. Pour accèder à la gestion des templates par défaut, aller dans le menu Lutèce, Phraseanet, puis dans Gestion des templates.
+
+Dans un premier temps, il est possible d'afficher les métadatas d'un média. Les métadatas sont renvoyés sous forme de liste. Pour chaque métadata, il est possible d'afficher son identifiant, son identifiant de sa meta structure, son nom et sa valeur. Voici un exemple d'affichage :
+```
+					
+<ul>
+<#list metadatas as metadata>
+	${metadata.metaId}
+	${metadata.metaStructureId}
+	${metadata.name}
+	${metadata.value}
+</#list>
+</ul>
+
+```
+
+
+Ensuite, les données renvoyées par phraseanet se retrouvent sous trois formats :
+ 
+* document
+* thumbnail
+* préview
+Pour récupérer les données avec l'un des trois formats, utiliser :
+```
+
+	${embed.getEmbedItem('document').[+ methode]}					
+
+```
+ou
+```
+
+	${embed.getEmbedItem('thumbnail').[+ methode]}						
+
+```
+ou
+```
+
+	${embed.getEmbedItem('preview').[+ methode]}					
+
+```
+Une fois l'un des trois formats spécifiées, nous pouvons utiliser (la suite prendre exemple sur document: longueur :
+```
+
+	${embed.getEmbedItem('preview').height}
+
+```
+largeur :
+```
+
+	${embed.getEmbedItem('preview').width}
+
+```
+taille du media :
+```
+
+	${embed.getEmbedItem('preview').filesize}
+
+```
+type du player :
+```
+
+	${embed.getEmbedItem('preview').playerType}
+
+```
+mine Type:
+```
+
+	${embed.getEmbedItem('preview').mineType}				
+
+```
+Ensuite, reste la partie de l'url. Pour pouvoir récupérer l'url, utilisez les méthodes suivantes :
+```
+
+	${embed.getEmbedItem('preview').permalink.createdOn}
+
+```
+
+```
+
+	${embed.getEmbedItem('preview').permalink.id}
+
+```
+
+```
+
+	${embed.getEmbedItem('preview').permalink.label}
+
+```
+
+```
+
+	${embed.getEmbedItem('preview').permalink.lastModified}
+
+```
+
+```
+
+	${embed.getEmbedItem('preview').permalink.pageUrl}
+
+```
+
+```
+
+	${embed.getEmbedItem('preview').permalink.Url}					
+
+```
+
+
+Pour meilleur utilisation et gestion des objets pour la template, s'aider de la documentation : [https://freemarker.apache.org/docs/index.html](https://freemarker.apache.org/docs/index.html) 
+
+## Gestion des media players
+
+Pour ajouter ou modifier un player, il suffit de spécifier un nom, une description, choisir un type de média, choisir un compte, puis créer une template ou utilise celle par défaut selon le type de média choisi.
+
+
+[Maven documentation and reports](https://dev.lutece.paris.fr/plugins/plugin-phraseanet/)
+
+
+
+ *generated by [xdoc2md](https://github.com/lutece-platform/tools-maven-xdoc2md-plugin) - do not edit directly.*

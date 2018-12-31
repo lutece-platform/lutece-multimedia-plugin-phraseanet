@@ -7,6 +7,9 @@
       </properties>
       <body>
           <section name="Plugin Phraseanet">
+              <p>
+                <img src="images/phrasea_logo.png" />                  
+              </p>
           	<subsection name="Introduction">
 	              <p>
 	                  Ce plugin vous permet récupérer des informations sur les données stockées par l'outil <a href="https://www.phraseanet.com/">Phraseanet</a>, à travers une interface d'administration Lutèce.
@@ -158,7 +161,8 @@
 					</div>
 				</p>
 				<p>
-					Pour meilleur utilisation et gestion des objets pour la template, s'aider de la documentation : <a href="http://freemarker.sourceforge.net/docs/index.html">http://freemarker.sourceforge.net/docs/index.html</a>
+					Pour meilleur utilisation et gestion des objets pour la template, s'aider de la documentation :
+                    <a href="https://freemarker.apache.org/docs/index.html">https://freemarker.apache.org/docs/index.html</a>
 				</p>
 			  </subsection>
 			  <subsection name="Gestion des media players">

@@ -1,15 +1,182 @@
-<?xml version="1.0" encoding="UTF-8"?>
-  <document>
-      <properties>
-          <title>
-              Plugin Phraseanet
-          </title>
-      </properties>
-      <body>
-          <section name="Plugin Phraseanet">
-          	
-          </section>
-		  
-      </body>
-  </document>
-          
+<?xml version = "1.0" encoding = "UTF-8"?>
+<document>
+    <properties>
+        <title>
+            Phraseanet plugin
+        </title>
+    </properties>
+    <body>
+        <section name = "Phraseanet Plugin">
+            <p>
+                <img src = "images /phrasea_logo.png" />
+            </p>
+            <subsection name = "Introduction">
+                <p>
+                    This plugin allows you to retrieve information about the data stored by the <a href="https://www.phraseanet.com/"> Phraseanet </a> tool, through a LUTECE administration interface.
+                </p>
+                <p>
+                    The use of this plugin requires having a Phraseanet server with a previously created account.
+                </p>
+                <p>
+                    This page will explain how to use this plugin, how to configure it in order to be able to display the media contained on the phraseanet server. The sequel will consider that the plugin is functional on your webapp. (plugin activated + database up to date + administration right)
+                </p>
+            </subsection>
+            <subsection name = "Account Setup">
+                <p>
+                    To access it, go to the menu Lutèce, Phraseanet, then in Advanced settings. This part allows you to add accounts present in phraseanet.
+                </p>
+                <p>
+                    <center>
+                        <img src = "images /manage_account.png" />
+                    </center>
+                </p>
+                <p>
+                    Specify an account name and description. The URL to the API is the URL where your Phraseanet server is installed. To complete the information of your Phraseanet user account, you must refer to Phraseanet even in the account of the user concerned and then in the Developer part. Choose the application concerned.
+                </p>
+                <p>
+                    <center>
+                        <img src = "images /account_phraseanet_info.png" />
+                    </center>
+                </p>
+                <p>
+                    A button "Test access" will check if the account is valid.
+                </p>
+            </subsection>
+            <subsection name = "Template Management">
+                <p>
+                    This part is probably the most useful phraseanet. It allows to use the information returned by Phraseanet to display our media.
+                    It is possible to have a template by type of media:
+                    <ul>
+                        <li> 
+                            <img src = "images /video_icon.png" /> Video </li>
+                        <li> 
+                            <img src = "images /audio_icon.png" /> Audio </li>
+                        <li> 
+                            <img src = "images /image_icon.png" /> Photo </li>
+                        <li> 
+                            <img src = "images /flash_icon.png" /> Flash </li>
+                        <li> 
+                            <img src = "images /document_icon.png" /> Document </li>
+                    </ul>
+                    Note that these default templates will be used when creating a new player or modifying a media type for an existing player.
+                    To access the management of default templates, go to the LUTECE menu, Phraseanet, then in Template Management.
+                </p>
+                <p>
+                    At first, it is possible to display the metadata of a media. Metadata are returned as a list. For each metadata, it is possible to display its identifier, its meta structure identifier, its name and its value.
+                    Here is an example of display:
+                    <div class = "source"> 
+                        
+                        <pre>
+&lt; ul &gt;
+&lt; #list metadatas as metadata &gt;
+${} Metadata.metaId <br/>
+${} Metadata.metaStructureId <br/>
+${} Metadata.name <br/>
+${} Metadata.value
+&lt; / # list &gt;
+&lt; / ul &gt;
+                        </pre>
+                    </div>
+                </p>
+                <p>
+                    Then, the data returned by phraseanet can be found in three formats:
+                    <ul>
+                        <li> Document </li>
+                        <li> thumbnail </li>
+                        <li> Préview </li>
+                    </ul>
+                    To recover data with one of three formats, use:
+                    <div class = "source">
+                        <pre>
+${embed.getEmbedItem ('document').[+ method]}
+                        </pre>
+                    </div>
+                    or
+                    <div class = "source">
+                        <pre>
+${embed.getEmbedItem ('thumbnail').[+ method]
+                        </pre>
+                    </div>
+                    or
+                    <div class = "source">
+                        <pre>
+${embed.getEmbedItem ('preview').[+ method]
+                        </pre>
+                    </div>
+                    Once one of the three formats specified, we can use (the following example on document:
+                    length:
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').height}
+                        </pre>
+                    </div>
+                    width :
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').width}
+                        </pre>
+                    </div>
+                    media size:
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').filesize}
+                        </pre>
+                    </div>
+                    type of player:
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').playerType}
+                        </pre>
+                    </div>
+                    mine Type:
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').mimeType}
+                        </pre>
+                    </div>
+                    Then, stay the part of the url. To retrieve the URL, use the following methods:
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').permalink.createdOn}
+                        </pre>
+                    </div>
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').permalink.id}
+                        </pre>
+                    </div>
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').permalink.label}
+                        </pre>
+                    </div>
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').permalink.lastModified}
+                        </pre>
+                    </div>
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').permalink.pageUrl}
+                        </pre>
+                    </div>
+                    <div class = "source">
+                        <pre>
+${Embed.getEmbedItem ( 'preview').permalink.Url}
+                        </pre>
+                    </div>
+                </p>
+                <p>
+                    For better use and management of objects for the template, use the documentation: 
+                    <a href="https://freemarker.apache.org/docs/index.html"> https://freemarker.apache.org/docs/index.html </a>
+                </p>
+            </subsection>
+            <subsection name = "Media player management">
+                <p>
+                    To add or modify a player, simply specify a name, a description, choose a media type, choose an account, then create a template or use the default one depending on the type of media chosen.
+                </p>
+            </subsection>
+        </section>
+
+    </body>
+</document>
