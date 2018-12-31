@@ -8,7 +8,7 @@
     <body>
         <section name = "Phraseanet Plugin">
             <p>
-                <img src = "images /phrasea_logo.png" />
+                <img src="images/phrasea_logo.png" />
             </p>
             <subsection name = "Introduction">
                 <p>
@@ -27,7 +27,7 @@
                 </p>
                 <p>
                     <center>
-                        <img src = "images /manage_account.png" />
+                        <img src="images/manage_account.png" />
                     </center>
                 </p>
                 <p>
@@ -35,7 +35,7 @@
                 </p>
                 <p>
                     <center>
-                        <img src = "images /account_phraseanet_info.png" />
+                        <img src="images/account_phraseanet_info.png" />
                     </center>
                 </p>
                 <p>
@@ -48,15 +48,15 @@
                     It is possible to have a template by type of media:
                     <ul>
                         <li> 
-                            <img src = "images /video_icon.png" /> Video </li>
+                            <img src="images/video_icon.png" /> Video </li>
                         <li> 
-                            <img src = "images /audio_icon.png" /> Audio </li>
+                            <img src="images/audio_icon.png" /> Audio </li>
                         <li> 
-                            <img src = "images /image_icon.png" /> Photo </li>
+                            <img src="images/image_icon.png" /> Photo </li>
                         <li> 
-                            <img src = "images /flash_icon.png" /> Flash </li>
+                            <img src="images/flash_icon.png" /> Flash </li>
                         <li> 
-                            <img src = "images /document_icon.png" /> Document </li>
+                            <img src="images/document_icon.png" /> Document </li>
                     </ul>
                     Note that these default templates will be used when creating a new player or modifying a media type for an existing player.
                     To access the management of default templates, go to the LUTECE menu, Phraseanet, then in Template Management.
@@ -64,17 +64,17 @@
                 <p>
                     At first, it is possible to display the metadata of a media. Metadata are returned as a list. For each metadata, it is possible to display its identifier, its meta structure identifier, its name and its value.
                     Here is an example of display:
-                    <div class = "source"> 
+                    <div class="source"> 
                         
                         <pre>
-&lt; ul &gt;
-&lt; #list metadatas as metadata &gt;
-${} Metadata.metaId <br/>
-${} Metadata.metaStructureId <br/>
-${} Metadata.name <br/>
-${} Metadata.value
-&lt; / # list &gt;
-&lt; / ul &gt;
+&lt;ul&gt;
+&lt;#list metadatas as metadata&gt;
+    ${metadata.metaId} <br/>
+    ${metadata.metaStructureId} <br/>
+    ${metadata.name} <br/>
+    ${metadata.value}
+&lt;/#list&gt;
+&lt;/ul&gt;
                         </pre>
                     </div>
                 </p>
@@ -86,83 +86,83 @@ ${} Metadata.value
                         <li> Préview </li>
                     </ul>
                     To recover data with one of three formats, use:
-                    <div class = "source">
+                    <div class="source">
                         <pre>
 ${embed.getEmbedItem ('document').[+ method]}
                         </pre>
                     </div>
                     or
-                    <div class = "source">
+                    <div class="source">
                         <pre>
 ${embed.getEmbedItem ('thumbnail').[+ method]
                         </pre>
                     </div>
                     or
-                    <div class = "source">
+                    <div class="source">
                         <pre>
 ${embed.getEmbedItem ('preview').[+ method]
                         </pre>
                     </div>
                     Once one of the three formats specified, we can use (the following example on document:
                     length:
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').height}
+${embed.getEmbedItem ( 'preview').height}
                         </pre>
                     </div>
                     width :
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').width}
+${embed.getEmbedItem ( 'preview').width}
                         </pre>
                     </div>
                     media size:
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').filesize}
+${embed.getEmbedItem ( 'preview').filesize}
                         </pre>
                     </div>
                     type of player:
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').playerType}
+${embed.getEmbedItem ( 'preview').playerType}
                         </pre>
                     </div>
                     mine Type:
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').mimeType}
+${embed.getEmbedItem ( 'preview').mimeType}
                         </pre>
                     </div>
                     Then, stay the part of the url. To retrieve the URL, use the following methods:
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').permalink.createdOn}
+${embed.getEmbedItem ( 'preview').permalink.createdOn}
                         </pre>
                     </div>
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').permalink.id}
+${embed.getEmbedItem ( 'preview').permalink.id}
                         </pre>
                     </div>
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').permalink.label}
+${embed.getEmbedItem ( 'preview').permalink.label}
                         </pre>
                     </div>
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').permalink.lastModified}
+${embed.getEmbedItem ( 'preview').permalink.lastModified}
                         </pre>
                     </div>
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').permalink.pageUrl}
+${embed.getEmbedItem ( 'preview').permalink.pageUrl}
                         </pre>
                     </div>
-                    <div class = "source">
+                    <div class="source">
                         <pre>
-${Embed.getEmbedItem ( 'preview').permalink.Url}
+${embed.getEmbedItem ( 'preview').permalink.Url}
                         </pre>
                     </div>
                 </p>
