@@ -39,14 +39,12 @@ import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 /**
@@ -69,27 +67,27 @@ public final class SearchResultsJsonParser
      * @return The search results
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static SearchResults parse( JSONObject jsonResponse )
+    public static SearchResults parse( JsonNode jsonResponse )
         throws PhraseanetApiCallException
     {
         try
         {
             SearchResults results = new SearchResults(  );
-            int total_results = jsonResponse.getInt( "total_results" );
-            int per_page = jsonResponse.getInt( "per_page" );
+            int total_results = jsonResponse.get( "total_results" ).asInt( );
+            int per_page = jsonResponse.get( "per_page" ).asInt( );
             int total_pages = (int) Math.ceil(total_results / per_page) ;
             int offset_start = (total_pages - 1) * per_page ;
             results.setTotalPages( total_pages );
             results.setCurrentPage( offset_start );
-            results.setAvailableResults( jsonResponse.getInt( "available_results" ) );
+            results.setAvailableResults( jsonResponse.get( "available_results" ).asInt( ) );
             results.setTotalResults( total_results );
-            results.setError( jsonResponse.getString( "error" ) );
-            results.setWarning( jsonResponse.getString( "warning" ) );
-            results.setQueryTime( jsonResponse.getString( "query_time" ) );
-            results.setSearchIndexes( jsonResponse.getString( "search_indexes" ) );
-            results.setQuery( jsonResponse.getString( "query" ) );
+            results.setError( jsonResponse.get( "error" ).asText( ) );
+            results.setWarning( jsonResponse.get( "warning" ).asText( ) );
+            results.setQueryTime( jsonResponse.get( "query_time" ).asText( ) );
+            results.setSearchIndexes( jsonResponse.get( "search_indexes" ).asText( ) );
+            results.setQuery( jsonResponse.get( "query" ).asText( ) );
 
-            JSONArray jsonResults = jsonResponse.getJSONArray( "results" );
+            JsonNode jsonResults = jsonResponse.get( "results" );
             List<Record> listResults = new ArrayList<Record>(  );
             Iterator i = jsonResults.iterator(  );
 
@@ -97,7 +95,7 @@ public final class SearchResultsJsonParser
             {
                 try 
                 {
-                    JSONObject jsonResult = (JSONObject) i.next(  );
+                    JsonNode jsonResult = (JsonNode) i.next(  );
                     _logger.debug("jsonResult" + jsonResult);
                     Record record = RecordJsonParser.parse( jsonResult );
                     listResults.add( record );
@@ -113,10 +111,10 @@ public final class SearchResultsJsonParser
             // TODO suggestions
             return results;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
             throw new PhraseanetApiCallException( "Error parsing databoxes : " + e.getMessage(  ) + " - JSON : " +
-                jsonResponse.toString( 4 ) );
+                jsonResponse.toString( ) );
         }
     }
 }

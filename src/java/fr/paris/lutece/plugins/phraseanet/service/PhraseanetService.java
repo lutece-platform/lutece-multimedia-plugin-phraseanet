@@ -47,9 +47,6 @@ import fr.paris.lutece.plugins.phraseanet.service.parsers.SearchResultsJsonParse
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
@@ -61,6 +58,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 
@@ -110,8 +109,8 @@ public final class PhraseanetService
         _logger.debug( "getRecord" );
         Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_GET_RECORD, arguments );
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
-        JSONObject jsonRecord = jsonResponse.getJSONObject( "record" );
+        JsonNode jsonResponse = PhraseanetApiCallService.getResponse( url, account );
+        JsonNode jsonRecord = jsonResponse.get( "record" );
 
         return RecordJsonParser.parse( jsonRecord );
     }
@@ -129,7 +128,7 @@ public final class PhraseanetService
         Object[] arguments = { Integer.toString( nDataboxId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_GET_DATABOXE_METADATAS, arguments );
         _logger.debug("getDataboxeMetadatas : " + url ) ;
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
+        JsonNode jsonResponse = PhraseanetApiCallService.getResponse( url, account );
         _logger.debug("getDataboxeMetadatas (response) : " + jsonResponse ) ;
 
         return MetadatasJsonParser.parseByDataboxe( jsonResponse );
@@ -148,7 +147,7 @@ public final class PhraseanetService
     {
         Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_GET_RECORD_METADATAS, arguments );
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
+        JsonNode jsonResponse = PhraseanetApiCallService.getResponse( url, account );
         
         return MetadatasJsonParser.parse( jsonResponse );
     }
@@ -182,7 +181,7 @@ public final class PhraseanetService
         mapParameters.put( PARAMETER_BASES, criterias.getBases(  ) );
 
         // TODO add other criterias
-        JSONObject jsonResponse = PhraseanetApiCallService.getPostResponse( strUrl, mapParameters, account );
+        JsonNode jsonResponse = PhraseanetApiCallService.getPostResponse( strUrl, mapParameters, account );
 
         return SearchResultsJsonParser.parse( jsonResponse );
     }
@@ -196,20 +195,8 @@ public final class PhraseanetService
     public static List<Databox> getDataboxes( Account account ) throws PhraseanetApiCallException
     {
         String strUrl = account.getAccessURL(  ) + PATH_DATABOXES;
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
-        JSONObject jsonDataboxes;
-        
-        try
-        {
-        	jsonDataboxes = jsonResponse.getJSONObject( "databoxes" );
-        }
-        catch ( JSONException e )
-		{
-			// maybe api_version 2
-        	JSONArray jsonDataboxesList = jsonResponse.getJSONArray( "databoxes" );
-            jsonDataboxes = jsonDataboxesList.toJSONObject( jsonDataboxesList ) ;
-		}	
-
+        JsonNode jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
+        JsonNode jsonDataboxes = jsonResponse.get( "databoxes" );
         return DataboxesJsonParser.parse( jsonDataboxes );
     }
 
@@ -225,7 +212,7 @@ public final class PhraseanetService
     {
         Object[] arguments = { nDataboxId };
         String strUrl = account.getAccessURL(  ) + MessageFormat.format( PATH_COLLECTIONS, arguments );
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
+        JsonNode jsonResponse = PhraseanetApiCallService.getResponse( strUrl, account );
         _logger.debug("Collections : " + jsonResponse);
 
         return CollectionsJsonParser.parse( jsonResponse );
@@ -244,9 +231,8 @@ public final class PhraseanetService
     {
         Object[] arguments = { Integer.toString( nDataboxId ), Integer.toString( nRecordId ) };
         String url = account.getAccessURL(  ) + MessageFormat.format( PATH_EMBED, arguments );
-        JSONObject jsonResponse = PhraseanetApiCallService.getResponse( url, account );
-        JSONArray jsonEmbedList = jsonResponse.getJSONArray( "embed" );
-        JSONObject jsonEmbed = jsonEmbedList.toJSONObject( jsonEmbedList ) ;
+        JsonNode jsonResponse = PhraseanetApiCallService.getResponse( url, account );
+        JsonNode jsonEmbed = jsonResponse.get( "embed" );
 
         return EmbedJsonParser.parse( jsonEmbed );
     }

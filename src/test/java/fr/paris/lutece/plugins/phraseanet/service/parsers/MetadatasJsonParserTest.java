@@ -33,52 +33,51 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
-import fr.paris.lutece.plugins.phraseanet.business.record.Record;
+import static org.junit.Assert.assertEquals;
 
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import static org.junit.Assert.*;
+import java.io.IOException;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
-
+import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
 /**
- * RecordJsonParserTest
+ * Metadatas Json Parser Test
  */
-public class RecordJsonParserTest
+public class MetadatasJsonParserTest
 {
     /**
-     * Test of parse method, of class RecordJsonParser.
+     * Test of parse method, of class MetadatasJsonParser.
      */
     @Test
-    public void testParse(  ) throws IOException, PhraseanetApiCallException
+    public void testRecordMetadatasParse( ) throws IOException, PhraseanetApiCallException
     {
         System.out.println( "parse" );
 
-        String strJson = new Utils(  ).getJson( "record.json" );
+        String strJson = new Utils( ).getJson( "metadatas_records.json" );
         ObjectMapper mapper = new ObjectMapper( );
-        JsonNode jsonRecord = mapper.readTree( strJson );
-        Record record = RecordJsonParser.parse( jsonRecord );
-        assertEquals( record.getDataboxId(  ), 1 );
-        assertEquals( record.getRecordId(  ), 295 );
-        assertEquals( record.getMimeType(  ), "image/gif" );
-        assertEquals( record.getTitle(  ), "Argentina.gif" );
-        assertEquals( record.getOriginalName(  ), "Argentina.gif" );
-        assertEquals( record.getLastModified(  ), "2011-03-24T12:05:18+01:00" );
-        assertEquals( record.getCreatedOn(  ), "2011-03-24T12:05:04+01:00" );
-        assertEquals( record.getCollectionId(  ), 1 );
-        assertEquals( record.getSha256(  ), "669f161400fe81fa3024b074a1c0cfe0d0d7643470a2f450e6b005ce8daf0f8d" );
-        assertEquals( record.getThumbnail(  ).getMimeType(  ), "image/jpeg" );
-        assertEquals( record.getThumbnail(  ).getHeight(  ), 48 );
-        assertEquals( record.getThumbnail(  ).getWidth(  ), 48 );
-        assertEquals( record.getThumbnail(  ).getFilesize(  ), 1017 );
-        assertNotNull( record.getThumbnail().getPermalink());
-        assertNotNull( record.getThumbnail().getPlayerType() );
-        assertEquals( record.getPhraseaType(  ), "image" );
-        assertEquals( record.getUuid(  ), "b65b957f-ed22-4291-9811-35c09a43ba28" );
+        JsonNode json = mapper.readTree( strJson );
+        List<Metadata> list = MetadatasJsonParser.parse( json );
+        assertEquals( list.size( ), 12 );
+    }
+
+    /**
+     * Test of parseByDataboxe method, of class MetadatasJsonParser.
+     */
+    @Test
+    public void testDataboxeMetadatasParse( ) throws IOException, PhraseanetApiCallException
+    {
+        System.out.println( "parseByDataboxe" );
+
+        String strJson = new Utils( ).getJson( "metadatas_databoxe.json" );
+        ObjectMapper mapper = new ObjectMapper( );
+        JsonNode json = mapper.readTree( strJson );
+        List<Metadata> list = MetadatasJsonParser.parseByDataboxe( json );
+        assertEquals( list.size( ), 2 );
     }
 }
