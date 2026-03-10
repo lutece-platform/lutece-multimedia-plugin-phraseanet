@@ -33,21 +33,17 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
-import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
-import fr.paris.lutece.plugins.phraseanet.business.record.MetadataValue;
-import fr.paris.lutece.plugins.phraseanet.service.Constants;
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import fr.paris.lutece.portal.service.util.AppLogService;
-
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
+import fr.paris.lutece.plugins.phraseanet.service.Constants;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
+import fr.paris.lutece.portal.service.util.AppLogService;
 
 
 /**
@@ -70,33 +66,28 @@ public final class MetadatasJsonParser
      * @return The list
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static List<Metadata> parse( JSONObject jsonResponse )
+    public static List<Metadata> parse( JsonNode jsonResponse )
     throws PhraseanetApiCallException
     {   
         try
         {
             List<Metadata> listMetadatas = new ArrayList<Metadata>(  );
             //JSONObject jsonMetadatas = jsonResponse.getJSONObject( "metadatas" );
-            JSONArray jsonMetadatasList = jsonResponse.getJSONArray( "record_metadatas" );
-            JSONObject jsonMetadatas = jsonMetadatasList.toJSONObject( jsonMetadatasList ) ;
-            Iterator i = jsonMetadatas.keys(  );
-            while ( i.hasNext(  ) )
+            JsonNode jsonMetadatasList = jsonResponse.get("record_metadatas");
+            for ( JsonNode jsonMetadata : jsonMetadatasList )
             {
-                String strKey = (String) i.next(  );
-                JSONObject jsonMetadata = jsonMetadatas.getJSONObject( strKey );
                 Metadata metadata = new Metadata(  );
-                metadata.setMetaId( jsonMetadata.getInt( "meta_id" ) );
-                metadata.setMetaStructureId( jsonMetadata.getInt( "meta_structure_id" ) );
-                metadata.setName( jsonMetadata.getString( "name" ) );
-                metadata.setValue( jsonMetadata.getString( "value" ) );
+                metadata.setMetaId( jsonMetadata.path( "meta_id" ).asInt( ) );
+                metadata.setMetaStructureId( jsonMetadata.path( "meta_structure_id" ).asInt( ) );
+                metadata.setName( jsonMetadata.path( "name" ).asText( ) );
+                metadata.setValue( jsonMetadata.path( "value" ).asText( ) );
                 listMetadatas.add( metadata );
             }
-
             return listMetadatas;
         }
-        catch ( JSONException e )
-        {//throw new PhraseanetApiCallException( "Error parsing metadatas : " + e.getMessage(  ) + " - JSON : " + jsonResponse.toString( 4 ) );
-            AppLogService.error( "Error parsing metadatas " + e.getMessage()+ " - JSON : " + jsonResponse.toString( 4 ) );
+        catch ( Exception e )
+        {
+            AppLogService.error( "Error parsing metadatas " + e.getMessage()+ " - JSON : " + jsonResponse.toString( ) );
             return null;
         }     
     }
@@ -107,34 +98,26 @@ public final class MetadatasJsonParser
      * @return The list
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static List<Metadata> parseByDataboxe( JSONObject jsonResponse )
+    public static List<Metadata> parseByDataboxe( JsonNode jsonResponse )
         throws PhraseanetApiCallException
     {
         try
         {
             List<Metadata> listMetadatas = new ArrayList<Metadata>(  );
-            JSONArray jsonMetadatasList = jsonResponse.getJSONArray( "document_metadatas" );
+            JsonNode jsonMetadatasList = jsonResponse.get("document_metadatas");
             _logger.debug("Liste des metadatas : " + jsonMetadatasList ) ;
-            JSONObject jsonMetadatas = jsonMetadatasList.toJSONObject(jsonMetadatasList);
-            _logger.debug("JSONObject : " + jsonMetadatas ) ;
-            Iterator i = jsonMetadatas.keys(  );
-
-            while ( i.hasNext(  ) )
+            for ( JsonNode jsonMetadata : jsonMetadatasList )
             {
-                String strKey = (String) i.next(  );
-                JSONObject jsonMetadata = jsonMetadatas.getJSONObject( strKey );
                 Metadata metadata = new Metadata(  );
-                metadata.setName( jsonMetadata.getString( "name" ) );
+                metadata.setName( jsonMetadata.path( "name" ).asText( ) );
                 listMetadatas.add( metadata );
             }
-
-
             return listMetadatas;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
             throw new PhraseanetApiCallException( "Error parsing metadatas : " + e.getMessage(  ) + " - JSON : " +
-                jsonResponse.toString( 4 ) );
+                jsonResponse.toString( ) );
         }
     }
 }

@@ -33,6 +33,16 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
@@ -40,12 +50,6 @@ import fr.paris.lutece.plugins.phraseanet.service.parsers.MetaJsonParser;
 import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.url.UrlItem;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import org.apache.log4j.Logger;
 
 
 /**
@@ -72,7 +76,7 @@ public final class PhraseanetApiCallService
      * @return The response as a JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static JSONObject getResponse( String strRequest, Account account )
+    public static JsonNode getResponse( String strRequest, Account account )
         throws PhraseanetApiCallException
     {
         try
@@ -99,11 +103,22 @@ public final class PhraseanetApiCallService
      * @return The response as JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
-    static JSONObject extractResponse( String strResponse )
+    static JsonNode extractResponse( String strResponse )
         throws PhraseanetApiCallException
     {
-        JSONObject json = (JSONObject) JSONSerializer.toJSON( strResponse );
-        JSONObject jsonMeta = json.getJSONObject( FIELD_META );
+        ObjectMapper mapper = new ObjectMapper( );
+
+        JsonNode json;
+        try
+        {
+            json = mapper.readTree( strResponse );
+        }
+        catch( JsonProcessingException e )
+        {
+            throw new PhraseanetApiCallException( "Error parsing response : " + e.getMessage( ) + " - JSON : " + strResponse );
+        }
+        JsonNode jsonMeta = json.get( FIELD_META );
+        
         Meta meta = MetaJsonParser.parse( jsonMeta );
 
         if ( meta.getHttpCode(  ) != SUCCESS )
@@ -111,7 +126,7 @@ public final class PhraseanetApiCallService
             throw new PhraseanetApiCallException( meta.getErrorMessage(  ) + " : " + meta.getErrorDetails(  ) );
         }
 
-        JSONObject jsonResponse = json.getJSONObject( FIELD_RESPONSE );
+        JsonNode jsonResponse = json.get( FIELD_RESPONSE );
 
         return jsonResponse;
     }
@@ -124,7 +139,7 @@ public final class PhraseanetApiCallService
      * @return The response as a JSON object
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static JSONObject getPostResponse( String strUrl, Map<String, List<String>> mapParameters, Account account )
+    public static JsonNode getPostResponse( String strUrl, Map<String, List<String>> mapParameters, Account account )
         throws PhraseanetApiCallException
     {
         try

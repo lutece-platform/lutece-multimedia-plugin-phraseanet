@@ -36,13 +36,11 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Databox;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 
@@ -64,31 +62,31 @@ public final class DataboxesJsonParser
      * @throws PhraseanetApiCallException if an error occurs
      * @return The list
      */
-    public static List<Databox> parse( JSONObject jsonResponse )
+    public static List<Databox> parse( JsonNode jsonResponse )
         throws PhraseanetApiCallException
     {
         try
         {
             List<Databox> listDataboxes = new ArrayList<Databox>(  );
-            Iterator i = jsonResponse.keys(  );
+            Iterator i = jsonResponse.fieldNames(  );
 
             while ( i.hasNext(  ) )
             {
                 String strKey = (String) i.next(  );
-                JSONObject jsonDatabox = jsonResponse.getJSONObject( strKey );
+                JsonNode jsonDatabox = jsonResponse.get( strKey );
                 Databox databox = new Databox(  );
-                databox.setDataboxId( jsonDatabox.getInt( "databox_id" ) );
-                databox.setName( jsonDatabox.getString( "name" ) );
-                databox.setVersion( jsonDatabox.getString( "version" ) );
+                databox.setDataboxId( jsonDatabox.path( "databox_id" ).asInt( ) );
+                databox.setName( jsonDatabox.path( "name" ).asText( ) );
+                databox.setVersion( jsonDatabox.path( "version" ).asText( ) );
                 listDataboxes.add( databox );
             }
 
             return listDataboxes;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
             throw new PhraseanetApiCallException( "Error parsing databoxes : " + e.getMessage(  ) + " - JSON : " +
-                jsonResponse.toString( 4 ) );
+                jsonResponse.toString( ) );
         }
     }
 }

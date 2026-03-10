@@ -36,11 +36,12 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -59,7 +60,8 @@ public class MetaJsonParserTest
         System.out.println( "parse" );
 
         String strJson = new Utils(  ).getJson( "meta.json" );
-        JSONObject jsonMeta = (JSONObject) JSONSerializer.toJSON( strJson );
+        ObjectMapper mapper = new ObjectMapper( );
+        JsonNode jsonMeta = mapper.readTree( strJson );
         Meta meta = MetaJsonParser.parse( jsonMeta );
         assertEquals( meta.getApiVersion(  ), "1.0" );
         assertEquals( meta.getRequest(  ), "GET /api/v1/feeds/288/content/" );

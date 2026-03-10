@@ -36,11 +36,12 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
 
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -61,8 +62,9 @@ public class CollectionsJsonParserTest
         System.out.println( "parse" );
 
         String strJson = new Utils(  ).getJson( "collections.json" );
-        JSONObject json = (JSONObject) JSONSerializer.toJSON( strJson );
+        ObjectMapper mapper = new ObjectMapper( );
+        JsonNode json = mapper.readTree( strJson );
         List<Collection> list = CollectionsJsonParser.parse( json );
-        assertEquals( list.size(  ), 11 );
+        assertEquals( list.size(  ), 3 );
     }
 }

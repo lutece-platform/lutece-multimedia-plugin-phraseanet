@@ -36,11 +36,12 @@ package fr.paris.lutece.plugins.phraseanet.service.parsers;
 import fr.paris.lutece.plugins.phraseanet.business.record.Record;
 
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -59,7 +60,8 @@ public class RecordJsonParserTest
         System.out.println( "parse" );
 
         String strJson = new Utils(  ).getJson( "record.json" );
-        JSONObject jsonRecord = (JSONObject) JSONSerializer.toJSON( strJson );
+        ObjectMapper mapper = new ObjectMapper( );
+        JsonNode jsonRecord = mapper.readTree( strJson );
         Record record = RecordJsonParser.parse( jsonRecord );
         assertEquals( record.getDataboxId(  ), 1 );
         assertEquals( record.getRecordId(  ), 295 );

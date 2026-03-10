@@ -35,10 +35,6 @@ package fr.paris.lutece.plugins.phraseanet.service.api;
 
 import fr.paris.lutece.plugins.phraseanet.business.account.Account;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
-import fr.paris.lutece.util.httpaccess.HttpAccess;
-import fr.paris.lutece.util.httpaccess.HttpAccessException;
-import fr.paris.lutece.util.url.UrlItem;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 

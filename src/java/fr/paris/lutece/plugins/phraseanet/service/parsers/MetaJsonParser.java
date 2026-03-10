@@ -37,9 +37,9 @@ import fr.paris.lutece.plugins.phraseanet.business.response.Meta;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 /**
@@ -59,26 +59,26 @@ public final class MetaJsonParser
      * @return The meta
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static Meta parse( JSONObject jsonMeta ) throws PhraseanetApiCallException
+    public static Meta parse( JsonNode jsonMeta ) throws PhraseanetApiCallException
     {
         _logger.debug( "MetaJsonParser" );
         try
         {
             Meta meta = new Meta(  );
-            meta.setApiVersion( jsonMeta.getString( "api_version" ) );
-            meta.setRequest( jsonMeta.getString( "request" ) );
-            meta.setResponseTime( jsonMeta.getString( "response_time" ) );
-            meta.setHttpCode( jsonMeta.getInt( "http_code" ) );
-            meta.setErrorMessage( jsonMeta.getString( "error_message" ) );
-            meta.setErrorDetails( jsonMeta.getString( "error_details" ) );
-            meta.setCharset( jsonMeta.getString( "charset" ) );
+            meta.setApiVersion( jsonMeta.path( "api_version" ).asText( ) );
+            meta.setRequest( jsonMeta.path( "request" ).asText( ) );
+            meta.setResponseTime( jsonMeta.path( "response_time" ).asText( ) );
+            meta.setHttpCode( jsonMeta.path( "http_code" ).asInt( ) );
+            meta.setErrorMessage( jsonMeta.path( "error_message" ).asText( ) );
+            meta.setErrorDetails( jsonMeta.path( "error_details" ).asText( ) );
+            meta.setCharset( jsonMeta.path( "charset" ).asText( ) );
 
             return meta;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
             throw new PhraseanetApiCallException( "Error parsing meta : " + e.getMessage(  ) + " - JSON : " +
-                jsonMeta.toString( 4 ) );
+                    jsonMeta.toString( ) );
         }
     }
 }

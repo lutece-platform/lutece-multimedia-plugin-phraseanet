@@ -37,11 +37,12 @@ import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.embed.EmbedItem;
 
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -60,7 +61,8 @@ public class EmbedJsonParserTest
         System.out.println( "parse" );
 
         String strJson = new Utils(  ).getJson( "embed.json" );
-        JSONObject jsonEmbed = (JSONObject) JSONSerializer.toJSON( strJson );
+        ObjectMapper mapper = new ObjectMapper( );
+        JsonNode jsonEmbed = mapper.readTree( strJson );
         Embed embed = EmbedJsonParser.parse( jsonEmbed );
         EmbedItem document = embed.getEmbedItem("document");
         assertEquals( document.getWidth(  ), 320 );

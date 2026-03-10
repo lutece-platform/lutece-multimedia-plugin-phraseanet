@@ -1,0 +1,22 @@
+{
+    "collections": [
+    {
+        "base_id": 1,
+        "coll_id": 1,
+        "name": "test",
+        "record_amount": 245
+    },
+    {
+        "base_id": 2,
+        "coll_id": 2,
+        "name": "BIBOO",
+        "record_amount": 5
+    },
+    {
+        "base_id": 4,
+        "coll_id": 4,
+        "name": "sample",
+        "record_amount": 2
+    }
+    ]
+}

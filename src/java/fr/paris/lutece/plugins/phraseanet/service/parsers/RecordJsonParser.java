@@ -39,9 +39,9 @@ import fr.paris.lutece.plugins.phraseanet.business.record.Thumbnail;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 /**
@@ -76,29 +76,29 @@ public final class RecordJsonParser
      * @return The record
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static Record parse( JSONObject jsonRecord )
+    public static Record parse( JsonNode jsonRecord )
         throws PhraseanetApiCallException
     {
         
         try
         {
             Record record = new Record(  );
-            int record_id = jsonRecord.getInt( "record_id" );
+            int record_id = jsonRecord.path( "record_id" ).asInt( );
             record.setRecordId( record_id );
-            record.setDataboxId( jsonRecord.getInt( "databox_id" ) );
-            record.setMimeType( jsonRecord.getString( FIELD_MINE_TYPE ) );
-            String title = jsonRecord.getString( "title" );
+            record.setDataboxId( jsonRecord.path( "databox_id" ).asInt( ) );
+            record.setMimeType( jsonRecord.path( FIELD_MINE_TYPE ).asText( ) );
+            String title = jsonRecord.path( "title" ).asText( );
             record.setTitle( title );
-            record.setOriginalName( jsonRecord.getString( "original_name" ) );
-            record.setLastModified( jsonRecord.getString( "updated_on" ) );
-            record.setCreatedOn( jsonRecord.getString( "created_on" ) );
-            record.setCollectionId( jsonRecord.getInt( "collection_id" ) );
-            record.setPhraseaType( jsonRecord.getString( "phrasea_type" ) );
-            record.setUuid( jsonRecord.getString( "uuid" ) );
-            record.setSha256( jsonRecord.getString( "sha256" ) );
+            record.setOriginalName( jsonRecord.path( "original_name" ).asText( ) );
+            record.setLastModified( jsonRecord.path( "updated_on" ).asText( ) );
+            record.setCreatedOn( jsonRecord.path( "created_on" ).asText( ) );
+            record.setCollectionId( jsonRecord.path( "collection_id" ).asInt( ) );
+            record.setPhraseaType( jsonRecord.path( "phrasea_type" ).asText( ) );
+            record.setUuid( jsonRecord.path( "uuid" ).asText( ) );
+            record.setSha256( jsonRecord.path( "sha256" ).asText( ) );
 
-            if (jsonRecord.getJSONObject(FIELD_THUMBNAIL_NAME).isNullObject())
-                {
+            if (null == jsonRecord.get(FIELD_THUMBNAIL_NAME))
+            {
                     _logger.debug("Pas de thumbnail pour le media " + title + "(id:" + record_id +")");
                     Thumbnail thumbnail = new Thumbnail(  );
                     Permalink permalink = new Permalink();
@@ -114,24 +114,23 @@ public final class RecordJsonParser
             else
                 {
                     _logger.debug("Thumbnail OK :-)");
-                    JSONObject jsonThumbnail = jsonRecord.getJSONObject( FIELD_THUMBNAIL_NAME );
+                    JsonNode jsonThumbnail = jsonRecord.get( FIELD_THUMBNAIL_NAME );
                     Thumbnail thumbnail = new Thumbnail(  );
-                    Permalink permalink = EmbedJsonParser.getPermalink( jsonThumbnail.getJSONObject( "permalink" ) );
+                    Permalink permalink = EmbedJsonParser.getPermalink( jsonThumbnail.get( "permalink" ) );
                     thumbnail.setPermalink( permalink );
-                    thumbnail.setMimeType( jsonThumbnail.getString( FIELD_MINE_TYPE ) );
-                    thumbnail.setHeight( jsonThumbnail.getInt( FIELD_THUMBNAIL_HEIGHT ) );
-                    thumbnail.setWidth( jsonThumbnail.getInt( FIELD_THUMBNAIL_WIDTH ) );
-                    thumbnail.setFilesize( jsonThumbnail.getInt( FIELD_THUMBNAIL_SIZE ) );
-                    thumbnail.setPlayerType( jsonThumbnail.getString( FIELD_THUMBNAIL_PLAYER ) );
+                    thumbnail.setMimeType( jsonThumbnail.get( FIELD_MINE_TYPE ).asText( ) );
+                    thumbnail.setHeight( jsonThumbnail.get( FIELD_THUMBNAIL_HEIGHT ).asInt( ) );
+                    thumbnail.setWidth( jsonThumbnail.get( FIELD_THUMBNAIL_WIDTH ).asInt( ) );
+                    thumbnail.setFilesize( jsonThumbnail.get( FIELD_THUMBNAIL_SIZE ).asInt( ) );
+                    thumbnail.setPlayerType( jsonThumbnail.get( FIELD_THUMBNAIL_PLAYER ).asText( ) );
                     record.setThumbnail( thumbnail );
                 }
 
             return record;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
-            throw new PhraseanetApiCallException( "Error parsing record : " + e.getMessage(  ) + " - JSON : " +
-                jsonRecord.toString( 4 ) );
+            throw new PhraseanetApiCallException( "Error parsing record : " + e.getMessage( ) + " - JSON : " + jsonRecord.toString( ) );
         }
     }
 }

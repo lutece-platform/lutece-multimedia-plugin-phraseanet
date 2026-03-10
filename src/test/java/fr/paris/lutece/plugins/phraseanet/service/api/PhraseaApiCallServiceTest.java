@@ -4,10 +4,11 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.api;
 
-import net.sf.json.JSONObject;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 /**
@@ -42,7 +43,7 @@ public class PhraseaApiCallServiceTest
     {
         System.out.println( "extractResponse" );
 
-        JSONObject response = PhraseanetApiCallService.extractResponse( RESPONSE );
-        assertEquals( response.getString( "body" ), "response body" );
+        JsonNode response = PhraseanetApiCallService.extractResponse( RESPONSE );
+        assertEquals( response.get( "body" ).asText( ), "response body" );
     }
 }

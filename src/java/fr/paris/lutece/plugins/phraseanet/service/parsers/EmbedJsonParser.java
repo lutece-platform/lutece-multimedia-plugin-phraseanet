@@ -40,9 +40,9 @@ import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import java.util.Iterator;
 
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 /**
@@ -63,35 +63,25 @@ public final class EmbedJsonParser
      * @return The embed
      * @throws PhraseanetApiCallException if an error occurs
     */
-    public static Embed parse( JSONObject jsonEmbed ) throws PhraseanetApiCallException
+    public static Embed parse( JsonNode jsonEmbed ) throws PhraseanetApiCallException
     {
         try
         {
             Embed embed = new Embed(  );
-            _logger.debug("parce jsonEmbed : " + jsonEmbed );
-            Iterator i = jsonEmbed.keys(  );
-            while( i.hasNext(  ) )
+            _logger.debug("parse jsonEmbed : " + jsonEmbed );
+            for ( JsonNode jsonEmbedItem : jsonEmbed )
             {
-                String key = ( String ) i.next(  );
-                if (jsonEmbed.getJSONObject(key).isNullObject())
-                {
-                    _logger.error( "Item manquant");
-                }
-                else
-                {
-                    EmbedItem ei = getEmbedItem( jsonEmbed.getJSONObject( key ) );
-                    String name = ei.getItemName();
-                    _logger.debug( "ItemName : " + name );
-                    embed.addEmbedItem( name,  getEmbedItem( jsonEmbed.getJSONObject( key ) ) );
-                }
+                EmbedItem ei = getEmbedItem( jsonEmbedItem );
+                String name = ei.getItemName();
+                _logger.debug( "ItemName : " + name );
+                embed.addEmbedItem( name,  ei );
             }
-
             return embed;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
             throw new PhraseanetApiCallException( "Error parsing embed : " + e.getMessage(  ) + " - JSON : " +
-                jsonEmbed.toString( 4 ) );
+                jsonEmbed.toString( ) );
         }
     }
 
@@ -100,22 +90,22 @@ public final class EmbedJsonParser
      * @param jsonEmbedItem The embed item as JSON object
      * @return The embed item object
      */
-    public static EmbedItem getEmbedItem( JSONObject jsonEmbedItem )
+    public static EmbedItem getEmbedItem( JsonNode jsonEmbedItem )
     {
         //_logger.debug( "getEmbedItem : " + jsonEmbedItem );
         EmbedItem ei = new EmbedItem(  );
         //_logger.debug( "EmbedItemName : " + jsonEmbedItem.getString("name") );
-        ei.setItemName( jsonEmbedItem.getString("name") );
-        JSONObject permalink = jsonEmbedItem.getJSONObject( "permalink" );
-        if( ! permalink.isNullObject(  ) )
+        ei.setItemName( jsonEmbedItem.path("name").asText( ) );
+        JsonNode permalink = jsonEmbedItem.get( "permalink" );
+        if(null != permalink )
         {
-            ei.setPermalink( getPermalink( jsonEmbedItem.getJSONObject( "permalink" ) ) );
+            ei.setPermalink( getPermalink( jsonEmbedItem.get( "permalink" ) ) );
         }
-        ei.setWidth( jsonEmbedItem.getInt( "width" ) );
-        ei.setHeight( jsonEmbedItem.getInt( "height" ) );
-        ei.setFilesize( jsonEmbedItem.getInt( "filesize" ) );
-        ei.setPlayerType( jsonEmbedItem.getString( "player_type" ) );
-        ei.setMimeType( jsonEmbedItem.getString( "mime_type" ) );
+        ei.setWidth( jsonEmbedItem.path( "width" ).asInt( ) );
+        ei.setHeight( jsonEmbedItem.path( "height" ).asInt( ) );
+        ei.setFilesize( jsonEmbedItem.path( "filesize" ).asInt( ) );
+        ei.setPlayerType( jsonEmbedItem.path( "player_type" ).asText( ) );
+        ei.setMimeType( jsonEmbedItem.path( "mime_type" ).asText( ) );
         //_logger.debug( "EmbedItem : ei=" + ei );
         return ei;
     }
@@ -125,7 +115,7 @@ public final class EmbedJsonParser
      * @param jsonPermalink The permalink as JSON object
      * @return  The permalink object
      */
-    public static Permalink getPermalink( JSONObject jsonPermalink )
+    public static Permalink getPermalink( JsonNode jsonPermalink )
     {
         _logger.debug( "getPermalink : " + jsonPermalink);
         Permalink p = null;
@@ -133,15 +123,15 @@ public final class EmbedJsonParser
         if( jsonPermalink != null )
         {
             p = new Permalink(  );
-            p.setId( jsonPermalink.getInt( "id" ) );
-            p.setCreatedOn( jsonPermalink.getString( "created_on" ) );
-            p.setLastModified( jsonPermalink.getString( "updated_on" ) );
-            p.setActivated( jsonPermalink.getBoolean( "is_activated" ) );
-            p.setLabel( jsonPermalink.getString( "label" ) );
-            _logger.debug( "label : " + jsonPermalink.getString( "label" ) );
-            p.setPageUrl( jsonPermalink.getString( "page_url" ) );
-            p.setUrl( jsonPermalink.getString( "url" ) );
-            _logger.debug( "url : " + jsonPermalink.getString( "url" ) );
+            p.setId( jsonPermalink.path( "id" ).asInt( ) );
+            p.setCreatedOn( jsonPermalink.path( "created_on" ).asText( ) );
+            p.setLastModified( jsonPermalink.path( "updated_on" ).asText( ) );
+            p.setActivated( jsonPermalink.path( "is_activated" ).asBoolean( ) );
+            p.setLabel( jsonPermalink.path( "label" ).asText( ) );
+            _logger.debug( "label : " + jsonPermalink.path( "label" ).asText( ) );
+            p.setPageUrl( jsonPermalink.path( "page_url" ).asText( ) );
+            p.setUrl( jsonPermalink.path( "url" ).asText( ) );
+            _logger.debug( "url : " + jsonPermalink.path( "url" ).asText( ) );
         }
         return p;
     }
