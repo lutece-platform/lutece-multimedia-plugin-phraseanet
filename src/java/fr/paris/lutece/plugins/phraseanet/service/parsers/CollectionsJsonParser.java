@@ -33,17 +33,16 @@
  */
 package fr.paris.lutece.plugins.phraseanet.service.parsers;
 
-import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
-import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallService;
-
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.sf.json.JSONArray;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import fr.paris.lutece.plugins.phraseanet.business.databox.Collection;
+import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 
 
 /**
@@ -62,35 +61,28 @@ public final class CollectionsJsonParser
      * @throws PhraseanetApiCallException if an error occurs
      * @return The list
      */
-    public static List<Collection> parse( JSONObject jsonResponse )
+    public static List<Collection> parse( JsonNode jsonResponse )
         throws PhraseanetApiCallException
     {
         try
         {
             List<Collection> listCollections = new ArrayList<Collection>(  );
-            JSONArray jsonCollectionsList = jsonResponse.getJSONArray( "collections" );
-            JSONObject jsonCollections = jsonCollectionsList.toJSONObject( jsonCollectionsList ) ;            
-            
-            Iterator i = jsonCollections.keys(  );
-
-            while ( i.hasNext(  ) )
+            JsonNode jsonCollectionsList = jsonResponse.get("collections");
+            for ( JsonNode jsonCollection : jsonCollectionsList )
             {
-                String strKey = (String) i.next(  );
-                JSONObject jsonCollection = jsonCollections.getJSONObject( strKey );
                 Collection collection = new Collection(  );
-                collection.setBaseId( jsonCollection.getInt( "base_id" ) );
-                collection.setCollId( jsonCollection.getInt( "collection_id" ) );
-                collection.setName( jsonCollection.getString( "name" ) );
-                collection.setRecordAmount( jsonCollection.getInt( "record_amount" ) );
+                collection.setBaseId( jsonCollection.path( "base_id" ).asInt( ) );
+                collection.setCollId( jsonCollection.path( "collection_id" ).asInt( ) );
+                collection.setName( jsonCollection.path( "name" ).asText( ) );
+                collection.setRecordAmount( jsonCollection.path( "record_amount" ).asInt( ) );
                 listCollections.add( collection );
             }
-
             return listCollections;
         }
-        catch ( JSONException e )
+        catch ( Exception e )
         {
             throw new PhraseanetApiCallException( "Error parsing collections : " + e.getMessage(  ) + " - JSON : " +
-                jsonResponse.toString( 4 ) );
+                jsonResponse.toString( ) );
         }
     }
 }

@@ -1,0 +1,38 @@
+{
+    "1": {
+        "databox_id": 1,
+        "name": "db_alch_demoelastic",
+        "viewname": "Base DemoElastic (L'alias)",
+        "labels": {
+            "en": "Base DemoElastic (Trad EN)",
+            "de": "Demoelasticken databazer (Trad DE)",
+            "fr": "Base DemoElastic (Trad FR)",
+            "nl": "Base DemoElastic (Trad NL)"
+        },
+        "version": "4.0.0-alpha.8"
+    },
+    "2": {
+        "databox_id": 2,
+        "name": "db_alch_demobetaelastic",
+        "viewname": "Base BETA 2.0 Demoelastic (L'alias)",
+        "labels": {
+            "en": "Base BETA 2.0 Demoelastic (Trad EN)",
+            "de": "Base BETA 2.0 Demoelastic (Trad DE)",
+            "fr": "Base BETA 2.0 Demoelastic (Trad FR)",
+            "nl": "BETA 2.0 Demoelastic (Trad NL)"
+        },
+        "version": "4.0.0-alpha.8"
+    },
+	"3": {
+	        "databox_id": 3,
+	        "name": "db_alch_demobetaelastic",
+	        "viewname": "Base BETA 3.0 Demoelastic (L'alias)",
+	        "labels": {
+	            "en": "Base BETA 3.0 Demoelastic (Trad EN)",
+	            "de": "Base BETA 3.0 Demoelastic (Trad DE)",
+	            "fr": "Base BETA 3.0 Demoelastic (Trad FR)",
+	            "nl": "BETA 3.0 Demoelastic (Trad NL)"
+	        },
+	        "version": "4.0.0-alpha.8"
+	    }
+}
