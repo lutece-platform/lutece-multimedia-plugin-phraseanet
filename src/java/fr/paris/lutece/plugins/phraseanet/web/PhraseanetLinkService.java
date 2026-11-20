@@ -39,7 +39,6 @@ import fr.paris.lutece.plugins.phraseanet.business.embed.Embed;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandler;
 import fr.paris.lutece.plugins.phraseanet.business.media.MediaHandlerHome;
 import fr.paris.lutece.plugins.phraseanet.business.record.Metadata;
-import fr.paris.lutece.plugins.phraseanet.business.record.MetadataValue;
 import fr.paris.lutece.plugins.phraseanet.business.search.SearchResults;
 import fr.paris.lutece.plugins.phraseanet.service.Constants;
 import fr.paris.lutece.plugins.phraseanet.service.PhraseanetService;
@@ -47,16 +46,27 @@ import fr.paris.lutece.plugins.phraseanet.service.SearchCriterias;
 import fr.paris.lutece.plugins.phraseanet.service.api.PhraseanetApiCallException;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.insert.InsertServiceJspBean;
 import fr.paris.lutece.portal.web.insert.InsertServiceSelectionBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.string.StringUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 
@@ -83,8 +93,10 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
     private static final String MARK_EMBED = "embed";
     private static final String MARK_METADATAS = "metadatas";
     private static final String MARK_ERROR = "error";
+    private static final String MARK_PAGINATOR = "paginator";
+    private static final String MARK_NB_ITEMS_PER_PAGE = "nb_items_per_page";
     private static final String PARAMETER_RECORD = "record";
-    private static final String PARAMETER_SEARCH = "search";
+    private static final String PARAMETER_QUERY = "query";
     private static final String PARAMETER_MEDIA_HANDLER = "media_handler";
     private static final String PARAMETER_INPUT = "input_search";
     private static final String PARAMETER_DATABOX = "databox";
@@ -134,26 +146,21 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      * @return The search form
      */
     public String getSearchForm( HttpServletRequest request )
-    {
-        _logger.debug( "getSearchForm" );
-        String strInput = request.getParameter( PARAMETER_INPUT );
-        String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
+    {     
+		try {
+			HashMap<String, Object> model = getModel(request);
+			
+	        // Gets the locale of the user
+	        Locale locale = AdminUserService.getLocale( request );
 
-        String strDefaultItemsPerPage = AppPropertiesService.getProperty( PROPERTY_ITEMS_PER_PAGE_DEFAULT );
+	        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SEARCH_FORM, locale, model );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-
-        model.put( MARK_INPUT, strInput );
-        model.put( MARK_MEDIA_HANDLER, strMediaHandler );
-        model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
-        model.put( MARK_ITEMS_PER_PAGE, strDefaultItemsPerPage );
-
-        // Gets the locale of the user
-        Locale locale = AdminUserService.getLocale( request );
-
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_SEARCH_FORM, locale, model );
-
-        return template.getHtml(  );
+	        return template.getHtml(  );
+        }
+        catch ( PhraseanetApiCallException ex )
+        {
+            return ex.getMessage(  );
+        }
     }
 
     /**
@@ -163,40 +170,9 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
      */
     public String getSearch( HttpServletRequest request )
     {
-        String strInput = request.getParameter( PARAMETER_INPUT );
-        String strMediaHandler = request.getParameter( PARAMETER_MEDIA_HANDLER );
-        String strQuery =  request.getParameter( PARAMETER_SEARCH );
-        String strCurrentPage = request.getParameter( PARAMETER_CURRENT_PAGE );
-        String strItemsPerPage = request.getParameter( PARAMETER_ITEMS_PER_PAGE );
-        
-        _logger.debug( "Query search : " + strQuery );
-
-
-        int nMediaHandlerId = Integer.parseInt( strMediaHandler );
-        MediaHandler mh = MediaHandlerHome.findByPrimaryKey( nMediaHandlerId );
-        int nPage = ( strCurrentPage != null ) ? Integer.parseInt( strCurrentPage ) : 1;
-        int nPerPage = ( strItemsPerPage != null ) ? Integer.parseInt( strItemsPerPage ) : 10;
-
         try
         {
-            SearchCriterias criterias = new SearchCriterias(  );
-            criterias.setRecordType( mh.getMediaType(  ) );
-            
-        	Account account = AccountHome.findByPrimaryKey( mh.getIdAccount(  ) );
-        	
-            SearchResults results = PhraseanetService.search( StringUtil.replaceAccent( strQuery ), nPage, nPerPage, criterias, account );
-
-            HashMap<String, Object> model = new HashMap<String, Object>(  );
-
-            model.put( MARK_INPUT, strInput );
-            model.put( MARK_MEDIA_HANDLER, strMediaHandler );
-
-            model.put( MARK_QUERY, ( strQuery != null ) ? strQuery : "" );
-            model.put( MARK_RESULTS, results );
-            model.put( MARK_SERVER, account.getAccessURL(  ) );
-
-            model.put( MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues(  ) );
-            model.put( MARK_ITEMS_PER_PAGE, strItemsPerPage );
+            HashMap<String, Object> model = getModel(request);
 
             // Gets the locale of the user
             Locale locale = AdminUserService.getLocale( request );
@@ -211,6 +187,109 @@ public class PhraseanetLinkService extends InsertServiceJspBean implements Inser
         }
     }
 
+
+	private HashMap<String, Object> getModel(HttpServletRequest request) throws PhraseanetApiCallException
+	{
+	    HashMap<String, Object> model = new HashMap<>();
+	
+	    String strInput = request.getParameter(PARAMETER_INPUT);
+	    String strMediaHandler = request.getParameter(PARAMETER_MEDIA_HANDLER);
+	    String strQuery = StringUtils.defaultString(request.getParameter(PARAMETER_QUERY));
+	    String strCurrentPage = request.getParameter(PARAMETER_CURRENT_PAGE);
+	    String strItemsPerPage = request.getParameter(PARAMETER_ITEMS_PER_PAGE);
+	
+	    // Media handler
+	    int nMediaHandlerId = Integer.parseInt(strMediaHandler);
+	    MediaHandler mh = MediaHandlerHome.findByPrimaryKey(nMediaHandlerId);
+	
+	    if (mh == null)
+	    {
+	        throw new PhraseanetApiCallException("MediaHandler not found: " + nMediaHandlerId);
+	    }
+	
+	    // Pagination parameters
+	    int nCurrentPage = StringUtils.isNumeric(strCurrentPage)
+	            ? Math.max(1, Integer.parseInt(strCurrentPage))
+	            : 1;
+	
+	    int nPerPage = StringUtils.isNumeric(strItemsPerPage)
+	            ? Integer.parseInt(strItemsPerPage)
+	            : AppPropertiesService.getPropertyInt(PROPERTY_ITEMS_PER_PAGE_DEFAULT, 10);
+	
+	    nPerPage = Math.max(1, nPerPage);
+	
+	    strCurrentPage = String.valueOf(nCurrentPage);
+	    strItemsPerPage = String.valueOf(nPerPage);
+	
+	    int nOffsetStart = (nCurrentPage - 1) * nPerPage;
+	
+	    // Account
+	    Account account = AccountHome.findByPrimaryKey(mh.getIdAccount());
+	
+	    // Search criterias
+	    SearchCriterias criterias = new SearchCriterias();
+	    criterias.setRecordType(mh.getMediaType());
+	
+	    // Phraseanet search
+	    SearchResults results = PhraseanetService.search(
+	            StringUtil.replaceAccent(strQuery),
+	            nOffsetStart,
+	            nPerPage,
+	            criterias,
+	            account
+	    );
+	
+	    // Paginator
+	    List<Integer> listPages = IntStream.range(0, results.getTotalResults())
+	            .boxed()
+	            .collect(Collectors.toList());
+	
+	    String strUrl = getUrl(request, strInput, strQuery, strItemsPerPage, nMediaHandlerId);
+	
+	    Paginator<Integer> paginator = new Paginator<>(
+	            listPages,
+	            nPerPage,
+	            strUrl,
+	            PARAMETER_CURRENT_PAGE,
+	            strCurrentPage
+	    );
+	
+	    // Model
+	    model.put(MARK_INPUT, strInput);
+	    model.put(MARK_MEDIA_HANDLER, strMediaHandler);
+	    model.put(MARK_PAGINATOR, paginator);
+	    model.put(MARK_QUERY, strQuery);
+	    model.put(MARK_RESULTS, results);
+	    model.put(MARK_NB_ITEMS_PER_PAGE, strItemsPerPage);
+	    model.put(MARK_SERVER, account.getAccessURL());
+	    model.put(MARK_ITEMS_PER_PAGE_VALUES, PhraseanetService.getItemsPerPageValues());
+	    model.put(MARK_ITEMS_PER_PAGE, strItemsPerPage);
+	
+	    return model;
+	}
+
+	/**
+	 * Get Phraseanet paginator URL
+	 * @param request
+	 * @param strInput
+	 * @param strQuery
+	 * @param strItemsPerPage
+	 * @param nMediaHandlerId
+	 * @return string url
+	 */
+	private String getUrl(HttpServletRequest request, String strInput, String strQuery, String strItemsPerPage, int nMediaHandlerId) {
+		try {
+			return request.getRequestURI()
+			        + "?input_search=" + strInput
+			        + "&media_handler=" + nMediaHandlerId
+			        + "&items_per_page=" + strItemsPerPage
+			        + "&query=" + URLEncoder.encode(strQuery, StandardCharsets.UTF_8.name());
+		} catch (UnsupportedEncodingException e) {
+			AppLogService.error("An error occurred while generating the Phraseanet paginator URL. ",e.getMessage());
+		}
+		return StringUtils.EMPTY;
+	}
+	
     /**
      * Insert the link into the editor
      * @param request The HTTP request
