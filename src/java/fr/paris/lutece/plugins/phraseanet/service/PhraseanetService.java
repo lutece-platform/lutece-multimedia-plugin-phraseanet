@@ -78,7 +78,7 @@ public final class PhraseanetService
     private static final String PATH_COLLECTIONS = "/api/v1/databoxes/{0}/collections/";
     private static final String PATH_EMBED = "/api/v1/records/{0}/{1}/embed/";
     private static final String PARAMETER_QUERY = "query";
-    private static final String PARAMETER_PAGE = "page";
+    private static final String PARAMETER_OFFSET_STRAT = "offset_start";
     private static final String PARAMETER_PER_PAGE = "per_page";
     private static final String PARAMETER_RECORD_TYPE = "record_type";
     private static final String PARAMETER_BASES = "bases[]";
@@ -155,22 +155,22 @@ public final class PhraseanetService
     /**
      * Searc results
      * @param strQuery Query terms
-     * @param nPage Page number
+     * @param nOffsetStart Page number
      * @param nPerPage Number of items per page
      * @param criterias Criterias
      * @param account the user phraseanet account
      * @return search results
      * @throws PhraseanetApiCallException if an error occurs
      */
-    public static SearchResults search( String strQuery, int nPage, int nPerPage, SearchCriterias criterias, Account account )
+    public static SearchResults search( String strQuery, int nOffsetStart, int nPerPage, SearchCriterias criterias, Account account )
         throws PhraseanetApiCallException
     {
         String strUrl = account.getAccessURL(  ) + PATH_SEARCH ;
         _logger.debug("URL de la reqette API : " + strUrl);
         Map<String, List<String>> mapParameters = new HashMap<String, List<String>>(  );
         putParameter( mapParameters, PARAMETER_QUERY, strQuery );
-        putParameter( mapParameters, PARAMETER_PAGE, String.valueOf( nPage ) );
-        putParameter( mapParameters, PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );
+        putParameter( mapParameters, PARAMETER_OFFSET_STRAT, String.valueOf( nOffsetStart ) );
+        putParameter( mapParameters, PARAMETER_PER_PAGE, String.valueOf( nPerPage ) );       
         _logger.debug("Parametres de la requette : " + mapParameters);
 
         if ( ( criterias.getRecordType(  ) != null ) || !criterias.getRecordType(  ).equals( SEARCH_ALL ) )
